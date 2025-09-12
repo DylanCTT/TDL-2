@@ -1,4 +1,4 @@
-package Usuario;
+package Sesion;
 
 public class Cuenta {
 	String mail;
