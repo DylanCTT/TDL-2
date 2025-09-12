@@ -7,14 +7,14 @@ public class Perfil{
 	private String nombre;
 	private String idioma;
 	private List<String> preferenciasGenero;
-	private List<Contenido> miLista;
+	//private List<Contenido> miLista;
 	private List<Resenia> resenias;
 	
 	public Perfil(String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Resenia> resenias) {
 		this.nombre = nombre;
 		this.idioma = idioma;
 		this.preferenciasGenero = new ArrayList<String>();
-		this.miLista = new ArrayList<Contenido>();
+		//this.miLista = new ArrayList<Contenido>();
 		this.resenias = new ArrayList<Resenia>();
 	}
 	
