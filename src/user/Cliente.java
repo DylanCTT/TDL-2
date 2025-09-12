@@ -1,5 +1,12 @@
 package user;
 
+/**
+ * Representa al dueno de la cuenta
+ * @author dylan y valen
+ * @version 1.0
+ * @since 12-9-2025
+ */
+
 public class Cliente extends Usuario {
 	private String plan;
 	private static final int maxPerfiles = 5;

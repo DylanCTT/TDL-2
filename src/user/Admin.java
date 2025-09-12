@@ -2,27 +2,41 @@ package user;
 
 import java.util.List;
 
-public class Admin {
-	private List<Reporte> listaReporte;
+/**
+ * Representa al tipo de usuario que
+ * @author dylan y valen
+ * @version 1.0
+ * @since 12-9-2025
+ */
 
-	public Admin(List<Reporte> listaReporte) {
+
+public class Admin {
+	private List<Reporte> listaReportes;
+
+	public Admin(List<Reporte> listaReportes) {
 		super();
-		this.listaReporte = listaReporte;
+		this.listaReportes = listaReportes;
+	}
+	
+	public Admin() {
+		
 	}
 
 	public List<Reporte> getListaReportes() {
-		return listaReporte;
+		return listaReportes;
 	}
 
 	public void setListaReportes(Reporte R) {
-		listaReporte.add(R);
+		listaReportes.add(R);
 	}
 	
+	public void agregarContenido(Contenido C) {
+		
+	}
 	
-	// metodos que requieren de otras clases
-	
-	//public void agregarContenido(Contenido C) {}
-	
-	//public String informarReportes () {}
+	public String informarReportes () {
+	  String reporte = "";
+	  return reporte;
+	}
 	
 }

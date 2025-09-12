@@ -1,5 +1,12 @@
 package user;
 
+/**
+ * Representa un comentario/opinion/puntaje que va a dejar un usuario sobre un contenido
+ * @author dylan y valen
+ * @version 1.0
+ * @since 12-9-2025
+ */
+
 public class Resenia {
   private String contenido;
   private String nomUsuario;
@@ -9,6 +16,10 @@ public class Resenia {
 	  this.contenido = contenido;
 	  this.nomUsuario = nomUsuario;
 	  this.puntaje = puntaje;
+  }
+  
+  public Resenia() {
+	  
   }
 
   public String getContenido() {
