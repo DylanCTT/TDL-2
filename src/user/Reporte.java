@@ -1,4 +1,4 @@
-package Usuario;
+package user;
 
 public abstract class Reporte {
 
