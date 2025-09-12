@@ -19,4 +19,10 @@ public class Admin {
 	}
 	
 	
+	// metodos que requieren de otras clases
+	
+	//public void agregarContenido(Contenido C) {}
+	
+	//public String informarReportes () {}
+	
 }
