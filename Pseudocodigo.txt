@@ -1,0 +1,7 @@
+Desde la clase Menu se selecciona un perfil
+
+La clase perfil elige una pelicula en la lista de catalogo
+
+Se selecciona la pelicula para instanciar el reproductor
+
+Se reproduce la pelicula
