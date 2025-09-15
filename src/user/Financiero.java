@@ -11,10 +11,6 @@ import java.util.List;
 
 public class Financiero extends Reporte{
 	private List<Integer> cantSubsPlan;
-	
-	public Financiero () {
-		
-	}
 
 	public Financiero(String contenido, List<Integer> cantSubsPlan) {
 		super(contenido);
