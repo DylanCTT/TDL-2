@@ -2,11 +2,27 @@ package user;
 
 import java.util.List;
 
-public class Individual extends Reporte{
+/**
+ * Representa un reporte que contiene datos sobre un solo cliente 
+ * @author dylan y valen
+ * @version 1.0
+ * @since 12-9-2025
+ */
+
+public class Individual extends Reporte {
 	private int tiempoTot;
 	private List<String> generosFav;
 	
+	public Individual(String contenido, int tiempoTot, List<String> generosFav) {
+		super(contenido);
+		this.tiempoTot = tiempoTot;
+		this.generosFav = generosFav;
+	}
 	
+	public Individual() {
+		
+	}
+
 	public int getTiempoTot() {
 		return tiempoTot;
 	}

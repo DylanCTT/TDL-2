@@ -1,6 +1,14 @@
 package user;
 
-public class Usuario {
+/**
+ * Representa el tipo "base" de un usuario de la plataforma
+ * 
+ * @author dylan y valen
+ * @version 1.0
+ * @since 12-9-2025
+ */
+
+public abstract class Usuario {
 	private String nombre;
 	private String apellido;
 	private String mail;
