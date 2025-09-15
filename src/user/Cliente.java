@@ -1,7 +1,7 @@
 package user;
 
 /**
- * Representa al dueno de la cuenta
+ * Representa al duenio de la cuenta
  * @author dylan y valen
  * @version 1.0
  * @since 12-9-2025
@@ -40,12 +40,22 @@ public class Cliente extends Usuario {
 		this.cantPerfiles = cantPerfiles;
 	}
 	
+	/**
+	 * Agrega un perfil a una cuenta
+	 * @param p el perfil a agregar
+	 */
+	
 	public void agregarPerfil(Perfil p) {
 	  if (this.cantPerfiles <= maxPerfiles) {
 	    this.perfiles[cantPerfiles] = p;
 	    this.cantPerfiles++;
 	  }
 	}
+	
+	/**
+	 * Elimina un perfil de una cuenta
+	 * @param p el perfil a eliminar
+	 */
 	
 	public void eliminarPerfil(Perfil p) {
   	  int i = 0;

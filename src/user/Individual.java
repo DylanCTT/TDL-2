@@ -3,7 +3,7 @@ package user;
 import java.util.List;
 
 /**
- * Representa un reporte que contiene datos sobre un cliente 
+ * Representa un reporte que contiene datos sobre un solo cliente 
  * @author dylan y valen
  * @version 1.0
  * @since 12-9-2025

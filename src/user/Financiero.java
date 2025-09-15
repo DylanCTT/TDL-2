@@ -20,7 +20,7 @@ public class Financiero extends Reporte{
 	public Financiero() {
 		
 	}
-
+	
 	public List<Integer> getCantSubsPlan() {
 		return cantSubsPlan;
 	}

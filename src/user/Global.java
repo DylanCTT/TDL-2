@@ -1,7 +1,7 @@
 package user;
 
 /**
- * Representa un reporte que contiene datos sobre todos los clientes de la plataforma
+ * Representa un reporte que contiene datos sobre los clientes de la plataforma
  * @author dylan y valen
  * @version 1.0
  * @since 12-9-2025

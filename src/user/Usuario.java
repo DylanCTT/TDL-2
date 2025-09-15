@@ -1,7 +1,7 @@
 package user;
 
 /**
- * Representa el tipo base de un usuario
+ * Representa el tipo "base" de un usuario de la plataforma
  * 
  * @author dylan y valen
  * @version 1.0

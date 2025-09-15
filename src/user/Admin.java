@@ -3,7 +3,7 @@ package user;
 import java.util.List;
 
 /**
- * Representa al tipo de usuario que
+ * Representa al tipo de usuario con acceso a funciones especiales (reportes, modificacion de catalogo, etc.)
  * @author dylan y valen
  * @version 1.0
  * @since 12-9-2025
