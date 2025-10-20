@@ -1,9 +1,18 @@
--Se abre la plataforma y se instancia Menu
+1. El usuario selecciona el titulo de la película a ver.
 
--Desde Menu se selecciona un perfil
+2. Se manda al reproductor el titulo y las preferencias del usuario (doblaje, subtítulo y calidad)
 
--Perfil elige una pelicula en la lista de catalogo
+3. El reproductor busca el título en el catálogo (suponemos que el usuario ingresa un título válido).
 
--Se selecciona e instancia la pelicula y en consecuencia se instancia Reproductor
+4. Si la película se encuentra en el catálogo, esta se guarda en la variable "contenido" de reproductor.
 
--Se reproduce la pelicula
+5. Se chequean las preferencias:
+
+  6. Si el subtítulo y doblaje de preferencia del usuario no se encuentran disponibles en la película, se settean los predeterminados.
+
+  7. Sino, se settean el subtitulo y doblaje de preferencia.
+
+8. Cuando se reproduce la película, se chequea cuál es la calidad máxima disponible y la compara con la calidad de preferencia del usuario.
+
+9. Mientras se esta reproduciendo la película, cada cierto tiempo se pregunta la velocidad de bajada del usuario para ajustar en base a eso la calidad.
+   Dependiendo de la velocidad de bajada, se settea una calidad mas alta o mas baja.

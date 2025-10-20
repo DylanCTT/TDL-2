@@ -1,0 +1,13 @@
+*UML:
+
+-Agregamos descripciones de relación a cada flecha.
+
+-Corregimos el sentido de algunas flechas.
+
+-Agregamos clase "Guardado", en donde guardamos las preferencias del usuario junto con el historial.
+
+-Cambiamos la clase "Menu" por la clase "Catalogo".
+
+*Diagrama de secuencia:
+
+-Ampliamos y corregimos el flujo, agregando la interaccion con la clase guardado y algunos condicionales.
