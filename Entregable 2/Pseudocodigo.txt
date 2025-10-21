@@ -1,9 +1,0 @@
--Se abre la plataforma y se instancia Menu
-
--Desde Menu se selecciona un perfil
-
--Perfil elige una pelicula en la lista de catalogo
-
--Se selecciona e instancia la pelicula y en consecuencia se instancia Reproductor
-
--Se reproduce la pelicula

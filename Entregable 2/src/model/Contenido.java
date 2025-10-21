@@ -1,4 +1,4 @@
-package user;
+package model;
 
 public class Contenido {
 

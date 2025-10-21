@@ -1,4 +1,4 @@
-package user;
+package model;
 
 /**
  * Representa estadisticas financieras y de datos sobre la plataforma 

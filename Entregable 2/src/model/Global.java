@@ -1,4 +1,4 @@
-package user;
+package model;
 
 /**
  * Representa un reporte que contiene datos sobre los clientes de la plataforma

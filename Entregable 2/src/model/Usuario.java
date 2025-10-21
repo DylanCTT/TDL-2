@@ -1,4 +1,4 @@
-package user;
+package model;
 
 /**
  * Representa el tipo "base" de un usuario de la plataforma

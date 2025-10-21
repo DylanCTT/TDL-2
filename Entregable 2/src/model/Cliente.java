@@ -1,4 +1,4 @@
-package user;
+package model;
 
 /**
  * Representa al duenio de la cuenta

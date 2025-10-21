@@ -1,4 +1,4 @@
-package user;
+package model;
 
 /**
  * Representa un comentario/opinion/puntaje que va a dejar un usuario sobre un contenido
