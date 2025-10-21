@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  * Representa un comentario/opinion/puntaje que va a dejar un usuario sobre un contenido
  * @author dylan y valen
@@ -8,42 +10,62 @@ package model;
  */
 
 public class Resenia {
-  private String contenido;
-  private String nomUsuario;
-  private int puntaje;
+	private String contenido;
+	private int puntaje;
+	private boolean aprobada;
+	private LocalDateTime fecha;
+	private String nomUsuario;
   
-  public Resenia(String contenido, String nomUsuario, int puntaje) {
-	  this.contenido = contenido;
-	  this.nomUsuario = nomUsuario;
-	  this.puntaje = puntaje;
-  }
+	public Resenia(String contenido, int puntaje, boolean aprobada, LocalDateTime fecha, String nomUsuario) {
+		this.contenido = contenido;
+		this.puntaje = puntaje;
+		this.aprobada = aprobada;
+		this.fecha = fecha;
+		this.nomUsuario = nomUsuario;
+	}
   
-  public Resenia() {
+	public Resenia() {
 	  
-  }
+	}
 
-  public String getContenido() {
-	  return contenido;
-  }
+	public String getContenido() {
+		return contenido;
+	}
 
-  public void setContenido(String contenido) {
-	  this.contenido = contenido;
-  }
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
+	}
 
-  public String getNomUsuario() {
-	  return nomUsuario;
-  }
+	public int getPuntaje() {
+		return puntaje;
+	}
 
-  public void setNomUsuario(String nomUsuario) {
-	  this.nomUsuario = nomUsuario;
-  }
+	public void setPuntaje(int puntaje) {
+		this.puntaje = puntaje;
+	}
+  
+	public boolean isAprobada() {
+		return aprobada;
+	}
 
-  public int getPuntaje() {
-	  return puntaje;
-  }
+	public void setAprobada(boolean aprobada) {
+		this.aprobada = aprobada;
+	}
 
-  public void setPuntaje(int puntaje) {
-	  this.puntaje = puntaje;
-  }
+	public LocalDateTime getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getNomUsuario() {
+		return nomUsuario;
+	}
+
+	public void setNomUsuario(String nomUsuario) {
+		this.nomUsuario = nomUsuario;
+	}
   
 }

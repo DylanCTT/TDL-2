@@ -15,14 +15,18 @@ public class Perfil {
 	private String idioma;
 	private List<String> preferenciasGenero;
 	private List<Contenido> miLista;
-	private List<Resenia> resenias;
+	private List<Contenido> recomendaciones;
+	private List<Resenia> misResenias;
+	private List<Contenido> historial;
 	
-	public Perfil(String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Resenia> resenias) {
+	public Perfil(String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Contenido> recomendaciones, List<Resenia> misResenias, List<Contenido> historial) {
 		this.nombre = nombre;
 		this.idioma = idioma;
 		this.preferenciasGenero = new ArrayList<String>();
 		this.miLista = new ArrayList<Contenido>();
-		this.resenias = new ArrayList<Resenia>();
+		this.recomendaciones = new ArrayList<Contenido>();
+		this.misResenias = new ArrayList<Resenia>();
+		this.historial = new ArrayList<Contenido>();
 	}
 	
 	public Perfil() {

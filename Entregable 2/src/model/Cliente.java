@@ -13,8 +13,8 @@ public class Cliente extends Usuario {
 	private Perfil[] perfiles;
 	private int cantPerfiles;
 	
-	public Cliente(String nombre, String apellido, String mail, String contrasenia, String plan, Perfil[] perfiles, int cantPerfiles) {
-		super(nombre, apellido, mail, contrasenia);
+	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia, String plan, Perfil[] perfiles, int cantPerfiles) {
+		super(nombre, apellido, DNI, email, contrasenia);
 		this.plan = plan;
 		this.perfiles = new Perfil[maxPerfiles];
 		this.cantPerfiles = cantPerfiles;

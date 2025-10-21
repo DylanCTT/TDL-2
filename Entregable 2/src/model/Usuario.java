@@ -11,14 +11,16 @@ package model;
 public abstract class Usuario {
 	private String nombre;
 	private String apellido;
-	private String mail;
+	private int DNI;
+	private String email;
 	private String contrasenia;
 	
-	public Usuario(String nombre, String apellido, String mail, String contrasenia) {
+	public Usuario(String nombre, String apellido, int DNI, String mail, String contrasenia) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.mail = mail;
+		this.DNI = DNI;
+		this.email = mail;
 		this.contrasenia = contrasenia;
 	}
 	
@@ -42,12 +44,20 @@ public abstract class Usuario {
 		this.apellido = apellido;
 	}
 	
-	public String getMail() {
-		return mail;
+	public int getDNI() {
+	  return DNI;	
 	}
 	
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setDNI(int DNI) {
+	  this.DNI = DNI;	
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public String getContrasenia() {
