@@ -1,5 +1,10 @@
 package dao.interfaces;
 
-public interface ReseniaDAO {
+import java.util.List;
+import model.Resenia;
 
+public interface ReseniaDAO {
+	void guardar(Resenia resenia);
+	List<Resenia> listarNoAprobadas();
+	void aprobar(int idResenia);
 }

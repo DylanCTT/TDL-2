@@ -9,6 +9,7 @@ public class Conexion {
   
   //constructor privado para evitar instancias
   private Conexion() {
+	  
   }
 	  
   public static Connection getConnection() throws SQLException { 

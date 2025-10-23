@@ -1,5 +1,9 @@
 package dao.interfaces;
 
-public interface PerfilDAO {
+import java.util.List;
+import model.Perfil;
 
+public interface PerfilDAO {
+	void guardar(Perfil perfil);
+	List<Perfil> listar(String orden);
 }
