@@ -33,7 +33,7 @@ public class Operaciones {
 		return p.matcher(email).matches();
 	}
 	
-	public static Cliente registroCliente() {
+	private static Cliente registroCliente() {
 		Cliente c = new Cliente();
 		boolean ok = false;
 		String validacion = "";
@@ -75,11 +75,31 @@ public class Operaciones {
 				System.out.println(validacion);
 				System.out.println("Ingrese los datos nuevamente: ");
 			}
-		}		
+		}
+		
+		System.out.println("Datos ingresados: " + c.toString());
 		return c;
 	}
 	
-	public static Perfil registroPerfil() {
+	private static boolean confirmar() {
+		System.out.println("Son correctos los datos ingresados? (si/no)");
+		String res = in.nextLine().trim().toLowerCase();
+		return res.equals("si");
+	}
+	
+	public static void registrarCliente() {
+		Cliente c = registroCliente();
+		
+		if (confirmar()) {
+			FactoryDAO.getClienteDAO().guardar(c);
+			System.out.println("Cliente guardado correctamente");
+		}
+		else {
+			System.out.println("Registro cancelado");
+		}
+	}
+	
+	private static Perfil registroPerfil() {
 		Perfil p = new Perfil();
 		boolean ok = false;
 		String validacion = "";
@@ -101,7 +121,20 @@ public class Operaciones {
 		return p;
 	}
 	
-	public static Pelicula registroPelicula() {
+	public static void registrarPerfil() {
+		//se selecciona un Cliente de la base de datos el cual queda asociado al perfil
+		Perfil p = registroPerfil();
+		
+		if (confirmar()) {
+			FactoryDAO.getPerfilDAO().guardar(p);
+			System.out.println("Perfil guardado correctamente");
+		}
+		else {
+			System.out.println("Registro cancelado");
+		}
+	}
+	
+	private static Pelicula registroPelicula() {
 		Pelicula p = new Pelicula();
 		boolean ok = false;
 		String validacion = "";
@@ -124,6 +157,8 @@ public class Operaciones {
 			System.out.println("Duracion (en minutos): ");
 			p.setDuracionR(in.nextFloat());
 			
+			//checkear genero con ENUM :o
+			
 			if ((p.getGenero().isEmpty()) || (p.getTitulo().isEmpty()) || (p.getDirector().isEmpty()) || (p.getDuracionR() <= 0)) validacion += "Se deben ingresar todos los datos. ";
 			
 			if (validacion.isEmpty()) ok = true;
@@ -133,6 +168,18 @@ public class Operaciones {
 			}
 		}		
 		return p;
+	}
+	
+	public static void registrarPelicula() {
+		Pelicula p = registroPelicula();
+		
+		if (confirmar()) {
+			FactoryDAO.getPeliculaDAO().guardar(p);
+			System.out.println("Pelicula guardada correctamente");
+		}
+		else {
+			System.out.println("Registro cancelado");
+		}	
 	}
 	
 	public static void listarPerfiles() {

@@ -23,8 +23,6 @@ public class Main {
 			System.out.println("Error de Base de datos: " + e.getMessage());
 		}*/
 		
-		//se realizan las distintas operaciones segun el numero que aprete el usuario desde la linea de comandos (metodo eleccionOperacion?)
-		
 		int op;
 		boolean salir = false;
 		Scanner in = new Scanner (System.in);
@@ -47,13 +45,13 @@ public class Main {
 		
 			switch (op) {
 			case 1:
-				Operaciones.registroCliente();
+				Operaciones.registrarCliente();
 				break;
 			case 2:
-				Operaciones.registroPerfil();
+				Operaciones.registrarPerfil();
 				break;
 			case 3:
-				Operaciones.registroPelicula();
+				Operaciones.registrarPelicula();
 				break;
 			case 4:
 				Operaciones.listarPerfiles();

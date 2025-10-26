@@ -72,7 +72,10 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		try (Connection conn = Conexion.getConnection();
 			 PreparedStatement ps = conn.prepareStatement(sql);
 			 ResultSet rs = ps.executeQuery()) {
-			ps.setInt(1, DNI); //rempleza el ? del rs con el DNI que me llega
+			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
+			if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)
+				existe = true;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println("Error al validar DNI: " + e.getMessage());
