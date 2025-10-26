@@ -12,6 +12,7 @@ public class Conexion {
 	  
   }
 	  
+  //conecta a la base de datos
   public static Connection getConnection() throws SQLException { 
 	  if (conn == null || conn.isClosed()) {
 		  conn = DriverManager.getConnection("jdbc:sqlite:plataforma.db");

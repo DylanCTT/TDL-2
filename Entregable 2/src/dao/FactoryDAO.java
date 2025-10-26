@@ -5,8 +5,8 @@ import dao.implJDBC.*;
 
 public class FactoryDAO {
 
-	public static UsuarioDAO getUsuarioDAO() {
-		return new UsuarioDAOjdbc(); 
+	public static ClienteDAO getClienteDAO() {
+		return new ClienteDAOjdbc(); 
 	}
 	
 	public static PerfilDAO getPerfilDAO() {

@@ -45,11 +45,11 @@ public abstract class Usuario {
 	}
 	
 	public int getDNI() {
-	  return DNI;	
+		return DNI;	
 	}
 	
 	public void setDNI(int DNI) {
-	  this.DNI = DNI;	
+		this.DNI = DNI;	
 	}
 	
 	public String getEmail() {
