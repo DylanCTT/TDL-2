@@ -3,11 +3,13 @@ package model;
 import java.util.List;
 
 public class Contenido {
+	private String genero; //se utiliza esta VI para el modelado de la BD 
 	private List<String> generos;
 	private String sinopsis;
 	private String director;
 	
-	public Contenido(List<String> generos, String sinopsis, String director) {
+	public Contenido(String genero, List<String> generos, String sinopsis, String director) {
+		this.genero = genero;
 		this.generos = generos;
 		this.sinopsis = sinopsis;
 		this.director = director;
@@ -15,6 +17,15 @@ public class Contenido {
 	
 	public Contenido() {
 		
+	}
+	
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 	public String getSinopsis() {

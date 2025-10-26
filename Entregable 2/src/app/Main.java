@@ -1,7 +1,10 @@
 package app;
 
-import java.sql.*;
-import util.*;
+import java.util.Scanner;
+
+//import java.sql.*;
+
+//import util.*;
 
 public class Main {
   
@@ -20,6 +23,59 @@ public class Main {
 			System.out.println("Error de Base de datos: " + e.getMessage());
 		}*/
 		
+		//se realizan las distintas operaciones segun el numero que aprete el usuario desde la linea de comandos (metodo eleccionOperacion?)
+		
+		int op;
+		boolean salir = false;
+		Scanner in = new Scanner (System.in);
+		
+		System.out.println("Bienvenido a Plataforma de Streaming TDL2");
+		
+		while (salir) {
+			System.out.println("Ingrese una de las siguientes operaciones: ");
+		
+			System.out.println("1. Registrar datos personales de cliente");
+			System.out.println("2. Registrar datos de un perfil");
+			System.out.println("3. Registrar pelicula");
+			System.out.println("4. Listar perfiles");
+			System.out.println("5. Listar peliculas");
+			System.out.println("6. Registrar resenia");
+			System.out.println("7. Aprobar resenia");
+			System.out.println("8. Salir");
+		
+			op = in.nextInt();
+		
+			switch (op) {
+			case 1:
+				Operaciones.registroCliente();
+				break;
+			case 2:
+				Operaciones.registroPerfil();
+				break;
+			case 3:
+				Operaciones.registroPelicula();
+				break;
+			case 4:
+				Operaciones.listarPerfiles();
+				break;
+			case 5:
+				Operaciones.listarPeliculas();
+				break;
+			case 6:
+				Operaciones.registroResenia();
+				break;
+			case 7:
+				Operaciones.aprobarResenia();
+				break;
+			case 8:
+				salir = true;
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Operacion invalida");
+			}
+		}
+		
+		in.close();
 	}
-	
 }

@@ -67,7 +67,17 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	}
 	
 	public boolean existeDNI(int DNI) {
-		
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM USUARIO WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery()) {
+			ps.setInt(1, DNI); //rempleza el ? del rs con el DNI que me llega
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar DNI: " + e.getMessage());
+		}
+		return existe;
 	}
 	
 }

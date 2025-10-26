@@ -17,11 +17,11 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			//ps.setString(1, pelicula.getGenero());
+			ps.setString(1, pelicula.getGenero());
 			ps.setString(2, pelicula.getTitulo());
 			ps.setString(3, pelicula.getSinopsis());
 			ps.setString(4, pelicula.getDirector());
-			//ps.setFloat(5, pelicula.getDuracion());
+			ps.setFloat(5, pelicula.getDuracionR());
 			
 			ps.executeUpdate();
 			

@@ -20,7 +20,7 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		  ps.setInt(1, resenia.getPuntaje());
 		  ps.setString(2, resenia.getContenido());
 		  ps.setBoolean(3, resenia.isAprobada());
-		  //ps.setLocalDateTime(5, resenia.getFecha());
+		  ps.setString(5, resenia.getFecha().toString());
 		}
 		catch (SQLException e) {
 		  System.out.println("Error al guardar resenia: " + e.getMessage());	
