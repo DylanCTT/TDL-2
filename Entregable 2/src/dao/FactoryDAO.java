@@ -17,7 +17,7 @@ public class FactoryDAO {
 		return new PeliculaDAOjdbc(); 
 	}
 	
-	public static ReseniaDAO ReseniaDAO() {
+	public static ReseniaDAO getReseniaDAO() {
 		return new ReseniaDAOjdbc(); 
 	}
 	

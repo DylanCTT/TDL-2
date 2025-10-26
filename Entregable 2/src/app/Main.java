@@ -60,7 +60,7 @@ public class Main {
 				Operaciones.listarPeliculas();
 				break;
 			case 6:
-				Operaciones.registroResenia();
+				Operaciones.registrarResenia();
 				break;
 			case 7:
 				Operaciones.aprobarResenia();

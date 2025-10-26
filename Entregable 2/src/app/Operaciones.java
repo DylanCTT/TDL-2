@@ -10,6 +10,7 @@ import model.Cliente;
 import model.Pelicula;
 import model.Perfil;
 import model.Resenia;
+import model.Generos;
 import dao.FactoryDAO;
 import dao.interfaces.ClienteDAO;
 
@@ -62,7 +63,7 @@ public class Operaciones {
 			
 			if (stringContieneNum(c.getApellido())) validacion += "El apellido no debe contener numeros. ";
 
-			ClienteDAO cDAO = FactoryDAO.getClienteDAO();
+			ClienteDAO cDAO = FactoryDAO.getClienteDAO(); //objeto DAO que accede a todos los clientes de la base
 			
 			if (!cDAO.existeDNI(c.getDNI())) validacion += "El DNI ingresado ya existe. ";
 			
@@ -121,7 +122,18 @@ public class Operaciones {
 		return p;
 	}
 	
+	private static void listarClientes() {
+		ClienteDAO cDao = FactoryDAO.getClienteDAO();
+		List<Cliente> listaClientes = cDao.listar();
+		
+		System.out.println("Listado clientes: ");
+		for (Cliente c : listaClientes) {
+			System.out.println("Nombre: " + c.getNombre() + ". Apellido: " + c.getApellido() + ". Email: " + c.getEmail() + ". Contrasenia: " + c.getContrasenia());
+		}
+	}
+	
 	public static void registrarPerfil() {
+		listarClientes();
 		//se selecciona un Cliente de la base de datos el cual queda asociado al perfil
 		Perfil p = registroPerfil();
 		
@@ -157,7 +169,12 @@ public class Operaciones {
 			System.out.println("Duracion (en minutos): ");
 			p.setDuracionR(in.nextFloat());
 			
-			//checkear genero con ENUM :o
+			p.setGenero(p.getGenero().toUpperCase());
+			try {
+				Generos genero = Generos.valueOf(p.getGenero());
+			} catch (IllegalArgumentException e) {
+				validacion += "Genero ingresado no valido. ";
+			}
 			
 			if ((p.getGenero().isEmpty()) || (p.getTitulo().isEmpty()) || (p.getDirector().isEmpty()) || (p.getDuracionR() <= 0)) validacion += "Se deben ingresar todos los datos. ";
 			
@@ -166,7 +183,9 @@ public class Operaciones {
 			  System.out.println(validacion);
 			  System.out.println("Ingrese los datos nuevamente: ");
 			}
-		}		
+		}	
+		System.out.println("Datos ingresaos: " + p.toString());
+		
 		return p;
 	}
 	
@@ -183,20 +202,14 @@ public class Operaciones {
 	}
 	
 	public static void listarPerfiles() {
-		ClienteDAO cDao = FactoryDAO.getClienteDAO();
-		List<Cliente> listaClientes = cDao.listar();
 		
-		System.out.println("Listado perfiles: ");
-		for (Cliente c : listaClientes) {
-			System.out.println("Nombre: " + c.getNombre());
-		}
 	}
 	
 	public static void listarPeliculas() {
 		
 	}
 	
-	public static Resenia registroResenia() {
+	private static Resenia registroResenia() {
 		Resenia r = new Resenia();
 		boolean ok = false;
 		String validacion = "";
@@ -225,7 +238,37 @@ public class Operaciones {
 		return r;
 	}
 	
-	public static void aprobarResenia() {
+	public static void registrarResenia() {
+		System.out.println("Ingrese nombre de usuario y contrasenia: ");
+		String nom = in.nextLine();
+		String contrasenia = in.nextLine();
 		
+		//validar nombre y contrasenia
+		
+		//mostrar listado peliculas
+		
+		//elegir pelicula
+		
+		Resenia r = registroResenia();
+		
+		if (confirmar()) {
+			FactoryDAO.getReseniaDAO().guardar(r);
+			System.out.println("Resenia guardada correctamente");
+		}
+		else {
+			System.out.println("Registro cancelado");
+		}	
+	}
+	
+	public static void aprobarResenia() {
+		//listado resenias
+		
+		//solicitar nro resenia a aprobar
+		
+		//validar existencia resenia
+		
+		//mostrar resenia seleccionada
+		
+		//aprobar
 	}
 }
