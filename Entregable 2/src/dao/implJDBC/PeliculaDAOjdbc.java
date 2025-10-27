@@ -61,7 +61,8 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	
 	@Override
 	public List<Pelicula> listarOrdenado(String orden) {
-		
+		List<Pelicula> lista = new ArrayList<>();
+		return lista;
 	}
 	
 	@Override

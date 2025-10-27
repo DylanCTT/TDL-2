@@ -18,8 +18,8 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		//getConnection devuelve un tipo Connection
 		//como voy a insertar datos variables, uso prepareStatement
 		//preparo al sql para recibir datos variabls (indicados con ? en el String)
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) { 
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) { 
 		  
 			ps.setString(1, cliente.getNombre());
 			ps.setString(2, cliente.getApellido());
@@ -67,8 +67,8 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	public boolean existeDNI(int DNI) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
 			
@@ -79,7 +79,7 @@ public class ClienteDAOjdbc implements ClienteDAO {
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("Error al validar DNI: " + e.getMessage());
+			throw new RuntimeException("Error al validar DNI: ", e);
 		}
 		return existe;
 	}

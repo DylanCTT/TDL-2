@@ -1,6 +1,8 @@
 package dao.implJDBC;
 
 import java.util.List;
+import java.util.ArrayList;
+
 import java.sql.*;
 import model.Perfil;
 import util.Conexion;
@@ -29,7 +31,8 @@ public class PerfilDAOjdbc implements PerfilDAO {
 	
 	@Override
 	public List<Perfil> listar(String orden) {
-		
+		List<Perfil> lista = new ArrayList<>();
+		return lista;
 	}
 	
 }

@@ -66,7 +66,13 @@ public class Operaciones {
 
 			ClienteDAO cDAO = FactoryDAO.getClienteDAO(); //objeto DAO que accede a todos los clientes de la base
 			
-			if (cDAO.existeDNI(c.getDNI())) validacion += "El DNI ingresado ya existe. ";
+			try {
+				if (cDAO.existeDNI(c.getDNI())) validacion += "El DNI ingresado ya existe. ";
+			}
+			catch (RuntimeException e) {
+				System.out.println("Error al validar DNI en base de datos");
+				return null;
+			}
 			
 			if (!stringEsMail(c.getEmail())) validacion += "Ingrese un mail valido. ";
 			
