@@ -162,6 +162,9 @@ public class Operaciones {
 			if (confirmar()) FactoryDAO.getPerfilDAO().guardar(p);
 			else System.out.println("Registro cancelado");
 		}
+		else {
+			System.out.println("ID de cliente no valido");
+		}
 	}
 	
 	private static Pelicula registroPelicula() {
@@ -231,6 +234,7 @@ public class Operaciones {
 		List<Pelicula> listaPelicula = pDao.listar();
 		System.out.println("Ingrese el orden por el que listar las peliculas: ");
 		String orden = in.nextLine();
+		
 		switch(orden) {
 		case "titulo":
 			listaPelicula.sort(new ComparadorTitulo());
@@ -246,6 +250,7 @@ public class Operaciones {
 			break;
 		default:
 			System.out.println("Criterio de ordenacion invalido");
+			return;
 		}
 		for (Pelicula p : listaPelicula) System.out.println(p.getId() + ". " + p.toString());
 	}
