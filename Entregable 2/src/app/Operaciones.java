@@ -1,6 +1,5 @@
 package app;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +12,9 @@ import model.Pelicula;
 import model.Perfil;
 import model.Resenia;
 import model.Generos;
+
+import model.comparadores.*;
+
 import dao.FactoryDAO;
 import dao.interfaces.*;
 
@@ -100,11 +102,14 @@ public class Operaciones {
 	public static void registrarCliente() {
 		Cliente c = registroCliente();
 		
-		if (confirmar()) {
-			FactoryDAO.getClienteDAO().guardar(c);
-		}
-		else {
-			System.out.println("Registro cancelado");
+		if (c != null) {
+		
+			if (confirmar()) {
+				FactoryDAO.getClienteDAO().guardar(c);
+			}
+			else {
+				System.out.println("Registro cancelado");
+			}
 		}
 	}
 	
@@ -228,13 +233,21 @@ public class Operaciones {
 		String orden = in.nextLine();
 		switch(orden) {
 		case "titulo":
-			Arrays.sort(listaPelicula, new ComparadorTitulo);
+			listaPelicula.sort(new ComparadorTitulo());
+			System.out.println("Listado de peliculas ordenado por titulo: ");
 			break;
 		case "genero":
+			listaPelicula.sort(new ComparadorGenero());
+			System.out.println("Listado de peliculas ordenado por genero: ");
 			break;
 		case "duracion":
+			listaPelicula.sort(new ComparadorDuracion());
+			System.out.println("Listado de peliculas ordenado por duracion: ");
 			break;
+		default:
+			System.out.println("Criterio de ordenacion invalido");
 		}
+		for (Pelicula p : listaPelicula) System.out.println(p.getId() + ". " + p.toString());
 	}
 	
 	private static void listarPeliculas() {
