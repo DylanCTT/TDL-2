@@ -1,5 +1,6 @@
 package app;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -221,7 +222,19 @@ public class Operaciones {
 	}
 	
 	public static void listarPeliculasOrdenado() {
-		
+		PeliculaDAO pDao = FactoryDAO.getPeliculaDAO();
+		List<Pelicula> listaPelicula = pDao.listar();
+		System.out.println("Ingrese el orden por el que listar las peliculas: ");
+		String orden = in.nextLine();
+		switch(orden) {
+		case "titulo":
+			Arrays.sort(listaPelicula, new ComparadorTitulo);
+			break;
+		case "genero":
+			break;
+		case "duracion":
+			break;
+		}
 	}
 	
 	private static void listarPeliculas() {
