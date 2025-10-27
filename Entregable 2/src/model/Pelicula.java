@@ -42,5 +42,10 @@ public class Pelicula extends Contenido {
 	public void setDuracionR(float duracionR) {
 		this.duracionR = duracionR;
 	}
+
+	@Override
+	public String toString() {
+		return "Pelicula [" + super.toString() + ", titulo=" + titulo + ", duracionR=" + duracionR + "]";
+	}
 	
 }

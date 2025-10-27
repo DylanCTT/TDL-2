@@ -10,21 +10,17 @@ public class PerfilDAOjdbc implements PerfilDAO {
 
 	@Override
 	public void guardar(Perfil perfil) {
-		try {
-			Connection conn = Conexion.getConnection();
-		  
-			String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE) VALUES (?, ?)";
-		  
-			PreparedStatement ps = conn.prepareStatement(sql);
+		String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE) VALUES (?, ?)";
+		
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);) {
 			
 			ps.setString(1, perfil.getNombre());
 			ps.setInt(2, perfil.getIdCliente());
 			
 			ps.executeUpdate();
 			
-			ps.close();
-			
-			System.out.println("Perfi guardado exitosamente");
+			System.out.println("Perfil guardado exitosamente");
 		}
 		catch (SQLException e) {
 		  System.out.println("Error al guardar perfil: " + e.getMessage());  

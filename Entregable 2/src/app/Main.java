@@ -29,7 +29,7 @@ public class Main {
 		
 		System.out.println("Bienvenido a Plataforma de Streaming TDL2");
 		
-		while (salir) {
+		while (!salir) {
 			System.out.println("Ingrese una de las siguientes operaciones: ");
 		
 			System.out.println("1. Registrar datos personales de cliente");
@@ -54,10 +54,10 @@ public class Main {
 				Operaciones.registrarPelicula();
 				break;
 			case 4:
-				Operaciones.listarPerfiles();
+				Operaciones.listarPerfilesOrdenado();
 				break;
 			case 5:
-				Operaciones.listarPeliculas();
+				Operaciones.listarPeliculasOrdenado();
 				break;
 			case 6:
 				Operaciones.registrarResenia();
@@ -68,6 +68,7 @@ public class Main {
 			case 8:
 				salir = true;
 				System.out.println("Saliendo...");
+				System.out.println("Plataforma cerrada correctamente");
 				break;
 			default:
 				System.out.println("Operacion invalida");

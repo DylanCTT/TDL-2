@@ -53,4 +53,9 @@ public class Contenido {
 		this.director = director;
 	}
 
+	@Override
+	public String toString() {
+		return "genero=" + genero + ", director=" + director;
+	}
+	
 }

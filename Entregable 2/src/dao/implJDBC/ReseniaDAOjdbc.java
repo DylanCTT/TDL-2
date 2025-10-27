@@ -1,7 +1,10 @@
 package dao.implJDBC;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+
+import model.Pelicula;
 import model.Resenia;
 import util.Conexion;
 import dao.interfaces.ReseniaDAO;
@@ -10,17 +13,21 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 
 	@Override
 	public void guardar(Resenia resenia) {
-		try {
-		  Connection conn = Conexion.getConnection();
-		  
-		  String sql = "INSERT INTO RESENIA (PUNTAJE, CONTENIDO, APROBADA, FECHA) VALUES (?, ?, ?, ?)";
-		  
-		  PreparedStatement ps = conn.prepareStatement(sql);
+		String sql = "INSERT INTO RESENIA (PUNTAJE, CONTENIDO, APROBADA, FECHA, ID_PERFIL, ID_PELICULA) VALUES (?, ?, ?, ?, ?, ?)";
+		
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);) {
 		  
 		  ps.setInt(1, resenia.getPuntaje());
 		  ps.setString(2, resenia.getContenido());
 		  ps.setBoolean(3, resenia.isAprobada());
-		  ps.setString(5, resenia.getFecha().toString());
+		  ps.setTimestamp(4, Timestamp.valueOf(resenia.getFecha()));
+		  ps.setInt(5, resenia.getIdCliente());
+		  ps.setInt(6, resenia.getIdContenido());
+		  
+		  ps.executeUpdate();
+		  
+		  System.out.println("Resenia guardada exitosamente");
 		}
 		catch (SQLException e) {
 		  System.out.println("Error al guardar resenia: " + e.getMessage());	
@@ -29,7 +36,29 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	
 	@Override
 	public List<Resenia> listarNoAprobadas() {
-		
+		List<Resenia> lista = new ArrayList<>();
+		String sql = "SELECT * FROM RESENIA";
+		try (Connection conn = Conexion.getConnection();			
+			 Statement st = conn.createStatement();     
+			 ResultSet rs = st.executeQuery(sql);) {   
+			
+			while (rs.next()) {
+				Resenia r = new Resenia();
+				r.setId(rs.getInt("ID"));
+				r.setPuntaje(rs.getInt("PUNTAJE"));
+				r.setContenido(rs.getString("CONTENIDO"));
+				r.setAprobada(rs.getBoolean("APROBADA"));
+				r.setFecha(rs.getTimestamp("FECHA").toLocalDateTime());
+				r.setIdCliente(rs.getInt("ID_PERFIL"));
+				r.setIdContenido(rs.getInt("ID_PELICULA"));
+				lista.add(r);
+			}
+			
+		}
+		catch (SQLException e) {
+			System.out.println("Error al listar resenias: " + e.getMessage());
+		}
+		return lista;	
 	}
 	
 	@Override 
@@ -37,27 +66,44 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		Resenia r = new Resenia();
 		String sql = "SELECT * FROM RESENIA WHERE ID = ?";
 		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);
-			 ResultSet rs = ps.executeQuery()) {
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			
 			ps.setInt(1, id);
-			if (rs.next() && rs.getInt(id) > 0) {
-				r.setId(rs.getInt("ID"));
-				r.setPuntaje(rs.getInt("PUNTAJE"));
-				r.setContenido(rs.getString("CONTENIDO"));
-				r.setFecha(rs.getDateTime("FECHA"));
-				r.setIdCliente(rs.getInt("ID_PERFIL"));
-				r.setIdContenido(rs.getInt("ID_PELICULA"));
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(id) > 0) {
+					r.setId(rs.getInt("ID"));
+					r.setPuntaje(rs.getInt("PUNTAJE"));
+					r.setContenido(rs.getString("CONTENIDO"));
+					r.setFecha(rs.getTimestamp("FECHA").toLocalDateTime());
+					r.setIdCliente(rs.getInt("ID_PERFIL"));
+					r.setIdContenido(rs.getInt("ID_PELICULA"));
+				}
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("Error al validar ID: " + e.getMessage());
+			System.out.println("Error al mostar resenia: " + e.getMessage());
 		}
 		return r;
 	}
 	
 	@Override
 	public void aprobar(Integer idResenia) {
+		String sql = "UPDATE RESENIA SET APROBADA = 1 WHERE ID = ?";
 		
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+		
+			ps.setInt(1, idResenia);
+			
+			ps.executeUpdate();
+		
+			System.out.println("Resenia aprobada exitosamente");
+		}
+		
+		catch(SQLException e) {
+			System.out.println("Error al aprobar resenia: " + e.getMessage());
+		}
 	}
 	
 	@Override
@@ -65,11 +111,14 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM RESENIA WHERE ID = ?"; 
 		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);
-			 ResultSet rs = ps.executeQuery()) {
-			ps.setInt(1, id); 					
-			if (rs.next() && rs.getInt("ID") > 0) {
-				existe = true;
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			
+			ps.setInt(1, id); 		
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					existe = true;
+				}
 			}
 		}
 		catch (SQLException e) {

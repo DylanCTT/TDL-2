@@ -11,17 +11,15 @@ public class ClienteDAOjdbc implements ClienteDAO {
 
 	@Override
 	public void guardar(Cliente cliente) {
-		try {
-			//abre un canal hacia la base de datos
-			//Connection es de java.util.sql
-			//getConnection devuelve un tipo Connection 
-			Connection conn = Conexion.getConnection();
-		  
-			String sql = "INSERT INTO cliente (NOMBRE, APELLIDO, DNI, EMAIL, CONTRASENIA) VALUES (?, ?, ?, ?, ?)";
-		  
-			 //como voy a insertar datos variables, uso prepareStatement
-			//preparo al sql para recibir datos variabls (indicados con ? en el String)
-			PreparedStatement ps = conn.prepareStatement(sql);
+		String sql = "INSERT INTO cliente (NOMBRE, APELLIDO, DNI, EMAIL, CONTRASENIA) VALUES (?, ?, ?, ?, ?)";
+		
+		//abre un canal hacia la base de datos
+		//Connection es de java.util.sql
+		//getConnection devuelve un tipo Connection
+		//como voy a insertar datos variables, uso prepareStatement
+		//preparo al sql para recibir datos variabls (indicados con ? en el String)
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);) { 
 		  
 			ps.setString(1, cliente.getNombre());
 			ps.setString(2, cliente.getApellido());
@@ -31,9 +29,7 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		  
 			//executeUpdate hace los cambios de los datos en el ps
 			ps.executeUpdate();
-		  
-			ps.close();
-		  
+			
 			System.out.println("Cliente guardado exitosamente");
 		}
 		catch (SQLException e) {
@@ -44,7 +40,7 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	@Override
 	public List<Cliente> listar() {
 		List<Cliente> lista = new ArrayList<>();
-		String sql = "SELECT * FROM cliente";
+		String sql = "SELECT * FROM CLIENTE";
 		try (Connection conn = Conexion.getConnection();			
 			 Statement st = conn.createStatement();     //statement porque se van a leer datos
 			 ResultSet rs = st.executeQuery(sql);) {    //al poner esto entre parentesis se cierran solos
@@ -72,11 +68,14 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
 		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);
-			 ResultSet rs = ps.executeQuery()) {
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			
 			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
-			if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)
-				existe = true;
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)
+					existe = true;
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -86,21 +85,45 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	}
 	
 	@Override
-	public Integer validarUsuario(String nom, String pass) {
-		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE NOMBRE = ? AND CONTRASENIA = ?";
+	public Integer validarCliente(String email, String pass) {
+		String sql = "SELECT ID FROM CLIENTE WHERE EMAIL = ? AND CONTRASENIA = ?";
 		try (Connection conn = Conexion.getConnection();
-			  PreparedStatement ps = conn.prepareStatement(sql);
-			  ResultSet rs = ps.executeQuery()) {
-			ps.setString(1, nom);
+			  PreparedStatement ps = conn.prepareStatement(sql);) {
+			
+			ps.setString(1, email);
 			ps.setString(2, pass);
-			if (rs.next()) {
-				return rs.getInt("ID");
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("ID");
+				}
 			}
 		}
 		catch (SQLException e) {
-			System.out.println("Error al validar usuario: " + e.getMessage());
+			System.out.println("Error al validar cliente: " + e.getMessage());
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean validarID(Integer id) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE ID = ?"; 
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);) {
+			
+			ps.setInt(1, id);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					existe = true;
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar ID: " + e.getMessage());
+		}
+		return existe;
 	}
 	
 }

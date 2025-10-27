@@ -96,4 +96,10 @@ public class Perfil {
 	public void ingresar() {
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Perfil [nombre=" + nombre + ", idCliente=" + idCliente + "]";
+	}
+	
 }

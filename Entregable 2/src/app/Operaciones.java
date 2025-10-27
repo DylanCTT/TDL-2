@@ -37,11 +37,12 @@ public class Operaciones {
 	private static Cliente registroCliente() {
 		Cliente c = new Cliente();
 		boolean ok = false;
-		String validacion = "";
 		
 		System.out.println("Ingrese sus datos personales: ");
 		
-		while (!ok) {		
+		while (!ok) {	
+			String validacion = "";
+			
 			System.out.println("Nombre: ");
 			c.setNombre(in.nextLine());
 		
@@ -65,9 +66,9 @@ public class Operaciones {
 
 			ClienteDAO cDAO = FactoryDAO.getClienteDAO(); //objeto DAO que accede a todos los clientes de la base
 			
-			if (!cDAO.existeDNI(c.getDNI())) validacion += "El DNI ingresado ya existe. ";
+			if (cDAO.existeDNI(c.getDNI())) validacion += "El DNI ingresado ya existe. ";
 			
-			if (stringEsMail(c.getEmail())) validacion += "Ingrese un mail valido. ";
+			if (!stringEsMail(c.getEmail())) validacion += "Ingrese un mail valido. ";
 			
 			if ((c.getNombre().isEmpty()) || (c.getApellido().isEmpty()) || (c.getDNI() <= 0) || (c.getEmail().isEmpty()) || (c.getContrasenia().isEmpty())) validacion += "Se deben ingresar todos los datos. ";
 			
@@ -93,23 +94,30 @@ public class Operaciones {
 		
 		if (confirmar()) {
 			FactoryDAO.getClienteDAO().guardar(c);
-			System.out.println("Cliente guardado correctamente");
 		}
 		else {
 			System.out.println("Registro cancelado");
 		}
 	}
 	
+	private static void listarClientes() {
+		ClienteDAO cDao = FactoryDAO.getClienteDAO();
+		List<Cliente> listaClientes = cDao.listar();
+		
+		System.out.println("Listado clientes: ");
+		for (Cliente c : listaClientes) System.out.println(c.getId() + ". " + c.toString());
+	}
+	
 	private static Perfil registroPerfil(Integer id) {
 		Perfil p = new Perfil();
 		boolean ok = false;
-		String validacion = "";
 		
 		p.setIdCliente(id);
 		
 		System.out.println("Ingrese sus datos de perfil: ");
 		
 		while (!ok) {
+			String validacion = "";
 			System.out.println("Nombre: ");
 			p.setNombre(in.nextLine());
 					
@@ -121,17 +129,9 @@ public class Operaciones {
 			  System.out.println("Ingrese los datos nuevamente: ");
 			}
 		}
-		return p;
-	}
-	
-	private static void listarClientes() {
-		ClienteDAO cDao = FactoryDAO.getClienteDAO();
-		List<Cliente> listaClientes = cDao.listar();
+		System.out.println("Datos ingresados: " + p.toString());
 		
-		System.out.println("Listado clientes: ");
-		for (Cliente c : listaClientes) {
-			System.out.println("ID: " + c.getId() + ". Nombre: " + c.getNombre() + ". Apellido: " + c.getApellido() + ". Email: " + c.getEmail() + ". Contrasenia: " + c.getContrasenia());
-		}
+		return p;
 	}
 	
 	public static void registrarPerfil() {
@@ -140,26 +140,26 @@ public class Operaciones {
 		//se selecciona un Cliente de la base de datos el cual queda asociado al perfil
 		System.out.println("Seleccionar ID del cliente a asociarse");
 		Integer id = in.nextInt();
+		in.nextLine();
 		
-		Perfil p = registroPerfil(id);
+		ClienteDAO cDAO = FactoryDAO.getClienteDAO();
+		if (cDAO.validarID(id)) {
+			Perfil p = registroPerfil(id);
 		
-		if (confirmar()) {
-			FactoryDAO.getPerfilDAO().guardar(p);
-			System.out.println("Perfil guardado correctamente");
-		}
-		else {
-			System.out.println("Registro cancelado");
+			if (confirmar()) FactoryDAO.getPerfilDAO().guardar(p);
+			else System.out.println("Registro cancelado");
 		}
 	}
 	
 	private static Pelicula registroPelicula() {
 		Pelicula p = new Pelicula();
 		boolean ok = false;
-		String validacion = "";
 		
 		System.out.println("Ingrese los datos de una pelicula: ");
 		
-		while (!ok) {		
+		while (!ok) {	
+			String validacion = "";
+			
 			System.out.println("Genero: ");
 			p.setGenero(in.nextLine());
 		
@@ -174,6 +174,8 @@ public class Operaciones {
 		
 			System.out.println("Duracion (en minutos): ");
 			p.setDuracionR(in.nextFloat());
+			
+			in.nextLine();
 			
 			p.setGenero(p.getGenero().toUpperCase());
 			try {
@@ -198,36 +200,40 @@ public class Operaciones {
 	public static void registrarPelicula() {
 		Pelicula p = registroPelicula();
 		
-		if (confirmar()) {
-			FactoryDAO.getPeliculaDAO().guardar(p);
-			System.out.println("Pelicula guardada correctamente");
-		}
-		else {
-			System.out.println("Registro cancelado");
-		}	
+		if (confirmar()) FactoryDAO.getPeliculaDAO().guardar(p);
+		else System.out.println("Registro cancelado");	
 	}
 	
-	public static void listarPerfiles() {
+	public static void listarPerfilesOrdenado() {
 		
 	}
 	
-	public static void listarPeliculas() {
+	public static void listarPeliculasOrdenado() {
 		
+	}
+	
+	private static void listarPeliculas() {
+		PeliculaDAO pDao = FactoryDAO.getPeliculaDAO();
+		List<Pelicula> listaPeliculas = pDao.listar();
+		
+		System.out.println("Listado peliculas: ");
+		for (Pelicula p : listaPeliculas) System.out.println(p.getId() + ". " + p.toString());
 	}
 	
 	private static Resenia registroResenia(Integer idCliente, Integer idPelicula) {
 		Resenia r = new Resenia();
 		boolean ok = false;
-		String validacion = "";
 		
 		System.out.println("Ingrese los datos de una resenia: ");
 		
 		r.setIdCliente(idCliente);
 		r.setIdContenido(idPelicula);
 		
-		while (!ok) {		
+		while (!ok) {	
+			String validacion = "";
 			System.out.println("Puntaje: ");
 			r.setPuntaje(in.nextInt());
+			in.nextLine();
 		
 			System.out.println("Mensaje: ");
 			r.setContenido(in.nextLine());
@@ -248,13 +254,13 @@ public class Operaciones {
 	}
 	
 	public static void registrarResenia() {
-		System.out.println("Ingrese nombre de usuario y contrasenia: ");
-		String nom = in.nextLine();
+		System.out.println("Ingrese mail y contrasenia: ");
+		String email = in.nextLine();
 		String contrasenia = in.nextLine();
 		
 		//validar nombre y contrasenia en la BD
 		ClienteDAO cDAO = FactoryDAO.getClienteDAO();
-		Integer idCliente = cDAO.validarUsuario(nom, contrasenia);
+		Integer idCliente = cDAO.validarCliente(email, contrasenia);
 		if (idCliente == null) System.out.println("Usuario no valido");
 		else {
 			//mostrar listado peliculas
@@ -268,10 +274,7 @@ public class Operaciones {
 			else {		
 				Resenia r = registroResenia(idCliente, idPelicula);
 		
-				if (confirmar()) {
-					FactoryDAO.getReseniaDAO().guardar(r);
-					System.out.println("Resenia guardada correctamente");
-				}
+				if (confirmar()) FactoryDAO.getReseniaDAO().guardar(r);
 				else System.out.println("Registro cancelado");
 			}
 		}
@@ -279,7 +282,10 @@ public class Operaciones {
 	
 	private static void listarResenias() {
 		ReseniaDAO rDAO = FactoryDAO.getReseniaDAO();
-		rDAO.listarNoAprobadas();
+		List<Resenia> listaResenias = rDAO.listarNoAprobadas();
+		
+		System.out.println("Listado resenias: ");
+		for (Resenia r : listaResenias) System.out.println(r.getId() + ". " + r.toString());
 	}
 	
 	public static void aprobarResenia() {
@@ -289,16 +295,21 @@ public class Operaciones {
 		//solicitar nro resenia a aprobar
 		System.out.println("Ingrese el ID de la resenia a aprobar");
 		Integer id = in.nextInt();
+		in.nextLine();
 		
 		//validar existencia resenia
 		ReseniaDAO rDAO = FactoryDAO.getReseniaDAO();
 		if (!rDAO.existeResenia(id)) System.out.println("ID de resenia no valido");
 		else {
 			//mostrar resenia seleccionada
-			rDAO.mostrar(id);
+			Resenia r = rDAO.mostrar(id);
+			System.out.println("Resenia seleccionada: " + r.toString());
 		
 			//aprobar
-			rDAO.aprobar(id);
+			if (confirmar()) rDAO.aprobar(id);
+			else {
+				System.out.println("Aprobacion de resenia cancelada");
+			}
 		}
 	}
 }

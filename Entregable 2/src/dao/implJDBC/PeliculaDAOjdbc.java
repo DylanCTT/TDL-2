@@ -1,7 +1,10 @@
 package dao.implJDBC;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+
+import model.Cliente;
 import model.Pelicula;
 import util.Conexion;
 import dao.interfaces.PeliculaDAO;
@@ -10,12 +13,10 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 
 	@Override
 	public void guardar(Pelicula pelicula) {
-		try {
-			Connection conn = Conexion.getConnection();
-			
-			String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION) VALUES (?, ?, ?, ?, ?)";
-			
-			PreparedStatement ps = conn.prepareStatement(sql);
+		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION) VALUES (?, ?, ?, ?, ?)";
+		
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);) {
 			
 			ps.setString(1, pelicula.getGenero());
 			ps.setString(2, pelicula.getTitulo());
@@ -25,8 +26,6 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			
 			ps.executeUpdate();
 			
-			ps.close();
-			
 			System.out.println("Pelicula guardada exitosamente");
 		}
 		catch (SQLException e) {
@@ -35,7 +34,33 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	}
 	
 	@Override
-	public List<Pelicula> listar(String orden) {
+	public List<Pelicula> listar() {
+		List<Pelicula> lista = new ArrayList<>();
+		String sql = "SELECT * FROM PELICULA";
+		try (Connection conn = Conexion.getConnection();			
+			 Statement st = conn.createStatement();     
+			 ResultSet rs = st.executeQuery(sql);) {   
+			
+			while (rs.next()) {
+				Pelicula p = new Pelicula();
+				p.setId(rs.getInt("ID"));
+				p.setGenero(rs.getString("GENERO"));
+				p.setTitulo(rs.getString("TITULO"));
+				p.setSinopsis(rs.getString("RESUMEN"));
+				p.setDirector(rs.getString("DIRECTOR"));
+				p.setDuracionR(rs.getFloat("DURACION"));
+				lista.add(p);
+			}
+			
+		}
+		catch (SQLException e) {
+			System.out.println("Error al listar peliculas: " + e.getMessage());
+		}
+		return lista;
+	}
+	
+	@Override
+	public List<Pelicula> listarOrdenado(String orden) {
 		
 	}
 	
@@ -44,11 +69,14 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 
 		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);
-			 ResultSet rs = ps.executeQuery()) {
-			ps.setInt(1, id); 					
-			if (rs.next() && rs.getInt("ID") > 0) {
-				existe = true;
+			 PreparedStatement ps = conn.prepareStatement(sql);) {
+			
+			ps.setInt(1, id); 	
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					existe = true;
+				}
 			}
 		}
 		catch (SQLException e) {

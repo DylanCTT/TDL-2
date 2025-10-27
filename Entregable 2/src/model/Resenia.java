@@ -97,5 +97,11 @@ public class Resenia {
 	public void setIdContenido(Integer idContenido) {
 		this.idContenido = idContenido;
 	}
+
+	@Override
+	public String toString() {
+		return "Resenia [contenido=" + contenido + ", puntaje=" + puntaje + ", aprobada=" + aprobada + ", fecha="
+				+ fecha + "]";
+	}
   
 }
