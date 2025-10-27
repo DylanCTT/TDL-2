@@ -8,8 +8,8 @@ public class Pelicula extends Contenido {
 	private LocalTime duracion;
 	private float duracionR; //simplificao para tablas
 	
-	public Pelicula(String genero, List<String> generos, String sinopsis, String director, String titulo, LocalTime duracion, float duracionR) {
-		super(genero, generos, sinopsis, director);
+	public Pelicula(Integer id, String genero, List<String> generos, String sinopsis, String director, String titulo, LocalTime duracion, float duracionR) {
+		super(id, genero, generos, sinopsis, director);
 		this.titulo = titulo;
 		this.duracion = duracion;
 		this.duracionR = duracionR;

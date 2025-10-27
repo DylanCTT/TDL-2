@@ -32,9 +32,50 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		
 	}
 	
+	@Override 
+	public Resenia mostrar(Integer id) {
+		Resenia r = new Resenia();
+		String sql = "SELECT * FROM RESENIA WHERE ID = ?";
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery()) {
+			ps.setInt(1, id);
+			if (rs.next() && rs.getInt(id) > 0) {
+				r.setId(rs.getInt("ID"));
+				r.setPuntaje(rs.getInt("PUNTAJE"));
+				r.setContenido(rs.getString("CONTENIDO"));
+				r.setFecha(rs.getDateTime("FECHA"));
+				r.setIdCliente(rs.getInt("ID_PERFIL"));
+				r.setIdContenido(rs.getInt("ID_PELICULA"));
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar ID: " + e.getMessage());
+		}
+		return r;
+	}
+	
 	@Override
-	public void aprobar(int idResenia) {
+	public void aprobar(Integer idResenia) {
 		
+	}
+	
+	@Override
+	public boolean existeResenia(Integer id) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM RESENIA WHERE ID = ?"; 
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery()) {
+			ps.setInt(1, id); 					
+			if (rs.next() && rs.getInt("ID") > 0) {
+				existe = true;
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar ID: " + e.getMessage());
+		}
+		return existe;	
 	}
 	
 }

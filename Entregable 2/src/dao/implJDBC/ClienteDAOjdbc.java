@@ -51,6 +51,7 @@ public class ClienteDAOjdbc implements ClienteDAO {
 			
 			while (rs.next()) {
 				Cliente c = new Cliente();
+				c.setId(rs.getInt("ID"));
 				c.setNombre(rs.getString("NOMBRE"));
 				c.setApellido(rs.getString("APELLIDO"));
 				c.setDNI(rs.getInt("DNI"));
@@ -66,9 +67,10 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		return lista;
 	}
 	
+	@Override
 	public boolean existeDNI(int DNI) {
 		boolean existe = false;
-		String sql = "SELECT COUNT(*) FROM USUARIO WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
 		try (Connection conn = Conexion.getConnection();
 			 PreparedStatement ps = conn.prepareStatement(sql);
 			 ResultSet rs = ps.executeQuery()) {
@@ -81,6 +83,24 @@ public class ClienteDAOjdbc implements ClienteDAO {
 			System.out.println("Error al validar DNI: " + e.getMessage());
 		}
 		return existe;
+	}
+	
+	@Override
+	public Integer validarUsuario(String nom, String pass) {
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE NOMBRE = ? AND CONTRASENIA = ?";
+		try (Connection conn = Conexion.getConnection();
+			  PreparedStatement ps = conn.prepareStatement(sql);
+			  ResultSet rs = ps.executeQuery()) {
+			ps.setString(1, nom);
+			ps.setString(2, pass);
+			if (rs.next()) {
+				return rs.getInt("ID");
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar usuario: " + e.getMessage());
+		}
+		return null;
 	}
 	
 }

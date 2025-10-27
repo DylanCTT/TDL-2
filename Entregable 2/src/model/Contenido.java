@@ -3,12 +3,14 @@ package model;
 import java.util.List;
 
 public class Contenido {
+	private Integer id;
 	private String genero; //se utiliza esta VI para el modelado de la BD 
 	private List<String> generos;
 	private String sinopsis;
 	private String director;
 	
-	public Contenido(String genero, List<String> generos, String sinopsis, String director) {
+	public Contenido(Integer id, String genero, List<String> generos, String sinopsis, String director) {
+		this.id = id;
 		this.genero = genero;
 		this.generos = generos;
 		this.sinopsis = sinopsis;
@@ -18,7 +20,14 @@ public class Contenido {
 	public Contenido() {
 		
 	}
-	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getGenero() {
 		return genero;

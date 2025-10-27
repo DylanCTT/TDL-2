@@ -7,4 +7,5 @@ public interface ClienteDAO {
 	void guardar(Cliente cliente);
 	List<Cliente> listar();
 	boolean existeDNI(int DNI);
+	Integer validarUsuario(String nom, String pass);
 }

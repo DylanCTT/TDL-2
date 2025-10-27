@@ -39,4 +39,22 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 		
 	}
 	
+	@Override
+	public boolean validarID(Integer id) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 
+		try (Connection conn = Conexion.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery()) {
+			ps.setInt(1, id); 					
+			if (rs.next() && rs.getInt("ID") > 0) {
+				existe = true;
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar ID: " + e.getMessage());
+		}
+		return existe;
+	}
+	
 }

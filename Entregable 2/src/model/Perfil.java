@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 
 public class Perfil {
+	private Integer id;
 	private String nombre;
 	private String idioma;
 	private List<String> preferenciasGenero;
@@ -18,8 +19,10 @@ public class Perfil {
 	private List<Contenido> recomendaciones;
 	private List<Resenia> misResenias;
 	private List<Contenido> historial;
+	private Integer idCliente;
 	
-	public Perfil(String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Contenido> recomendaciones, List<Resenia> misResenias, List<Contenido> historial) {
+	public Perfil(Integer id, String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Contenido> recomendaciones, List<Resenia> misResenias, List<Contenido> historial, Integer idCliente) {
+		this.id = id;
 		this.nombre = nombre;
 		this.idioma = idioma;
 		this.preferenciasGenero = new ArrayList<String>();
@@ -27,10 +30,19 @@ public class Perfil {
 		this.recomendaciones = new ArrayList<Contenido>();
 		this.misResenias = new ArrayList<Resenia>();
 		this.historial = new ArrayList<Contenido>();
+		this.idCliente = idCliente;
 	}
 	
 	public Perfil() {
 		
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -49,6 +61,14 @@ public class Perfil {
 		this.idioma = idioma;
 	}
 	
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
+
 	public void agregarPreferenciaGenero() {
 		
 	}

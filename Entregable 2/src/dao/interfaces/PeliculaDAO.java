@@ -6,4 +6,5 @@ import model.Pelicula;
 public interface PeliculaDAO {
 	void guardar(Pelicula pelicula);
 	List<Pelicula> listar(String orden);
+	boolean validarID(Integer id);
 }
