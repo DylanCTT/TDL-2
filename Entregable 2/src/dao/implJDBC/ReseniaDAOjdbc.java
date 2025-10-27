@@ -36,7 +36,7 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	@Override
 	public List<Resenia> listarNoAprobadas() {
 		List<Resenia> lista = new ArrayList<>();
-		String sql = "SELECT * FROM RESENIA";
+		String sql = "SELECT * FROM RESENIA WHERE APROBADA = 0";
 		Connection conn = Conexion.getConnection();
 		try (Statement st = conn.createStatement();     
 			 ResultSet rs = st.executeQuery(sql);) {   

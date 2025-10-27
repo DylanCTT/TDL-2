@@ -8,7 +8,7 @@ public class Conexion {
   private static Connection conn = null;
   static {
 	  try {
-		  conn = DriverManager.getConnection("jdbc:sqlite:plataforma.db");
+		  conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/valen/Desktop/TDL-2/Entregable 2/plataforma.db");
 	  }
 	  catch (SQLException e) {
 		  System.out.println("Error al conectar con BD: " + e.getMessage());
@@ -26,3 +26,4 @@ public class Conexion {
   }
 	  
 }
+
