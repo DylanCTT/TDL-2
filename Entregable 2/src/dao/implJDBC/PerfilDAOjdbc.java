@@ -32,8 +32,6 @@ public class PerfilDAOjdbc implements PerfilDAO {
 	@Override
 	public List<Perfil> listar(String orden) {
 		List<Perfil> lista = new ArrayList<>();
-		
-		
 		return lista;
 
 		
