@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @since 12-9-2025
  */
 
-public class Perfil {
+public class Perfil implements Comparable<Perfil> {
 	private Integer id;
 	private String nombre;
 	private String idioma;
@@ -100,6 +100,11 @@ public class Perfil {
 	@Override
 	public String toString() {
 		return "Perfil [nombre=" + nombre + ", idCliente=" + idCliente + "]";
+	}
+	
+	@Override
+	public int compareTo(Perfil o) {
+		return this.nombre.compareTo(o.getNombre());
 	}
 	
 }

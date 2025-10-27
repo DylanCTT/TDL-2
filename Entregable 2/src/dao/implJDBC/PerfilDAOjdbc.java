@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.sql.*;
+
+import model.Pelicula;
 import model.Perfil;
 import util.Conexion;
 import dao.interfaces.PerfilDAO;
@@ -30,11 +32,25 @@ public class PerfilDAOjdbc implements PerfilDAO {
 	}
 	
 	@Override
-	public List<Perfil> listar(String orden) {
+	public List<Perfil> listar() {
 		List<Perfil> lista = new ArrayList<>();
+		String sql = "SELECT * FROM PERFIL";
+		Connection conn = Conexion.getConnection();
+		try (Statement st = conn.createStatement();     
+			 ResultSet rs = st.executeQuery(sql);) {   
+			
+			while (rs.next()) {
+				Perfil p = new Perfil();
+				p.setId(rs.getInt("ID"));
+				p.setNombre(rs.getString("NOMBRE"));
+				lista.add(p);
+			}
+			
+		}
+		catch (SQLException e) {
+			System.out.println("Error al listar perfiles: " + e.getMessage());
+		}
 		return lista;
-
-		
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Pelicula extends Contenido {
 	private String titulo;
 	private LocalTime duracion;
-	private float duracionR; //simplificao para tablas
+	private float duracionR; //simplificado para tablas
 	
 	public Pelicula(Integer id, String genero, List<String> generos, String sinopsis, String director, String titulo, LocalTime duracion, float duracionR) {
 		super(id, genero, generos, sinopsis, director);
