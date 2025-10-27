@@ -87,8 +87,8 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	@Override
 	public Integer validarCliente(String email, String pass) {
 		String sql = "SELECT ID FROM CLIENTE WHERE EMAIL = ? AND CONTRASENIA = ?";
-		try (Connection conn = Conexion.getConnection();
-			  PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)){
 			
 			ps.setString(1, email);
 			ps.setString(2, pass);
@@ -109,8 +109,8 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	public boolean validarID(Integer id) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE ID = ?"; 
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setInt(1, id);
 			
