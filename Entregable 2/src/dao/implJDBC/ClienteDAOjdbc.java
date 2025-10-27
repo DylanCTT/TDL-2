@@ -41,8 +41,8 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	public List<Cliente> listar() {
 		List<Cliente> lista = new ArrayList<>();
 		String sql = "SELECT * FROM CLIENTE";
-		try (Connection conn = Conexion.getConnection();			
-			 Statement st = conn.createStatement();     //statement porque se van a leer datos
+		Connection conn = Conexion.getConnection();
+		try (Statement st = conn.createStatement();     //statement porque se van a leer datos
 			 ResultSet rs = st.executeQuery(sql);) {    //al poner esto entre parentesis se cierran solos
 			
 			while (rs.next()) {

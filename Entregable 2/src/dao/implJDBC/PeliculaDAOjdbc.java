@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
-import model.Cliente;
 import model.Pelicula;
 import util.Conexion;
 import dao.interfaces.PeliculaDAO;
@@ -15,8 +14,8 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	public void guardar(Pelicula pelicula) {
 		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION) VALUES (?, ?, ?, ?, ?)";
 		
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setString(1, pelicula.getGenero());
 			ps.setString(2, pelicula.getTitulo());
@@ -37,8 +36,8 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	public List<Pelicula> listar() {
 		List<Pelicula> lista = new ArrayList<>();
 		String sql = "SELECT * FROM PELICULA";
-		try (Connection conn = Conexion.getConnection();			
-			 Statement st = conn.createStatement();     
+		Connection conn = Conexion.getConnection();
+		try (Statement st = conn.createStatement();     
 			 ResultSet rs = st.executeQuery(sql);) {   
 			
 			while (rs.next()) {
@@ -69,8 +68,8 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	public boolean validarID(Integer id) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setInt(1, id); 	
 			

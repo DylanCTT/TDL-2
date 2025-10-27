@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
-import model.Pelicula;
 import model.Resenia;
 import util.Conexion;
 import dao.interfaces.ReseniaDAO;
@@ -15,8 +14,8 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	public void guardar(Resenia resenia) {
 		String sql = "INSERT INTO RESENIA (PUNTAJE, CONTENIDO, APROBADA, FECHA, ID_PERFIL, ID_PELICULA) VALUES (?, ?, ?, ?, ?, ?)";
 		
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 		  
 		  ps.setInt(1, resenia.getPuntaje());
 		  ps.setString(2, resenia.getContenido());
@@ -38,8 +37,8 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	public List<Resenia> listarNoAprobadas() {
 		List<Resenia> lista = new ArrayList<>();
 		String sql = "SELECT * FROM RESENIA";
-		try (Connection conn = Conexion.getConnection();			
-			 Statement st = conn.createStatement();     
+		Connection conn = Conexion.getConnection();
+		try (Statement st = conn.createStatement();     
 			 ResultSet rs = st.executeQuery(sql);) {   
 			
 			while (rs.next()) {
@@ -65,8 +64,8 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	public Resenia mostrar(Integer id) {
 		Resenia r = new Resenia();
 		String sql = "SELECT * FROM RESENIA WHERE ID = ?";
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setInt(1, id);
 			
@@ -91,8 +90,8 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	public void aprobar(Integer idResenia) {
 		String sql = "UPDATE RESENIA SET APROBADA = 1 WHERE ID = ?";
 		
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 		
 			ps.setInt(1, idResenia);
 			
@@ -110,8 +109,8 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 	public boolean existeResenia(Integer id) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM RESENIA WHERE ID = ?"; 
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setInt(1, id); 		
 			

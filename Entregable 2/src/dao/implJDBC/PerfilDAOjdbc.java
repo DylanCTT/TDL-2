@@ -14,8 +14,8 @@ public class PerfilDAOjdbc implements PerfilDAO {
 	public void guardar(Perfil perfil) {
 		String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE) VALUES (?, ?)";
 		
-		try (Connection conn = Conexion.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql);) {
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
 			ps.setString(1, perfil.getNombre());
 			ps.setInt(2, perfil.getIdCliente());
@@ -32,7 +32,11 @@ public class PerfilDAOjdbc implements PerfilDAO {
 	@Override
 	public List<Perfil> listar(String orden) {
 		List<Perfil> lista = new ArrayList<>();
+		
+		
 		return lista;
+
+		
 	}
 	
 }
