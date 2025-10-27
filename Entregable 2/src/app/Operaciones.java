@@ -1,5 +1,6 @@
 package app;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -211,7 +212,12 @@ public class Operaciones {
 	}
 	
 	public static void listarPerfilesOrdenado() {
+		PerfilDAO pDao = FactoryDAO.getPerfilDAO();
+		List<Perfil> listaPerfiles = pDao.listar();
+		Collections.sort(listaPerfiles);
 		
+		System.out.println("Listado de perfiles ordenado por nombre: ");
+		for (Perfil p : listaPerfiles) System.out.println(p.getId() + ". " + p.toString());
 	}
 	
 	public static void listarPeliculasOrdenado() {

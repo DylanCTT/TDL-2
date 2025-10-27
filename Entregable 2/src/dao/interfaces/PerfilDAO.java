@@ -5,5 +5,5 @@ import model.Perfil;
 
 public interface PerfilDAO {
 	void guardar(Perfil perfil);
-	List<Perfil> listar(String orden);
+	List<Perfil> listar();
 }
