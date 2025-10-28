@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"user","l":"Admin"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"user","l":"Cliente"},{"p":"user","l":"Contenido"},{"p":"user","l":"Financiero"},{"p":"user","l":"Global"},{"p":"user","l":"Individual"},{"p":"user","l":"Perfil"},{"p":"user","l":"Reporte"},{"p":"user","l":"Resenia"},{"p":"user","l":"Usuario"}];updateSearchResults();
