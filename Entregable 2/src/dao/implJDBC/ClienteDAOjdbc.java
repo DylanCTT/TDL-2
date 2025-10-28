@@ -10,6 +10,27 @@ import dao.interfaces.ClienteDAO;
 public class ClienteDAOjdbc implements ClienteDAO {
 
 	@Override
+	public boolean existeDNI(int DNI) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			
+			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)
+					existe = true;
+				}
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException("Error al validar DNI: ", e);
+		}
+		return existe;
+	}
+	
+	@Override
 	public void guardar(Cliente cliente) {
 		String sql = "INSERT INTO cliente (NOMBRE, APELLIDO, DNI, EMAIL, CONTRASENIA) VALUES (?, ?, ?, ?, ?)";
 		
@@ -64,22 +85,22 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	}
 	
 	@Override
-	public boolean existeDNI(int DNI) {
+	public boolean validarID(Integer id) {
 		boolean existe = false;
-		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE DNI = ?"; //COUNT(*) devuelve la cantidad de filas que cumple una condicion. si hay usuario con ese DNI devuelve 1 o mas. sino 0 
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE ID = ?"; 
 		Connection conn = Conexion.getConnection();
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
-			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
+			ps.setInt(1, id);
 			
 			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)
+				if (rs.next() && rs.getInt(1) > 0) {
 					existe = true;
 				}
 			}
 		}
 		catch (SQLException e) {
-			throw new RuntimeException("Error al validar DNI: ", e);
+			System.out.println("Error al validar ID: " + e.getMessage());
 		}
 		return existe;
 	}
@@ -103,27 +124,6 @@ public class ClienteDAOjdbc implements ClienteDAO {
 			System.out.println("Error al validar cliente: " + e.getMessage());
 		}
 		return null;
-	}
-	
-	@Override
-	public boolean validarID(Integer id) {
-		boolean existe = false;
-		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE ID = ?"; 
-		Connection conn = Conexion.getConnection();
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			
-			ps.setInt(1, id);
-			
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next() && rs.getInt(1) > 0) {
-					existe = true;
-				}
-			}
-		}
-		catch (SQLException e) {
-			System.out.println("Error al validar ID: " + e.getMessage());
-		}
-		return existe;
 	}
 	
 }

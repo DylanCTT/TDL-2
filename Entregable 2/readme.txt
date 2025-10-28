@@ -12,6 +12,7 @@
 
 -Puede haber problemas al ingresar a la DB cuando esta el DB browser de SQLite abierto.
 
+
 COMANDOS PARA EJECUTAR DESDE POWERSHELL
 
 javac -d out (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })

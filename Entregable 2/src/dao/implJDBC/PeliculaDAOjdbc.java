@@ -59,12 +59,6 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	}
 	
 	@Override
-	public List<Pelicula> listarOrdenado(String orden) {
-		List<Pelicula> lista = new ArrayList<>();
-		return lista;
-	}
-	
-	@Override
 	public boolean validarID(Integer id) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 

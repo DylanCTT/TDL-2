@@ -10,7 +10,11 @@ public class Main {
   
 	public static void main(String[] args) {
 		try {
-			Connection conn = Conexion.getConnection();	  
+			Connection conn = Conexion.getConnection();	
+			if (conn == null) {
+				System.out.println("No se pudo establecer la conexion");
+				return;
+			}
 			System.out.println("Conexion obtenida");
 	    
 			CreacionTablas creadorTablas = new CreacionTablas();

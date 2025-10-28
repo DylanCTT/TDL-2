@@ -6,7 +6,7 @@ import model.Resenia;
 public interface ReseniaDAO {
 	void guardar(Resenia resenia);
 	List<Resenia> listarNoAprobadas();
-	Resenia mostrar(Integer id);
+	boolean existeNoAprobada(Integer id);
+	Resenia imprimir(Integer id);
 	void aprobar(Integer idResenia);
-	boolean existeResenia(Integer id);
 }

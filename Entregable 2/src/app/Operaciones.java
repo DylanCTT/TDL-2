@@ -12,7 +12,6 @@ import model.Pelicula;
 import model.Perfil;
 import model.Resenia;
 import model.Generos;
-
 import model.comparadores.*;
 
 import dao.FactoryDAO;
@@ -94,7 +93,7 @@ public class Operaciones {
 	}
 	
 	private static boolean confirmar() {
-		System.out.println("Son correctos los datos ingresados? (si/no)");
+		System.out.println("Son correctos los datos? (si/no)");
 		String res = in.nextLine().trim().toLowerCase();
 		return res.equals("si");
 	}
@@ -104,12 +103,8 @@ public class Operaciones {
 		
 		if (c != null) {
 		
-			if (confirmar()) {
-				FactoryDAO.getClienteDAO().guardar(c);
-			}
-			else {
-				System.out.println("Registro cancelado");
-			}
+			if (confirmar()) FactoryDAO.getClienteDAO().guardar(c);
+			else System.out.println("Registro cancelado");
 		}
 	}
 	
@@ -162,8 +157,13 @@ public class Operaciones {
 			if (confirmar()) FactoryDAO.getPerfilDAO().guardar(p);
 			else System.out.println("Registro cancelado");
 		}
-		else {
-			System.out.println("ID de cliente no valido");
+		else System.out.println("ID de cliente no valido");
+	}
+	
+	private static void imprimirGeneros() {
+		System.out.println("GENEROS DISPONIBLES: ");
+		for (Generos g : Generos.values()) {
+			System.out.println("-" + g);
 		}
 	}
 	
@@ -176,11 +176,13 @@ public class Operaciones {
 		while (!ok) {	
 			String validacion = "";
 			
-			System.out.println("Genero: ");
-			p.setGenero(in.nextLine());
-		
 			System.out.println("Titulo: ");
 			p.setTitulo(in.nextLine());
+			
+			System.out.println("Genero: ");
+			imprimirGeneros();
+			
+			p.setGenero(in.nextLine());
 			
 			System.out.println("Sinopsis: ");
 			p.setSinopsis(in.nextLine());
@@ -323,17 +325,26 @@ public class Operaciones {
 		}
 	}
 	
-	private static void listarResenias() {
+	private static boolean listarResenias() {
 		ReseniaDAO rDAO = FactoryDAO.getReseniaDAO();
 		List<Resenia> listaResenias = rDAO.listarNoAprobadas();
 		
-		System.out.println("Listado resenias: ");
+		if (listaResenias.isEmpty()) return true;
+		
+		System.out.println("Listado resenias no aprobadas: ");
 		for (Resenia r : listaResenias) System.out.println(r.getId() + ". " + r.toString());
+		
+		return false;
 	}
 	
 	public static void aprobarResenia() {
 		//listado resenias
-		listarResenias();
+		boolean vacia = listarResenias();
+		
+		if (vacia) {
+			System.out.println("No hay resenias sin aprobar");
+			return;
+		}
 		
 		//solicitar nro resenia a aprobar
 		System.out.println("Ingrese el ID de la resenia a aprobar");
@@ -342,17 +353,18 @@ public class Operaciones {
 		
 		//validar existencia resenia
 		ReseniaDAO rDAO = FactoryDAO.getReseniaDAO();
-		if (!rDAO.existeResenia(id)) System.out.println("ID de resenia no valido");
-		else {
-			//mostrar resenia seleccionada
-			Resenia r = rDAO.mostrar(id);
-			System.out.println("Resenia seleccionada: " + r.toString());
 		
-			//aprobar
-			if (confirmar()) rDAO.aprobar(id);
-			else {
-				System.out.println("Aprobacion de resenia cancelada");
-			}
+		if (!rDAO.existeNoAprobada(id)) {
+			System.out.println("ID de resenia no valido (no existe o ya esta aprobada)");
+			return;
 		}
+		
+		//mostrar resenia seleccionada
+		Resenia r = rDAO.imprimir(id);
+		System.out.println("Resenia seleccionada: " + r.toString());
+		
+		//aprobar
+		if (confirmar()) rDAO.aprobar(id);
+		else System.out.println("Aprobacion de resenia cancelada");
 	}
 }

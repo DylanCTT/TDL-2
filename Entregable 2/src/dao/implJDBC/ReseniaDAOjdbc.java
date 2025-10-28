@@ -60,8 +60,29 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		return lista;	
 	}
 	
+	@Override
+	public boolean existeNoAprobada(Integer id) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM RESENIA WHERE ID = ? AND APROBADA = 0"; 
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			
+			ps.setInt(1, id); 		
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					existe = true;
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al validar ID no aprobado: " + e.getMessage());
+		}
+		return existe;	
+	}
+	
 	@Override 
-	public Resenia mostrar(Integer id) {
+	public Resenia imprimir(Integer id) {
 		Resenia r = new Resenia();
 		String sql = "SELECT * FROM RESENIA WHERE ID = ?";
 		Connection conn = Conexion.getConnection();
@@ -70,10 +91,11 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 			ps.setInt(1, id);
 			
 			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next() && rs.getInt(id) > 0) {
+				if (rs.next()) {
 					r.setId(rs.getInt("ID"));
 					r.setPuntaje(rs.getInt("PUNTAJE"));
 					r.setContenido(rs.getString("CONTENIDO"));
+					r.setAprobada(rs.getBoolean("APROBADA"));
 					r.setFecha(rs.getTimestamp("FECHA").toLocalDateTime());
 					r.setIdCliente(rs.getInt("ID_PERFIL"));
 					r.setIdContenido(rs.getInt("ID_PELICULA"));
@@ -103,27 +125,6 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		catch(SQLException e) {
 			System.out.println("Error al aprobar resenia: " + e.getMessage());
 		}
-	}
-	
-	@Override
-	public boolean existeResenia(Integer id) {
-		boolean existe = false;
-		String sql = "SELECT COUNT(*) FROM RESENIA WHERE ID = ?"; 
-		Connection conn = Conexion.getConnection();
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			
-			ps.setInt(1, id); 		
-			
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next() && rs.getInt(1) > 0) {
-					existe = true;
-				}
-			}
-		}
-		catch (SQLException e) {
-			System.out.println("Error al validar ID: " + e.getMessage());
-		}
-		return existe;	
 	}
 	
 }
