@@ -1,19 +1,18 @@
--Modelamos datos personales como cliente y usuario como perfil
+-Para ser consistentes con el UML, modelamos Datos Personales como Cliente y Usuario como Perfil.
 
--Si bien en el UML dentro de Contenido tenemos lista de géneros, aca lo simplificamos usando un solo genero.
+-Si bien en el UML dentro de Contenido tenemos lista de géneros, aca lo simplificamos usando un solo genero por pelicula.
 
--Simplificación de duración película a numero real.
+-Simplificamos la duración de película a un numero real.
 
 -La reseña se setea por default a no aprobada. Se aprueban todas manualmente.
 
--Cuando se registra una reseña, al momento de la validación del usuario y contraseña, se verifica con el mail del cliente y su contraseña. 
+-Cuando se registra una reseña, al momento de la validación del usuario y contraseña, se verifica con el mail del cliente y su contraseña, no el el nombre del perfil. 
 
--Géneros cargados desde el inicio?????????????
+-Entendimos por "Todos los datos son requeridos a excepción del Resumen" en el registro de pelicula, como que el resumen puede ingresarse en el registro pero si no se ingresa es valido tambien.
 
--Aclarar lo que entendemos por que el resumen no haga falta en el registro de película 
+-Puede haber problemas al ingresar a la DB cuando esta el DB browser de SQLite abierto.
 
-
-COMANDOS PARA EJECUTAR DESDE SHELL
+COMANDOS PARA EJECUTAR DESDE POWERSHELL
 
 javac -d out (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })
 
