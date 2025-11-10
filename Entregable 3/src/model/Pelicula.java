@@ -1,0 +1,51 @@
+package model;
+
+import java.time.LocalTime;
+import java.util.List;
+
+public class Pelicula extends Contenido {
+	private String titulo;
+	private LocalTime duracion;
+	private float duracionR; //simplificado para tablas
+	
+	public Pelicula(Integer id, String genero, List<String> generos, String sinopsis, String director, String titulo, LocalTime duracion, float duracionR) {
+		super(id, genero, generos, sinopsis, director);
+		this.titulo = titulo;
+		this.duracion = duracion;
+		this.duracionR = duracionR;
+	}	
+	
+	public Pelicula() {
+		
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public LocalTime getDuracion() {
+		return duracion;
+	}
+
+	public void setDuracion(LocalTime duracion) {
+		this.duracion = duracion;
+	}
+
+	public float getDuracionR() {
+		return duracionR;
+	}
+
+	public void setDuracionR(float duracionR) {
+		this.duracionR = duracionR;
+	}
+
+	@Override
+	public String toString() {
+		return "Pelicula [" + super.toString() + ", titulo=" + titulo + ", duracionR=" + duracionR + "]";
+	}
+	
+}
