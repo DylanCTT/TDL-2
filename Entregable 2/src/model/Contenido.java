@@ -5,7 +5,7 @@ import java.util.List;
 public class Contenido {
 	private Integer id;
 	private String genero; //se utiliza esta VI para el modelado de la BD 
-	private List<String> generos;
+	private List<Generos> generos;
 	private String sinopsis;
 	private String director;
 	
