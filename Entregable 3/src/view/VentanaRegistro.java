@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class VentanaRegistro extends JFrame {
@@ -19,6 +20,7 @@ public class VentanaRegistro extends JFrame {
 	public VentanaRegistro () {
 		setTitle("Registro");
 		setSize(500, 250);
+		setLocationRelativeTo(null); //abre la ventana en el centro de la pantalla
 		setLayout(new GridLayout(6,1));
 		
 		lblNombres.setForeground(Color.BLACK);
@@ -43,7 +45,31 @@ public class VentanaRegistro extends JFrame {
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		VentanaRegistro vr = new VentanaRegistro();
+	public void addRegistrarListener(ActionListener l) {
+		btnRegistrar.addActionListener(l);
+	}
+	
+	public String getNombres() {
+		return tfNombres.getText();
+	}
+	
+	public String getApellidos() {
+		return tfApellidos.getText();
+	}
+	
+	public int getDni() {
+		return Integer.parseInt(tfDni.getText());
+	}
+	
+	public String getEmail() {
+		return tfEmail.getText();
+	}
+	
+	public String getPassword() {
+		return String.valueOf(tfPassword.getPassword());
+	}
+	
+	public JButton getBotonRegistro() {
+		return btnRegistrar;
 	}
 }

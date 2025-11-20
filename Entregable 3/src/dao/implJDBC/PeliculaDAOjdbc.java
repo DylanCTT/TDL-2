@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
+import model.Generos;
 import model.Pelicula;
 import util.Conexion;
 import dao.interfaces.PeliculaDAO;
@@ -17,7 +18,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 		Connection conn = Conexion.getConnection();
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
-			ps.setString(1, pelicula.getGenero());
+			ps.setString(1, pelicula.getGenero().name());
 			ps.setString(2, pelicula.getTitulo());
 			ps.setString(3, pelicula.getSinopsis());
 			ps.setString(4, pelicula.getDirector());
@@ -43,7 +44,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			while (rs.next()) {
 				Pelicula p = new Pelicula();
 				p.setId(rs.getInt("ID"));
-				p.setGenero(rs.getString("GENERO"));
+				p.setGenero(Generos.valueOf(rs.getString("GENERO")));
 				p.setTitulo(rs.getString("TITULO"));
 				p.setSinopsis(rs.getString("RESUMEN"));
 				p.setDirector(rs.getString("DIRECTOR"));

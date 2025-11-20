@@ -5,10 +5,10 @@ import view.VentanaLogin;
 import javax.swing.*;
 import java.sql.*;
 
-public class ControladorLogin {
+public class LoginController {
 	private VentanaLogin vista;
 
-	public ControladorLogin(VentanaLogin vista) {
+	public LoginController(VentanaLogin vista) {
 		this.vista = vista;
 
 		vista.getBotonIngresar().addActionListener(e -> validarLogin());

@@ -9,17 +9,21 @@ package model;
 
 public class Cliente extends Usuario {
 	private Integer id;
-	private String plan;
+	private Planes plan;
 	private static final int maxPerfiles = 5;
 	private Perfil[] perfiles;
 	private int cantPerfiles;
 	
-	public Cliente(Integer id, String nombre, String apellido, int DNI, String email, String contrasenia, String plan, Perfil[] perfiles, int cantPerfiles) {
+	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia, Integer id,  Planes plan, Perfil[] perfiles, int cantPerfiles) {
 		super(nombre, apellido, DNI, email, contrasenia);
 		this.id = id;
 		this.plan = plan;
 		this.perfiles = new Perfil[maxPerfiles];
 		this.cantPerfiles = cantPerfiles;
+	}
+	
+	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia) {
+		super(nombre, apellido, DNI, email, contrasenia);
 	}
 	
 	public Cliente() {
@@ -34,11 +38,11 @@ public class Cliente extends Usuario {
 		this.id = id;
 	}
 
-	public String getPlan() {
+	public Planes getPlan() {
 		return plan;
 	}
 	
-	public void setPlan(String plan) {
+	public void setPlan(Planes plan) {
 		this.plan = plan;
 	}
 	
