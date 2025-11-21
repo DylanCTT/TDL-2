@@ -18,13 +18,20 @@ public class RegistroController {
 	
 	class RegistarListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			String nombres = view.getNombres();
-			String apellidos = view.getApellidos();
-			int dni = view.getDni();
-			String email = view.getEmail();
-			String password = view.getPassword();
+			try {
+				String nombres = view.getNombres().trim();
+				String apellidos = view.getApellidos().trim();
+				int dni = view.getDni();
+				String email = view.getEmail().trim();
+				String password = view.getPassword().trim();
 				
-			service.registar(nombres, apellidos, dni, email, password);
+				service.registar(nombres, apellidos, dni, email, password);
+				
+				view.mostrarMensaje("Registro realizado con exito");
+			}
+			catch (Exception exc) {
+				view.mostarMensajeError(exc.getMessage());
+			}
 		}
 	}
 	

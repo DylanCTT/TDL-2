@@ -1,47 +1,52 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import view.VentanaLogin;
-
-import javax.swing.*;
-import java.sql.*;
+import view.VentanaRegistro;
+import service.ClienteService;
 
 public class LoginController {
-	private VentanaLogin vista;
+	private VentanaLogin view;
+	private ClienteService service;
 
-	public LoginController(VentanaLogin vista) {
-		this.vista = vista;
+	public LoginController(VentanaLogin view, ClienteService service) {
+		this.view = view;
+		this.service = service;
 
-		vista.getBotonIngresar().addActionListener(e -> validarLogin());
+		this.view.getBotonIngresar().addActionListener(new IngresarListener());
+		this.view.getBotonRegistrate().addActionListener(new RegistrateListener());
 	}
 
-	private void validarLogin() {
-		String email = vista.getEmail().trim();
-		String password = vista.getPassword().trim();
+	class IngresarListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String email = view.getEmail().trim();
+				String password = view.getPassword().trim();
 
-		if (email.isEmpty() || password.isEmpty()) {
-			JOptionPane.showMessageDialog(vista, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-
-		// conexion y consulta
-		try (Connection conn = DriverManager.getConnection("jdbc:sqlite:usuarios.db")) {
-			String sql = "SELECT * FROM usuarios WHERE email = ? AND contraseña = ?";
-			try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-				stmt.setString(1, email);
-				stmt.setString(2, password);
-
-				try (ResultSet rs = stmt.executeQuery()) {
-					if (rs.next()) {
-						// login exitoso
-						JOptionPane.showMessageDialog(vista, "Login exitoso. Bienvenido " + rs.getString("nombre"));
-					} else {
-						// no coincide
-						JOptionPane.showMessageDialog(vista, "Email o contraseña incorrectos.", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
-					}
-				}
+				service.ingresar(email, password);
+				
+				view.mostrarMensaje("Login realizado con exito");
+				
+				//va a la seleccion de perfiles
+			} 
+			catch (Exception exc) {
+				view.mostrarMensajeError(exc.getMessage());
 			}
-		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(vista, "Error al conectar con la base de datos:\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	class RegistrateListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				VentanaRegistro view = new VentanaRegistro();
+				ClienteService service = new ClienteService();
+				
+				RegistroController controller = new RegistroController(view, service); 
+			} 
+			catch (Exception exc) {
+				view.mostrarMensajeError(exc.getMessage());
+			}
 		}
 	}
 }

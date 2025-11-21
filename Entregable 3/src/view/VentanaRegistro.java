@@ -6,28 +6,37 @@ import javax.swing.*;
 
 public class VentanaRegistro extends JFrame {
 	private JLabel lblNombres = new JLabel("Nombres");
-	private JTextField tfNombres = new JTextField("", 10);
+	private JTextField tfNombres = new JTextField(10);
 	private JLabel lblApellidos = new JLabel("Apellidos");
-	private JTextField tfApellidos = new JTextField("", 10);
+	private JTextField tfApellidos = new JTextField(10);
 	private JLabel lblDni = new JLabel("DNI");
-	private JTextField tfDni = new JTextField("", 10);
+	private JTextField tfDni = new JTextField(10);
 	private JLabel lblEmail = new JLabel("Email");
-	private JTextField tfEmail = new JTextField("", 10);
+	private JTextField tfEmail = new JTextField(10);
 	private JLabel lblPassword = new JLabel("Contrasenia");
-	private JPasswordField tfPassword = new JPasswordField("", 10);
+	private JPasswordField tfPassword = new JPasswordField(10);
 	private JButton btnRegistrar = new JButton("Registrarse");
 	
 	public VentanaRegistro () {
 		setTitle("Registro");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 250);
+		setResizable(false);
 		setLocationRelativeTo(null); //abre la ventana en el centro de la pantalla
 		setLayout(new GridLayout(6,1));
 		
-		lblNombres.setForeground(Color.BLACK);
-		lblApellidos.setForeground(Color.BLACK);
-		lblDni.setForeground(Color.BLACK);
-		lblEmail.setForeground(Color.BLACK);
-		lblPassword.setForeground(Color.BLACK);
+		lblNombres.setFont(new Font("Calibri", Font.BOLD, 14));
+		tfNombres.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblApellidos.setFont(new Font("Calibri", Font.BOLD, 14));
+		tfApellidos.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblDni.setFont(new Font("Calibri", Font.BOLD, 14));
+		tfDni.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		tfEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblPassword.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnRegistrar.setBackground(Color.BLUE);
+		btnRegistrar.setForeground(Color.WHITE);
+		btnRegistrar.setFont(new Font("Calibri", Font.BOLD, 14));
 		
 		add(lblNombres); add(tfNombres);
 		add(lblApellidos); add(tfApellidos);
@@ -36,9 +45,6 @@ public class VentanaRegistro extends JFrame {
 		add(lblPassword); add(tfPassword);
 		
 		add(new JLabel(" "));
-		
-		btnRegistrar.setBackground(Color.BLUE);
-		btnRegistrar.setForeground(Color.WHITE);
 		
 		add(btnRegistrar);
 		
@@ -71,5 +77,17 @@ public class VentanaRegistro extends JFrame {
 	
 	public JButton getBotonRegistro() {
 		return btnRegistrar;
+	}
+	
+	public void mostrarMensaje(String msj) {
+		JOptionPane.showMessageDialog(this, msj);
+	}
+	
+	public void mostarMensajeError(String msj) {
+		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void main(String args[]) {
+		VentanaRegistro vr = new VentanaRegistro();
 	}
 }

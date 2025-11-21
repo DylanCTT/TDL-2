@@ -9,4 +9,5 @@ public interface ClienteDAO {
 	List<Cliente> listar();
 	boolean validarID(Integer id);
 	Integer validarCliente(String nom, String pass);
+	boolean existeEmail(String email);
 }

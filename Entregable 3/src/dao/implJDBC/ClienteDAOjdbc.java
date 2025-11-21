@@ -126,4 +126,24 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		return null;
 	}
 	
+	@Override
+	public boolean existeEmail(String email) {
+		boolean existe = false;
+		String sql = "SELECT COUNT(*) FROM CLIENTE WHERE EMAIL = ?";
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql) ) {
+			ps.setString(1, email);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					existe = true;
+				}
+			}
+		}
+		catch (SQLException e) {
+			throw new RuntimeException("Error al validar Email", e);
+		}
+		return existe;
+	}
+	
 }
