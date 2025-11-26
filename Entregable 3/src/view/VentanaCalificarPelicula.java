@@ -63,4 +63,8 @@ public class VentanaCalificarPelicula extends JFrame {
     public JButton getBotonGuardar() {
         return botonGuardar;
     }
+    
+    public static void main(String args[]) {
+		VentanaCalificarPelicula califPeli = new VentanaCalificarPelicula();
+	}
 }

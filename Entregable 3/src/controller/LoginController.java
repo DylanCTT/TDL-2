@@ -3,7 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import view.VentanaLogin;
+import view.VentanaPerfiles;
 import view.VentanaRegistro;
+import service.PerfilService;
 import service.ClienteService;
 
 public class LoginController {
@@ -28,7 +30,10 @@ public class LoginController {
 				
 				view.mostrarMensaje("Login realizado con exito");
 				
-				//va a la seleccion de perfiles
+				VentanaPerfiles view = new VentanaPerfiles();
+				PerfilService service = new PerfilService();
+				
+				PerfilesController controller = new PerfilesController(view, service);
 			} 
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());

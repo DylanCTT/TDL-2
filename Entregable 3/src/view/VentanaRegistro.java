@@ -27,13 +27,18 @@ public class VentanaRegistro extends JFrame {
 		
 		lblNombres.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfNombres.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		lblApellidos.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfApellidos.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		lblDni.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfDni.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		lblEmail.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		lblPassword.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		btnRegistrar.setBackground(Color.BLUE);
 		btnRegistrar.setForeground(Color.WHITE);
 		btnRegistrar.setFont(new Font("Calibri", Font.BOLD, 14));

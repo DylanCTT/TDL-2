@@ -36,7 +36,7 @@ public class VentanaLogin extends JFrame {
 		add(lblPassword); add(tfPassword);
 		add(new JLabel(" "));
 		add(btnIngresar);
-		add(new JLabel("¿Aun no tienes cuenta?"));
+		add(new JLabel("¿Todavia no tenes cuenta?"));
 		add(btnRegistrate);
 
 		setVisible(true);
