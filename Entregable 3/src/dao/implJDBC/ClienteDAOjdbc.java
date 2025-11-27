@@ -34,9 +34,6 @@ public class ClienteDAOjdbc implements ClienteDAO {
 	public void guardar(Cliente cliente) {
 		String sql = "INSERT INTO cliente (NOMBRE, APELLIDO, DNI, EMAIL, CONTRASENIA) VALUES (?, ?, ?, ?, ?)";
 		
-		//abre un canal hacia la base de datos
-		//Connection es de java.util.sql
-		//getConnection devuelve un tipo Connection
 		//como voy a insertar datos variables, uso prepareStatement
 		//preparo al sql para recibir datos variabls (indicados con ? en el String)
 		Connection conn = Conexion.getConnection();
@@ -141,9 +138,34 @@ public class ClienteDAOjdbc implements ClienteDAO {
 			}
 		}
 		catch (SQLException e) {
-			throw new RuntimeException("Error al validar Email", e);
+			System.out.println("Error al validar email: " + e.getMessage());
 		}
 		return existe;
 	}
 	
+	@Override
+	public Cliente devolverClienteXmail(String email) {
+		String sql = "SELECT * FROM CLIENTE WHERE EMAIL = ?";
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, email);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					Cliente c = new Cliente();
+					c.setId(rs.getInt("ID"));
+					c.setNombre(rs.getString("NOMBRE"));
+					c.setApellido(rs.getString("APELLIDO"));
+					c.setDNI(rs.getInt("DNI"));
+					c.setEmail(rs.getString("EMAIL"));
+					c.setContrasenia(rs.getString("CONTRASENIA"));
+					return c;
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al devolver cliente: " + e.getMessage());
+		}
+		return null;
+	}
 }

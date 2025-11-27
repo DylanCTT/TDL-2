@@ -10,4 +10,5 @@ public interface ClienteDAO {
 	boolean validarID(Integer id);
 	Integer validarCliente(String nom, String pass);
 	boolean existeEmail(String email);
+	Cliente devolverClienteXmail(String email);
 }

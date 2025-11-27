@@ -2,7 +2,7 @@ package service;
 
 import java.util.regex.Pattern;
 import dao.FactoryDAO;
-import dao.interfaces.*;
+import dao.interfaces.ClienteDAO;
 import model.Cliente;
 
 public class ClienteService {
@@ -20,12 +20,16 @@ public class ClienteService {
 		return p.matcher(email).matches();
 	}
 	
-	public void ingresar(String email, String password) throws Exception {
+	public Cliente ingresar(String email, String password) throws Exception {
 		if (!stringEsMail(email)) throw new Exception("El mail ingresado no es valido");
 		
 		if (!clienteDAO.existeEmail(email)) throw new Exception("El email ingresado no existe");
 		
 		if ((email.isEmpty()) || (password.isEmpty())) throw new Exception("Ingrese todos los campos");
+		
+		Cliente c = clienteDAO.devolverClienteXmail(email);
+		
+		return c;
 	}
 	
 	public void registar(String nombres, String apellidos, int dni, String email, String password) throws Exception {
@@ -37,7 +41,7 @@ public class ClienteService {
 		
 		if ((nombres.isEmpty()) || (apellidos.isEmpty()) || (dni < 0) || (email.isEmpty()) || password.isEmpty()) throw new Exception("Ingrese todos los campos");
 		
-		Cliente c = new Cliente(nombres, apellidos, dni, email, password);
+		Cliente c = new Cliente(nombres, apellidos, dni, email, password, 0);
 		
 		clienteDAO.guardar(c);
 	}

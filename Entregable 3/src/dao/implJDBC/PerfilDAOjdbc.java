@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.sql.*;
-
-import model.Pelicula;
 import model.Perfil;
 import util.Conexion;
 import dao.interfaces.PerfilDAO;
@@ -53,4 +51,25 @@ public class PerfilDAOjdbc implements PerfilDAO {
 		return lista;
 	}
 	
+	@Override
+	public List<Perfil> getPerfilesXidCliente(Integer id) {
+		List<Perfil> perfiles = new ArrayList<>();
+		String sql = "SELECT * FROM PERFIL WHERE ID_CLIENTE = ?";
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next() && rs.getInt(1) > 0) {
+					Perfil p = new Perfil();
+					p.setNombre(rs.getString("NOMBRE"));
+					perfiles.add(p);
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al devolver perfiles: " + e.getMessage());
+		}
+		return perfiles;
+	}
 }

@@ -6,4 +6,5 @@ import model.Perfil;
 public interface PerfilDAO {
 	void guardar(Perfil perfil);
 	List<Perfil> listar();
+	List<Perfil> getPerfilesXidCliente(Integer id);
 }

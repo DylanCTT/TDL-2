@@ -1,7 +1,11 @@
 package controller;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.Cliente;
+import model.Perfil;
 import view.VentanaLogin;
 import view.VentanaPerfiles;
 import view.VentanaRegistro;
@@ -26,12 +30,13 @@ public class LoginController {
 				String email = view.getEmail().trim();
 				String password = view.getPassword().trim();
 
-				service.ingresar(email, password);
+				Cliente c = service.ingresar(email, password);
 				
 				view.mostrarMensaje("Login realizado con exito");
 				
-				VentanaPerfiles view = new VentanaPerfiles();
 				PerfilService service = new PerfilService();
+				ArrayList<Perfil> perfiles = (ArrayList<Perfil>) service.getPerfilesXidCliente(c.getId());
+				VentanaPerfiles view = new VentanaPerfiles(perfiles);
 				
 				PerfilesController controller = new PerfilesController(view, service);
 			} 

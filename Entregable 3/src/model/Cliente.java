@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Representa al duenio de la cuenta
  * @author dylan y valen
@@ -10,20 +13,19 @@ package model;
 public class Cliente extends Usuario {
 	private Integer id;
 	private Planes plan;
-	private static final int maxPerfiles = 5;
-	private Perfil[] perfiles;
+	private List<Perfil> perfiles;
 	private int cantPerfiles;
 	
-	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia, Integer id,  Planes plan, Perfil[] perfiles, int cantPerfiles) {
+	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia, Integer id, Planes plan, List<Perfil> perfiles) {
 		super(nombre, apellido, DNI, email, contrasenia);
 		this.id = id;
 		this.plan = plan;
-		this.perfiles = new Perfil[maxPerfiles];
-		this.cantPerfiles = cantPerfiles;
+		this.perfiles = new ArrayList<Perfil>();
 	}
 	
-	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia) {
+	public Cliente(String nombre, String apellido, int DNI, String email, String contrasenia, int cantPerfiles) {
 		super(nombre, apellido, DNI, email, contrasenia);
+		this.cantPerfiles = 0;
 	}
 	
 	public Cliente() {
@@ -60,10 +62,7 @@ public class Cliente extends Usuario {
 	 */
 	
 	public void agregarPerfil(Perfil p) {
-	  if (this.cantPerfiles <= maxPerfiles) {
-	    this.perfiles[cantPerfiles] = p;
-	    this.cantPerfiles++;
-	  }
+		perfiles.add(p);
 	}
 	
 	/**
@@ -72,19 +71,7 @@ public class Cliente extends Usuario {
 	 */
 	
 	public void eliminarPerfil(Perfil p) {
-  	  int i = 0;
-  	  boolean encontre = false;
-	  while ((i <= maxPerfiles) && (!encontre)) {
-	    if (this.perfiles[i] == p) {
-	      encontre = true;
-	      int j;
-	      for (j = i; j < maxPerfiles; j++) {
-	        this.perfiles[j] = this.perfiles[j + 1];
-	      }
-	      this.cantPerfiles--;
-	    }
-	    i++;
-	  }
+		if (perfiles.contains(p)) perfiles.remove(p);
 	}
 	
 	@Override
