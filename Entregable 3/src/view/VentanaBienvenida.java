@@ -17,17 +17,29 @@ public class VentanaBienvenida extends JFrame {
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 
-		// Layout principal con CardLayout
 		layout = new CardLayout();
 		panelContenedor = new JPanel(layout);
-		add(panelContenedor);
+		add(panelContenedor); 	
 
-		// Vista de espera
 		JPanel panelEspera = new JPanel(new BorderLayout());
 		JLabel mensaje = new JLabel("Cargando películas... Un momento por favor...", SwingConstants.CENTER);
-		mensaje.setFont(new Font("Arial", Font.BOLD, 20));
+		mensaje.setFont(new Font("Calibri", Font.BOLD, 20));
 		panelEspera.add(mensaje, BorderLayout.CENTER);
 		panelContenedor.add(panelEspera, "espera");
+		
+		// vista de películas con un panel con scroll
+		panelPeliculas = new JPanel();
+		panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
+		
+		JScrollPane scroll = new JScrollPane(panelPeliculas);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelContenedor.add(scroll, "peliculas");
 
+		setVisible(true);
+
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new VentanaBienvenida());
 	}
 }
