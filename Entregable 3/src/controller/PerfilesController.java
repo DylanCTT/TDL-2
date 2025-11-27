@@ -5,7 +5,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import view.VentanaPerfiles;
+import view.VentanaBienvenida;
 import service.PerfilService;
+import service.PeliculaService;
 
 public class PerfilesController {
 	private VentanaPerfiles view;
@@ -25,7 +27,10 @@ public class PerfilesController {
 	class SeleccionarListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
-				//abrir ventana bienvenida
+				VentanaBienvenida view = new VentanaBienvenida();
+				PeliculaService service = new PeliculaService();
+				
+				BienvenidaController controller = new BienvenidaController(view, service);
 			}
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());
