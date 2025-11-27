@@ -11,6 +11,7 @@ public class VentanaPerfiles extends JFrame {
 	private JLabel lblTitulo = new JLabel("Quien esta viendo ahora?");
 	private JPanel pnlPerfiles = new JPanel(new GridLayout(0, 3, 10, 10));
 	private List<JButton> botonesSeleccionar = new ArrayList<>();
+	private JButton btnAgregarPerfil = new JButton("Agregar perfil");
 	
 	public VentanaPerfiles(ArrayList<Perfil> perfiles) {
 		setTitle("Seleccion de perfil");
@@ -31,6 +32,7 @@ public class VentanaPerfiles extends JFrame {
 			JLabel lblNombre = new JLabel(p.getNombre());
 			lblNombre.setForeground(Color.WHITE);
 			lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 
 			JButton btnSeleccion = new JButton("Seleccionar");
 			botonesSeleccionar.add(btnSeleccion);
@@ -42,6 +44,8 @@ public class VentanaPerfiles extends JFrame {
 		}
 		
 		add(pnlPerfiles, BorderLayout.CENTER);
+		
+		add(btnAgregarPerfil, BorderLayout.SOUTH);
 
 		setVisible(true);
 	}
@@ -52,8 +56,32 @@ public class VentanaPerfiles extends JFrame {
 		}
 	}
 	
+	public void addAgregarPerfilListener(ActionListener l) {
+		btnAgregarPerfil.addActionListener(l);
+	}
+	
+	public JLabel getLblTitulo() {
+		return lblTitulo;
+	}
+
+	public void setLblTitulo(JLabel lblTitulo) {
+		this.lblTitulo = lblTitulo;
+	}
+
+	public JPanel getPnlPerfiles() {
+		return pnlPerfiles;
+	}
+
+	public void setPnlPerfiles(JPanel pnlPerfiles) {
+		this.pnlPerfiles = pnlPerfiles;
+	}
+
 	public List<JButton> getBotonesSeleccionar() {
 		return botonesSeleccionar;
+	}
+	
+	public JButton getBotonAgregarPerfiles() {
+		return btnAgregarPerfil;
 	}
 	
 	public void mostrarMensajeError(String msj) {
