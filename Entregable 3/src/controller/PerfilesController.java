@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import view.VentanaPerfiles;
 import view.VentanaBienvenida;
+import view.VentanaNuevoPerfil;
 import service.PerfilService;
 import service.PeliculaService;
 
@@ -22,6 +23,8 @@ public class PerfilesController {
 		for (int i = 0 ; i < botones.size(); i++) {
 			botones.get(i).addActionListener(new SeleccionarListener());
 		}
+		
+		this.view.getBotonAgregarPerfiles().addActionListener(new AgregarPerfilListener());
 	}
 	
 	class SeleccionarListener implements ActionListener {
@@ -31,6 +34,20 @@ public class PerfilesController {
 				PeliculaService service = new PeliculaService();
 				
 				BienvenidaController controller = new BienvenidaController(view, service);
+			}
+			catch (Exception exc) {
+				view.mostrarMensajeError(exc.getMessage());
+			}
+		}
+	}
+	
+	class AgregarPerfilListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				VentanaNuevoPerfil view = new VentanaNuevoPerfil();
+				PerfilService service = new PerfilService();
+				
+				NuevoPerfilController controller = new NuevoPerfilController(view, service);
 			}
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());
