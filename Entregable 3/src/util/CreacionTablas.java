@@ -40,16 +40,29 @@ public class CreacionTablas {
 			  ");";     
 		stmt.executeUpdate(sql);
       
-      
-		sql = "CREATE TABLE IF NOT EXISTS PELICULA (" + 
-			  "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-			  "GENERO TEXT NOT NULL," +
-			  "TITULO TEXT(100) NOT NULL," + 
-			  "RESUMEN TEXT(500) NOT NULL," +
-			  "DIRECTOR TEXT(100) NOT NULL," +
-			  "DURACION REAL NOT NULL" + 
-    		");"; 
-      stmt.executeUpdate(sql); 
+		// 	creacion de nueva tabla de peliculas acorde al .csv
+		sql = "DROP TABLE IF EXISTS PELICULA;";
+		
+		stmt.executeUpdate(sql);
+		
+		sql = "CREATE TABLE IF NOT EXISTS PELICULA (" +
+	             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+	             "GENERO TEXT NOT NULL," +
+	             "TITULO TEXT(100) NOT NULL," +
+	             "RESUMEN TEXT NOT NULL," +
+	             "DIRECTOR TEXT(100)," +
+	             "DURACION REAL," +
+	             "RELEASE_DATE TEXT," +
+	             "POPULARITY REAL," +
+	             "VOTE_COUNT INTEGER," +
+	             "VOTE_AVERAGE REAL," +
+	             "ORIGINAL_LANGUAGE TEXT," +
+	             "POSTER TEXT," +
+	             "STATUS TEXT," +
+	             "URL TEXT" +
+	             ");";
+		stmt.executeUpdate(sql);
+ 
   
       
       sql = "CREATE TABLE IF NOT EXISTS RESENIA (" + 

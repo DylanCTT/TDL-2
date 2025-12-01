@@ -13,24 +13,34 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 
 	@Override
 	public void guardar(Pelicula pelicula) {
-		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RELEASE_DATE, POPULARITY, VOTE_COUNT, VOTE_AVERAGE, ORIGINAL_LANGUAGE, POSTER, STATUS, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 		
 		Connection conn = Conexion.getConnection();
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			
-			ps.setString(1, pelicula.getGenero().name());
-			ps.setString(2, pelicula.getTitulo());
-			ps.setString(3, pelicula.getSinopsis());
-			ps.setString(4, pelicula.getDirector());
-			ps.setFloat(5, pelicula.getDuracionR());
-			
-			ps.executeUpdate();
-			
-			System.out.println("Pelicula guardada exitosamente");
-		}
-		catch (SQLException e) {
-			System.out.println("Error al guardar pelicula: " + e.getMessage());
-		}
+
+	    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+	        // Campos básicos
+	        ps.setString(1, pelicula.getGenero().name());
+	        ps.setString(2, pelicula.getTitulo());
+	        ps.setString(3, pelicula.getSinopsis());
+	        ps.setString(4, pelicula.getDirector());
+	        ps.setFloat(5, pelicula.getDuracionR());
+
+	        // Campos nuevos
+	        ps.setString(6, pelicula.getReleaseDate());
+	        ps.setDouble(7, pelicula.getPopularity());
+	        ps.setInt(8, pelicula.getVoteCount());
+	        ps.setDouble(9, pelicula.getVoteAverage());
+	        ps.setString(10, pelicula.getOriginalLanguage());
+	        ps.setString(11, pelicula.getPoster());
+	        ps.setString(12, pelicula.getStatus());
+	        ps.setString(13, pelicula.getUrl());
+
+	        ps.executeUpdate();
+	        System.out.println("Película guardada exitosamente");
+	    } catch (SQLException e) {
+	        System.out.println("Error al guardar película: " + e.getMessage());
+	    }
 	}
 	
 	@Override
@@ -49,9 +59,18 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 				p.setSinopsis(rs.getString("RESUMEN"));
 				p.setDirector(rs.getString("DIRECTOR"));
 				p.setDuracionR(rs.getFloat("DURACION"));
+				
+				p.setReleaseDate(rs.getString("RELEASEDATE"));
+				p.setPopularity(rs.getDouble("POPULARIDAD"));
+				p.setVoteCount(rs.getInt("VOTECOUNT"));
+				p.setVoteAverage(rs.getDouble("VOTEAVERAGE"));
+				p.setOriginalLanguage(rs.getString("OGLANGUAGE"));
+				p.setPoster(rs.getString("POSTER"));
+				p.setStatus(rs.getString("STATUS"));
+				p.setUrl(rs.getString("URL"));
+				
 				lista.add(p);
 			}
-			
 		}
 		catch (SQLException e) {
 			System.out.println("Error al listar peliculas: " + e.getMessage());
@@ -60,7 +79,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	}
 	
 	@Override
-	public boolean validarID(Integer id) {
+	public boolean validarID(Integer id) {   //a chequeaaaarr
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 
 		Connection conn = Conexion.getConnection();

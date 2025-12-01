@@ -4,3 +4,8 @@
 /LoginController$IngresarListener.class
 /LoginController$RegistrateListener.class
 /CalificarPeliculaController.class
+/BienvenidaController.class
+/PerfilesController$SeleccionarListener.class
+/PerfilesController.class
+/NuevoPerfilController.class
+/PerfilesController$AgregarPerfilListener.class

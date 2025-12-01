@@ -4,44 +4,51 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Pelicula extends Contenido {
-	private String titulo;
-	private LocalTime duracion;
-	private float duracionR; //simplificado para tablas
-	
-	public Pelicula(Integer id, Generos genero, List<String> generos, String sinopsis, String director, String titulo, LocalTime duracion, float duracionR) {
-		super(id, genero, generos, sinopsis, director);
-		this.titulo = titulo;
-		this.duracion = duracion;
-		this.duracionR = duracionR;
-	}	
-	
-	public Pelicula() {
 		
-	}
+		private String titulo;
+		private float duracionR;
 
-	public String getTitulo() {
-		return titulo;
-	}
+	    // nuevos campos
+	    private String releaseDate;
+	    private double popularity;
+	    private int voteCount;
+	    private double voteAverage;
+	    private String originalLanguage;
+	    private String poster;
+	    private String status;
+	    private String url;
+	    
+	    
+	    public String getTitulo() {return titulo;}
+		public void setTitulo(String titulo) {this.titulo = titulo; }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+	    public float getDuracionR() { return duracionR; }
+	    public void setDuracionR(float duracionR) { this.duracionR = duracionR; }
 
-	public LocalTime getDuracion() {
-		return duracion;
-	}
+	    public String getReleaseDate() { return releaseDate; }
+	    public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
 
-	public void setDuracion(LocalTime duracion) {
-		this.duracion = duracion;
-	}
+	    public double getPopularity() { return popularity; }
+	    public void setPopularity(double popularity) { this.popularity = popularity; }
 
-	public float getDuracionR() {
-		return duracionR;
-	}
+	    public int getVoteCount() { return voteCount; }
+	    public void setVoteCount(int voteCount) { this.voteCount = voteCount; }
 
-	public void setDuracionR(float duracionR) {
-		this.duracionR = duracionR;
-	}
+	    public double getVoteAverage() { return voteAverage; }
+	    public void setVoteAverage(double voteAverage) { this.voteAverage = voteAverage; }
+
+	    public String getOriginalLanguage() { return originalLanguage; }
+	    public void setOriginalLanguage(String originalLanguage) { this.originalLanguage = originalLanguage; }
+
+	    public String getPoster() { return poster; }
+	    public void setPoster(String poster) { this.poster = poster; }
+
+	    public String getStatus() { return status; }
+	    public void setStatus(String status) { this.status = status; }
+
+	    public String getUrl() { return url; }
+	    public void setUrl(String url) { this.url = url; }
+
 
 	@Override
 	public String toString() {

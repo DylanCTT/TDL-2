@@ -5,14 +5,12 @@ import java.util.List;
 public class Contenido {
 	private Integer id;
 	private Generos genero; //se utiliza esta VI para el modelado de la BD 
-	private List<String> generos;
 	private String sinopsis;
 	private String director;
 	
 	public Contenido(Integer id, Generos genero, List<String> generos, String sinopsis, String director) {
 		this.id = id;
 		this.genero = genero;
-		this.generos = generos;
 		this.sinopsis = sinopsis;
 		this.director = director;
 	}
