@@ -1,8 +1,8 @@
 package view;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class VentanaLogin extends JFrame {
 	private JLabel lblEmail = new JLabel("E-mail");

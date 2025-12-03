@@ -16,7 +16,7 @@ public class ClienteDAOjdbc implements ClienteDAO {
 		Connection conn = Conexion.getConnection();
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			
-			ps.setInt(1, DNI); 					 //rempleza el ? del rs con el DNI que me llega
+			ps.setInt(1, DNI);  					 //rempleza el ? del rs con el DNI que me llega
 			
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next() && rs.getInt(1) > 0) { //getInt obtiene el valor de COUNT(*)

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.Cliente;
 import view.VentanaPerfiles;
 import view.VentanaBienvenida;
 import view.VentanaNuevoPerfil;
@@ -13,10 +14,12 @@ import service.PeliculaService;
 public class PerfilesController {
 	private VentanaPerfiles view;
 	private PerfilService service;
+	private Cliente c;
 	
-	public PerfilesController(VentanaPerfiles view, PerfilService service) {
+	public PerfilesController(VentanaPerfiles view, PerfilService service, Cliente c) {
 		this.view = view;
 		this.service = service;
+		this.c = c;
 		
 		List<JButton> botones = view.getBotonesSeleccionar();
 		
@@ -47,7 +50,7 @@ public class PerfilesController {
 				VentanaNuevoPerfil view = new VentanaNuevoPerfil();
 				PerfilService service = new PerfilService();
 				
-				NuevoPerfilController controller = new NuevoPerfilController(view, service);
+				NuevoPerfilController controller = new NuevoPerfilController(view, service, c);
 			}
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());

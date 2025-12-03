@@ -38,7 +38,7 @@ public class LoginController {
 				ArrayList<Perfil> perfiles = (ArrayList<Perfil>) service.getPerfilesXidCliente(c.getId());
 				VentanaPerfiles view = new VentanaPerfiles(perfiles);
 				
-				PerfilesController controller = new PerfilesController(view, service);
+				PerfilesController controller = new PerfilesController(view, service, c);
 			} 
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());
