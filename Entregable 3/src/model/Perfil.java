@@ -33,6 +33,11 @@ public class Perfil implements Comparable<Perfil> {
 		this.idCliente = idCliente;
 	}
 	
+	public Perfil(String nombre, Integer idCliente) {
+		this.nombre = nombre;
+		this.idCliente = idCliente;
+	}
+	
 	public Perfil() {
 		
 	}
