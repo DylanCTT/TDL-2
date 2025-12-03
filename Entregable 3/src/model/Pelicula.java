@@ -1,58 +1,63 @@
 package model;
 
-import java.time.LocalTime;
-import java.util.List;
+import java.time.LocalDate;
 
-public class Pelicula extends Contenido {
+public class Pelicula extends Contenido {	
+	private String director;
+	private float duracion;
+	private String status;
+	private String url;
+	
+	public Pelicula(Integer id, LocalDate fechaSalida, String titulo, String resumen, double popularidad,
+			int cantVotos, double votosPromedio, String idioma, Generos genero, String poster, String sinopsis,
+			String director, float duracion, String status, String url) {
+		super(id, fechaSalida, titulo, resumen, popularidad, cantVotos, votosPromedio, idioma, genero, poster);
+		this.director = director;
+		this.duracion = duracion;
+		this.status = status;
+		this.url = url;
+	}
+	
+	public Pelicula() {
 		
-		private String titulo;
-		private float duracionR;
+	}
 
-	    // nuevos campos
-	    private String releaseDate;
-	    private double popularity;
-	    private int voteCount;
-	    private double voteAverage;
-	    private String originalLanguage;
-	    private String poster;
-	    private String status;
-	    private String url;
-	    
-	    
-	    public String getTitulo() {return titulo;}
-		public void setTitulo(String titulo) {this.titulo = titulo; }
+	public String getDirector() {
+		return director;
+	}
 
-	    public float getDuracionR() { return duracionR; }
-	    public void setDuracionR(float duracionR) { this.duracionR = duracionR; }
+	public void setDirector(String director) {
+		this.director = director;
+	}
 
-	    public String getReleaseDate() { return releaseDate; }
-	    public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
+	public float getDuracion() {
+		return duracion;
+	}
 
-	    public double getPopularity() { return popularity; }
-	    public void setPopularity(double popularity) { this.popularity = popularity; }
+	public void setDuracion(float duracion) {
+		this.duracion = duracion;
+	}
 
-	    public int getVoteCount() { return voteCount; }
-	    public void setVoteCount(int voteCount) { this.voteCount = voteCount; }
+	public String getStatus() {
+		return status;
+	}
 
-	    public double getVoteAverage() { return voteAverage; }
-	    public void setVoteAverage(double voteAverage) { this.voteAverage = voteAverage; }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-	    public String getOriginalLanguage() { return originalLanguage; }
-	    public void setOriginalLanguage(String originalLanguage) { this.originalLanguage = originalLanguage; }
+	public String getUrl() {
+		return url;
+	}
 
-	    public String getPoster() { return poster; }
-	    public void setPoster(String poster) { this.poster = poster; }
-
-	    public String getStatus() { return status; }
-	    public void setStatus(String status) { this.status = status; }
-
-	    public String getUrl() { return url; }
-	    public void setUrl(String url) { this.url = url; }
-
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	@Override
 	public String toString() {
-		return "Pelicula [" + super.toString() + ", titulo=" + titulo + ", duracionR=" + duracionR + "]";
+		return "Pelicula [director=" + director + ", duracion=" + duracion + ", status=" + status + ", url=" + url
+				+ "]";
 	}
 	
 }

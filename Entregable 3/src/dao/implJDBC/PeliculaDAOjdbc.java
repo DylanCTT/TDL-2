@@ -3,7 +3,6 @@ package dao.implJDBC;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-
 import model.Generos;
 import model.Pelicula;
 import util.Conexion;
@@ -13,31 +12,28 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 
 	@Override
 	public void guardar(Pelicula pelicula) {
-		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RELEASE_DATE, POPULARITY, VOTE_COUNT, VOTE_AVERAGE, ORIGINAL_LANGUAGE, POSTER, STATUS, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO PELICULA (FECHA_SALIDA, TITULO, RESUMEN, POPULARIDAD, CANT_VOTOS, VOTOS_PROMEDIO, IDIOMA, GENERO, POSTER, DIRECTOR, DURACION, STATUS, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		
 		Connection conn = Conexion.getConnection();
 
 	    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-	        // Campos básicos
-	        ps.setString(1, pelicula.getGenero().name());
+	        ps.setDate(1, java.sql.Date.valueOf(pelicula.getFechaSalida()));
 	        ps.setString(2, pelicula.getTitulo());
-	        ps.setString(3, pelicula.getSinopsis());
-	        ps.setString(4, pelicula.getDirector());
-	        ps.setFloat(5, pelicula.getDuracionR());
-
-	        // Campos nuevos
-	        ps.setString(6, pelicula.getReleaseDate());
-	        ps.setDouble(7, pelicula.getPopularity());
-	        ps.setInt(8, pelicula.getVoteCount());
-	        ps.setDouble(9, pelicula.getVoteAverage());
-	        ps.setString(10, pelicula.getOriginalLanguage());
-	        ps.setString(11, pelicula.getPoster());
+	        ps.setString(3, pelicula.getResumen());
+	        ps.setDouble(4, pelicula.getPopularidad());
+	        ps.setInt(5, pelicula.getCantVotos());
+	        ps.setDouble(6, pelicula.getVotosPromedio());
+	        ps.setString(7, pelicula.getIdioma());
+	        ps.setString(8, pelicula.getGenero().name());
+	        ps.setString(9, pelicula.getPoster());
+	        ps.setString(10, pelicula.getDirector());
+	        ps.setDouble(11, pelicula.getDuracion());
 	        ps.setString(12, pelicula.getStatus());
 	        ps.setString(13, pelicula.getUrl());
 
 	        ps.executeUpdate();
 	        System.out.println("Película guardada exitosamente");
+	        
 	    } catch (SQLException e) {
 	        System.out.println("Error al guardar película: " + e.getMessage());
 	    }
@@ -54,18 +50,17 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			while (rs.next()) {
 				Pelicula p = new Pelicula();
 				p.setId(rs.getInt("ID"));
-				p.setGenero(Generos.valueOf(rs.getString("GENERO")));
+				p.setFechaSalida(rs.getTimestamp("FECHA_SALIDA").toLocalDateTime().toLocalDate());
 				p.setTitulo(rs.getString("TITULO"));
-				p.setSinopsis(rs.getString("RESUMEN"));
-				p.setDirector(rs.getString("DIRECTOR"));
-				p.setDuracionR(rs.getFloat("DURACION"));
-				
-				p.setReleaseDate(rs.getString("RELEASEDATE"));
-				p.setPopularity(rs.getDouble("POPULARIDAD"));
-				p.setVoteCount(rs.getInt("VOTECOUNT"));
-				p.setVoteAverage(rs.getDouble("VOTEAVERAGE"));
-				p.setOriginalLanguage(rs.getString("OGLANGUAGE"));
+				p.setResumen(rs.getString("RESUMEN"));
+				p.setPopularidad(rs.getDouble("POPULARIDAD"));
+				p.setCantVotos(rs.getInt("CANT_VOTOS"));
+				p.setVotosPromedio(rs.getDouble("VOTOS_PROMEDIO"));
+				p.setIdioma(rs.getString("IDIOMA"));
+				p.setGenero(Generos.valueOf(rs.getString("GENERO")));
 				p.setPoster(rs.getString("POSTER"));
+				p.setDirector(rs.getString("DIRECTOR"));
+				p.setDuracion(rs.getFloat("DURACION"));
 				p.setStatus(rs.getString("STATUS"));
 				p.setUrl(rs.getString("URL"));
 				
@@ -79,7 +74,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	}
 	
 	@Override
-	public boolean validarID(Integer id) {   //a chequeaaaarr
+	public boolean validarID(Integer id) {
 		boolean existe = false;
 		String sql = "SELECT COUNT(*) FROM PELICULA WHERE ID = ?"; 
 		Connection conn = Conexion.getConnection();

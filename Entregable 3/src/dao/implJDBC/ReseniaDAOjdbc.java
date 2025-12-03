@@ -3,7 +3,6 @@ package dao.implJDBC;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-
 import model.Resenia;
 import util.Conexion;
 import dao.interfaces.ReseniaDAO;

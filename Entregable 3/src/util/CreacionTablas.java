@@ -17,8 +17,7 @@ public class CreacionTablas {
 	public void creacionDeTablasEnDB(Connection connection) throws SQLException { //connection es la conexion activa con la base de datos. usa la connection ya abierta en pruebaDB
 																				   //que haya un throws de una exception significa que quien llame al metodo este debera encargarse con un try/catch de manejar el error
 		Statement stmt = connection.createStatement(); //se crea un objeto que maneje sentencias SQL sobre esta conexion (crea, modifica, inserta o elimina tablas)
-      
-	  
+    
 		//nuestro "DATOS_PERSONALES"
 		String sql = "CREATE TABLE IF NOT EXISTS CLIENTE (" +
 					 "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + 
@@ -30,7 +29,6 @@ public class CreacionTablas {
 					 ");";       
 		stmt.executeUpdate(sql); //executeUpdate modifica la base de datos con el string sql que escribimos
  
-      
 		//nuestro "USUARIO"
 		sql = "CREATE TABLE IF NOT EXISTS PERFIL (" +
 			  "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -39,45 +37,38 @@ public class CreacionTablas {
 			  "CONSTRAINT PERFIL_CLIENTE_FK FOREIGN KEY (ID_CLIENTE) REFERENCES CLIENTE(ID)" +
 			  ");";     
 		stmt.executeUpdate(sql);
-      
-		// 	creacion de nueva tabla de peliculas acorde al .csv
-		sql = "DROP TABLE IF EXISTS PELICULA;";
-		
-		stmt.executeUpdate(sql);
 		
 		sql = "CREATE TABLE IF NOT EXISTS PELICULA (" +
-	             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-	             "GENERO TEXT NOT NULL," +
-	             "TITULO TEXT(100) NOT NULL," +
-	             "RESUMEN TEXT NOT NULL," +
-	             "DIRECTOR TEXT(100)," +
-	             "DURACION REAL," +
-	             "RELEASE_DATE TEXT," +
-	             "POPULARITY REAL," +
-	             "VOTE_COUNT INTEGER," +
-	             "VOTE_AVERAGE REAL," +
-	             "ORIGINAL_LANGUAGE TEXT," +
-	             "POSTER TEXT," +
-	             "STATUS TEXT," +
-	             "URL TEXT" +
-	             ");";
+	          "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+			  "FECHA_SALIDA DATETIME NOT NULL," +
+	          "TITULO TEXT(100) NOT NULL," +
+		      "RESUMEN TEXT NOT NULL," +
+	          "POPULARIDAD REAL NOT NULL," +
+		      "CANT_VOTOS INTEGER NOT NULL," +
+	          "VOTOS_PROMEDIO REAL NOT NULL," +
+			  "IDIOMA TEXT NOT NULL," +
+	          "GENERO TEXT NOT NULL," +
+			  "POSTER TEXT NOT NULL," +
+	          "DIRECTOR TEXT(100)," +
+	          "DURACION REAL," +	             	             	             	           	          
+	          "STATUS TEXT," +
+	          "URL TEXT" +
+	          ");";
 		stmt.executeUpdate(sql);
- 
   
+		sql = "CREATE TABLE IF NOT EXISTS RESENIA (" + 
+			  "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+			  "PUNTAJE INTEGER NOT NULL," +
+			  "CONTENIDO TEXT(500)," +  
+			  "APROBADA INTEGER DEFAULT (1) NOT NULL," + 
+			  "FECHA DATETIME NOT NULL," +
+			  "ID_PERFIL INTEGER NOT NULL," + 
+			  "ID_PELICULA INTEGER NOT NULL," + 
+			  "CONSTRAINT RESENIA_PERFIL_FK FOREIGN KEY (ID_PERFIL) REFERENCES PERFIL(ID),"+ 
+			  "CONSTRAINT RESENIA_PELICULA_FK FOREIGN KEY (ID_PELICULA) REFERENCES PELICULA(ID)"+ 
+			  ");";   
+		stmt.executeUpdate(sql); 
       
-      sql = "CREATE TABLE IF NOT EXISTS RESENIA (" + 
-    		"ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-    		"PUNTAJE INTEGER NOT NULL," +
-    		"CONTENIDO TEXT(500)," +  
-    		"APROBADA INTEGER DEFAULT (1) NOT NULL," + 
-    		"FECHA DATETIME NOT NULL," +
-    		"ID_PERFIL INTEGER NOT NULL," + 
-    		"ID_PELICULA INTEGER NOT NULL," + 
-    		"CONSTRAINT RESENIA_PERFIL_FK FOREIGN KEY (ID_PERFIL) REFERENCES PERFIL(ID),"+ 
-    		"CONSTRAINT RESENIA_PELICULA_FK FOREIGN KEY (ID_PELICULA) REFERENCES PELICULA(ID)"+ 
-    		");";   
-      stmt.executeUpdate(sql); 
-      
-      stmt.close(); //cierra el objeto statement, para no dejar conexiones abiertas
+		stmt.close(); //cierra el objeto statement, para no dejar conexiones abiertas
 	}
 }
