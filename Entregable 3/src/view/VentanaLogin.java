@@ -22,8 +22,10 @@ public class VentanaLogin extends JFrame {
 
 		//Agrego colores lindos
 		lblEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		//lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		tfEmail.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPassword.setFont(new Font("Calibri", Font.BOLD, 14));
+		//lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		btnIngresar.setBackground(Color.BLUE);
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setFont(new Font("Calibri", Font.BOLD, 14));

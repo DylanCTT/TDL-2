@@ -11,8 +11,6 @@ import util.Conexion;
 
 
 public class PeliculaService {
-
-	
 	public static List<Pelicula> cargarPeliculas(String rutaCSV) {
         List<Pelicula> lista = new ArrayList<>();
 
