@@ -35,10 +35,9 @@ public class VentanaCalificarPelicula extends JPanel {
         lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
         crearEstrellas(pnlCalificacion);
         
-        // Panel para la calificación
-        JPanel pnlCalificacionCompleto = new JPanel(new BorderLayout());
-        pnlCalificacionCompleto.add(lblCalificacion, BorderLayout.NORTH);
-        pnlCalificacionCompleto.add(pnlCalificacion, BorderLayout.CENTER);
+        JPanel pnlCalificacion = new JPanel(new BorderLayout());
+        pnlCalificacion.add(lblCalificacion, BorderLayout.NORTH);
+        pnlCalificacion.add(pnlCalificacion, BorderLayout.CENTER);
         
         lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
         
@@ -51,7 +50,7 @@ public class VentanaCalificarPelicula extends JPanel {
         pnlComentario.add(scrollComentario, BorderLayout.CENTER);
         
         pnlCentro.setLayout(new GridLayout(2,1));
-        pnlCentro.add(pnlCalificacionCompleto);
+        pnlCentro.add(pnlCalificacion);
         pnlCentro.add(pnlComentario);
         
         btnGuardar.setBackground(Color.BLUE);
