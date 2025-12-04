@@ -13,7 +13,7 @@ public class Vista extends JFrame {
         	
         setTitle("VYZYALIZE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 1000);
+        setSize(950, 950);
      
         
         //Panel principal
