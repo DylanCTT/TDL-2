@@ -9,7 +9,7 @@ public class Vista extends JFrame {
     public Vista () {
     	setTitle("VYZYALIZE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 1000);
+        setSize(950, 950);
      
         ventanaMain = new VentanaPrincipal ();
     
