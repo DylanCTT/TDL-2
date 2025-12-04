@@ -34,8 +34,6 @@ public class VentanaNuevoPerfil extends JPanel {
         panelCentral.setBorder(BorderFactory.createEmptyBorder(100, 50, 100, 50));
 
         lblNombre.setFont(new Font("Calibri", Font.BOLD, 18));
-        
-
         tfNombre.setPreferredSize(new Dimension(300, 35));
 
         lblColores.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -51,13 +49,8 @@ public class VentanaNuevoPerfil extends JPanel {
         // Campo nombre
         gbc.gridx = 0; gbc.gridy = 0;
         panelCentral.add(lblNombre, gbc);
-
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
         panelCentral.add(tfNombre, gbc);
-
 
         // Campo color
         gbc.gridx = 0; gbc.gridy = 1;

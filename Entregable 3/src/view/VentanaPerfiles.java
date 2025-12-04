@@ -8,44 +8,64 @@ import javax.swing.*;
 import model.Perfil;
 
 public class VentanaPerfiles extends JPanel {
-	private JLabel lblTitulo = new JLabel("Quien esta viendo ahora?");
-	private JPanel pnlPerfiles = new JPanel(new GridLayout(0, 3, 10, 10));
-	private List<JButton> botonesSeleccionar = new ArrayList<>();
-	private JButton btnAgregarPerfil = new JButton("Agregar perfil");
-	
-	public VentanaPerfiles() {
-		this(new ArrayList<Perfil>());
-	}
-	
-	public VentanaPerfiles(ArrayList<Perfil> perfiles) {
-		setLayout(new BorderLayout());
+    private JLabel lblTitulo = new JLabel("¿Quién está viendo ahora?");
+    private JPanel pnlPerfiles = new JPanel(new GridLayout(0, 3, 20, 20));
+    private List<JButton> botonesSeleccionar = new ArrayList<>();
+    private JButton btnAgregarPerfil = new JButton("Agregar perfil");
 
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER); //centra en el centro je
-		add(lblTitulo, BorderLayout.NORTH);
-		
-		for (Perfil p : perfiles) {
-			JPanel pnlPerfil = new JPanel(new BorderLayout());
-			pnlPerfil.setBackground(Color.GREEN);
-			
-			JLabel lblNombre = new JLabel(p.getNombre());
-			lblNombre.setForeground(Color.WHITE);
-			lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+    public VentanaPerfiles() {
+        this(new ArrayList<Perfil>());
+    }
 
-			JButton btnSeleccion = new JButton("Seleccionar");
-			botonesSeleccionar.add(btnSeleccion);
-			
-			pnlPerfil.add(lblNombre, BorderLayout.CENTER);
-			pnlPerfil.add(btnSeleccion, BorderLayout.SOUTH);
-			
-			pnlPerfiles.add(pnlPerfil);
-		}
-		
-		add(pnlPerfiles, BorderLayout.CENTER);
-		
-		add(btnAgregarPerfil, BorderLayout.SOUTH);
-	}
+    public VentanaPerfiles(ArrayList<Perfil> perfiles) {
+        setLayout(new BorderLayout());
+
+        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        add(lblTitulo, BorderLayout.NORTH);
+
+        // Panel contenedor para centrar pnlPerfiles
+        JPanel contenedorCentral = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        contenedorCentral.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+        // Limitar tamaño del panel de perfiles
+        pnlPerfiles.setPreferredSize(new Dimension(700, 500)); // ajustá según tu ventana
+        pnlPerfiles.setOpaque(false);
+
+        for (Perfil p : perfiles) {
+            JPanel pnlPerfil = new JPanel(new BorderLayout());
+            pnlPerfil.setBackground(new Color(0, 153, 0)); // verde más suave
+            pnlPerfil.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+            pnlPerfil.setPreferredSize(new Dimension(200, 200));
+
+            JLabel lblNombre = new JLabel(p.getNombre());
+            lblNombre.setForeground(Color.WHITE);
+            lblNombre.setFont(new Font("Calibri", Font.BOLD, 16));
+            lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+
+            JButton btnSeleccion = new JButton("Seleccionar");
+            botonesSeleccionar.add(btnSeleccion);
+
+            pnlPerfil.add(lblNombre, BorderLayout.CENTER);
+            pnlPerfil.add(btnSeleccion, BorderLayout.SOUTH);
+
+            pnlPerfiles.add(pnlPerfil);
+        }
+
+        contenedorCentral.add(pnlPerfiles);
+        add(contenedorCentral, BorderLayout.CENTER);
+
+        // Botón inferior
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        btnAgregarPerfil.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnAgregarPerfil.setPreferredSize(new Dimension(180, 40));
+        panelInferior.setBorder(BorderFactory.createEmptyBorder(20, 0, 30, 0));
+        panelInferior.add(btnAgregarPerfil);
+
+        add(panelInferior, BorderLayout.SOUTH);
+    }
+
 	
 	public void addSeleccionarListener(ActionListener l) {
 		for (JButton b : botonesSeleccionar) {
