@@ -21,7 +21,6 @@ public class InfoPeliculaController {
 	class ContinuarListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
-				// Volver a la vista de bienvenida
 				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}
 			catch(Exception exc) {

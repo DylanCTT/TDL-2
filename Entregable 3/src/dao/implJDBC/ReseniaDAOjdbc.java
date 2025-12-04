@@ -17,10 +17,10 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 		  
 		  ps.setInt(1, resenia.getPuntaje());
-		  ps.setString(2, resenia.getContenido());
+		  ps.setString(2, resenia.getComentario());
 		  ps.setBoolean(3, resenia.isAprobada());
 		  ps.setTimestamp(4, Timestamp.valueOf(resenia.getFecha()));
-		  ps.setInt(5, resenia.getIdCliente());
+		  ps.setInt(5, resenia.getIdPerfil());
 		  ps.setInt(6, resenia.getIdContenido());
 		  
 		  ps.executeUpdate();
@@ -44,10 +44,10 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 				Resenia r = new Resenia();
 				r.setId(rs.getInt("ID"));
 				r.setPuntaje(rs.getInt("PUNTAJE"));
-				r.setContenido(rs.getString("CONTENIDO"));
+				r.setComentario(rs.getString("CONTENIDO"));
 				r.setAprobada(rs.getBoolean("APROBADA"));
 				r.setFecha(rs.getTimestamp("FECHA").toLocalDateTime());
-				r.setIdCliente(rs.getInt("ID_PERFIL"));
+				r.setIdPerfil(rs.getInt("ID_PERFIL"));
 				r.setIdContenido(rs.getInt("ID_PELICULA"));
 				lista.add(r);
 			}
@@ -93,10 +93,10 @@ public class ReseniaDAOjdbc implements ReseniaDAO {
 				if (rs.next()) {
 					r.setId(rs.getInt("ID"));
 					r.setPuntaje(rs.getInt("PUNTAJE"));
-					r.setContenido(rs.getString("CONTENIDO"));
+					r.setComentario(rs.getString("CONTENIDO"));
 					r.setAprobada(rs.getBoolean("APROBADA"));
 					r.setFecha(rs.getTimestamp("FECHA").toLocalDateTime());
-					r.setIdCliente(rs.getInt("ID_PERFIL"));
+					r.setIdPerfil(rs.getInt("ID_PERFIL"));
 					r.setIdContenido(rs.getInt("ID_PELICULA"));
 				}
 			}

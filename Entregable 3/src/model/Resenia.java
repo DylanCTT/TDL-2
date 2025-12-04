@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * Representa un comentario/opinion/puntaje que va a dejar un usuario sobre un contenido
+ * Representa un comentario/opinion/puntaje que va a dejar un usuario sobre un comentario
  * @author dylan y valen
  * @version 1.0
  * @since 12-9-2025
@@ -11,22 +11,29 @@ import java.time.LocalDateTime;
 
 public class Resenia {
 	private Integer id;
-	private String contenido;
+	private String comentario;
 	private int puntaje;
 	private boolean aprobada;
 	private LocalDateTime fecha;
-	private String nomUsuario;
-	private Integer idCliente;
+	private Integer idPerfil;
 	private Integer idContenido;
   
-	public Resenia(Integer id, String contenido, int puntaje, boolean aprobada, LocalDateTime fecha, String nomUsuario, Integer idCliente, Integer idContenido) {
+	public Resenia(Integer id, String comentario, int puntaje, boolean aprobada, LocalDateTime fecha, Integer idPerfil, Integer idContenido) {
 		this.id = id;
-		this.contenido = contenido;
+		this.comentario = comentario;
 		this.puntaje = puntaje;
 		this.aprobada = aprobada;
 		this.fecha = fecha;
-		this.nomUsuario = nomUsuario;
-		this.idCliente = idCliente;
+		this.idPerfil = idPerfil;
+		this.idContenido = idContenido;
+	}
+	
+	public Resenia(String comentario, int puntaje, boolean aprobada, LocalDateTime fecha, Integer idPerfil, Integer idContenido) {
+		this.comentario = comentario;
+		this.puntaje = puntaje;
+		this.aprobada = aprobada;
+		this.fecha = fecha;
+		this.idPerfil = idPerfil;
 		this.idContenido = idContenido;
 	}
   
@@ -42,12 +49,12 @@ public class Resenia {
 		this.id = id;
 	}
 
-	public String getContenido() {
-		return contenido;
+	public String getComentario() {
+		return comentario;
 	}
 
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
 	public int getPuntaje() {
@@ -74,20 +81,12 @@ public class Resenia {
 		this.fecha = fecha;
 	}
 
-	public String getNomUsuario() {
-		return nomUsuario;
+	public Integer getIdPerfil() {
+		return idPerfil;
 	}
 
-	public void setNomUsuario(String nomUsuario) {
-		this.nomUsuario = nomUsuario;
-	}
-
-	public Integer getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
+	public void setIdPerfil(Integer idPerfil) {
+		this.idPerfil = idPerfil;
 	}
 
 	public Integer getIdContenido() {
@@ -100,7 +99,7 @@ public class Resenia {
 
 	@Override
 	public String toString() {
-		return "Resenia [contenido=" + contenido + ", puntaje=" + puntaje + ", aprobada=" + aprobada + ", fecha="
+		return "Resenia [comentario=" + comentario + ", puntaje=" + puntaje + ", aprobada=" + aprobada + ", fecha="
 				+ fecha + "]";
 	}
   
