@@ -5,74 +5,63 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VentanaLogin extends JPanel {
-	private JLabel lblEmail = new JLabel("E-mail");
-	private JTextField tfEmail = new JTextField(50);
-	private JLabel lblPassword = new JLabel("Contrasenia");
-	private JPasswordField tfPassword = new JPasswordField(50);
-	private JButton btnIngresar = new JButton("Ingresar");
-	private JButton btnRegistrate = new JButton("Registrarte");
-	
-	public VentanaLogin() {
-		        setLayout(new BorderLayout());
-		        
-		        JLabel imagen = new JLabel(new ImageIcon("C:\\Users\\clatd\\OneDrive\\Escritorio\\Informatica\\TDL-2\\Entregable 3\\Logo Popcorn Caricatura.png"));
-		        imagen.setPreferredSize(new Dimension(500, 500)); // ajustá según tu imagen
-		        add(imagen, BorderLayout.WEST);
-		            setLayout(new BorderLayout());
+    private JLabel lblEmail = new JLabel("E-mail: ");
+    private JTextField tfEmail = new JTextField(20);
+    private JLabel lblPassword = new JLabel("Contrasenia: ");
+    private JPasswordField tfPassword = new JPasswordField(20);
+    private JButton btnIngresar = new JButton("Ingresar");
+    private JButton btnRegistrarte = new JButton("Registrarte");
 
-		            // Imagen decorativa a la izquierda
-		            JLabel imagenDecorativa = new JLabel(new ImageIcon("assets/login_banner.png")); // ajustá la ruta
-		            imagenDecorativa.setPreferredSize(new Dimension(300, 600));
-		            add(imagenDecorativa, BorderLayout.WEST);
+        public VentanaLogin() {
+            setLayout(new BorderLayout());
 
-		            // Panel central con campos y botones
-		            JPanel panelCentro = new JPanel(new GridBagLayout());
-		            panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50)); // margen interno
+            // Imagen a la izquierda
+            JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caticatura.png"));
+            imagen.setPreferredSize(new Dimension(500, 500)); 
+            add(imagen, BorderLayout.WEST);
 
-		            GridBagConstraints gbc = new GridBagConstraints();
-		            gbc.insets = new Insets(10, 10, 10, 10);
-		            gbc.anchor = GridBagConstraints.WEST;
-		            gbc.fill = GridBagConstraints.HORIZONTAL;
+            // anel central con campos
+            JPanel panelCentro = new JPanel();
+            panelCentro.setLayout(new GridBagLayout());
+            panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50)); // margen interno
 
-		            // Email
-		            gbc.gridx = 0; gbc.gridy = 0;
-		            panelCentro.add(lblEmail, gbc);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(10, 10, 10, 10); // espacio entre componentes
+            gbc.anchor = GridBagConstraints.WEST;   // alinear a la izquierda
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridx = 0; gbc.gridy = 0;
+            panelCentro.add(lblEmail, gbc);
 
-		            gbc.gridx = 1;
-		            panelCentro.add(tfEmail, gbc);
+            gbc.gridx = 1;
+            panelCentro.add(tfEmail, gbc);
 
-		            // Contraseña
-		            gbc.gridx = 0; gbc.gridy = 1;
-		            panelCentro.add(lblPassword, gbc);
+            gbc.gridx = 0; gbc.gridy = 1;
+            panelCentro.add(lblPassword, gbc);
 
-		            gbc.gridx = 1;
-		            panelCentro.add(tfPassword, gbc);
+            gbc.gridx = 1;
+            panelCentro.add(tfPassword, gbc);
 
-		         // Panel para los botones
-		            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
-		            btnIngresar.setPreferredSize(new Dimension(120, 30));
-		            btnRegistrate.setPreferredSize(new Dimension(120, 30));
+            gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
+            gbc.anchor = GridBagConstraints.CENTER;
 
-		            // Agregar ambos botones al panel
-		            panelBotones.add(btnIngresar);
-		            panelBotones.add(btnRegistrate);
+            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
 
-		            // Agregar el panel de botones al panel principal
-		            gbc.gridx = 0;
-		            gbc.gridy = 2;
-		            gbc.gridwidth = 2;
-		            gbc.anchor = GridBagConstraints.CENTER;
-		            panelCentro.add(panelBotones, gbc);
+            btnIngresar.setPreferredSize(new Dimension(120, 30));
+            btnRegistrarte.setPreferredSize(new Dimension(120, 30));
 
-		            add(panelCentro, BorderLayout.CENTER);
-		    }
+            panelBotones.add(btnIngresar);
+            panelBotones.add(btnRegistrarte);
+            panelCentro.add(panelBotones, gbc);
+
+            add(panelCentro, BorderLayout.CENTER);
+        }
 
 	public void addIngresarListener(ActionListener l) {
 		btnIngresar.addActionListener(l);
 	}
 	
 	public void addRegistrateListener(ActionListener l) {
-		btnRegistrate.addActionListener(l);
+		btnRegistrarte.addActionListener(l);
 	}
 	
 	public String getEmail() {
@@ -88,7 +77,7 @@ public class VentanaLogin extends JPanel {
 	}
 
 	public JButton getBotonRegistrate() {
-		return btnRegistrate;
+		return btnRegistrarte;
 	}
 	
 	public void mostrarMensaje(String msj) {
