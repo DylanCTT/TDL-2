@@ -5,6 +5,15 @@ import java.awt.event.*;
 import javax.swing.*;
 import model.Pelicula;
 
+<<<<<<< HEAD
+public class VentanaCalificarPelicula extends JPanel {
+    private JLabel[] estrellas = new JLabel[5];
+    private int puntuacionSeleccionada = 0;
+    private JTextArea campoComentario = new JTextArea(5, 30);
+    private JButton botonGuardar = new JButton("Guardar");
+
+    public VentanaCalificarPelicula() {
+=======
 public class VentanaCalificarPelicula extends JFrame {
 	private JLabel lblTitulo;
 	private JPanel pnlCentro = new JPanel();
@@ -23,6 +32,7 @@ public class VentanaCalificarPelicula extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
         setLocationRelativeTo(null);
+>>>>>>> b0bd761e6a4257010556f7f65872a4cbbe8ebea5
         setLayout(new BorderLayout());
    
         lblTitulo = new JLabel(p.getTitulo(), SwingConstants.CENTER);         
@@ -31,6 +41,16 @@ public class VentanaCalificarPelicula extends JFrame {
         lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
         crearEstrellas(pnlCalificacion);
         
+<<<<<<< HEAD
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        panelInferior.add(new JLabel("Comentario:"), BorderLayout.NORTH);
+        panelInferior.add(new JScrollPane(campoComentario), BorderLayout.CENTER);
+        panelInferior.add(botonGuardar, BorderLayout.SOUTH);
+
+        add(panelInferior, BorderLayout.SOUTH);
+=======
         lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
         
         taComentario.setFont(new Font("Calibri", Font.BOLD, 13));
@@ -54,6 +74,7 @@ public class VentanaCalificarPelicula extends JFrame {
         add(btnGuardar, BorderLayout.SOUTH);
            
         setVisible(true);
+>>>>>>> b0bd761e6a4257010556f7f65872a4cbbe8ebea5
     }
 
     private void crearEstrellas(JPanel pnlCalifiacion) {

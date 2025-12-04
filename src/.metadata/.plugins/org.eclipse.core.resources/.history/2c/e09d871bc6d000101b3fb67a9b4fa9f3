@@ -11,6 +11,3 @@
 /PerfilesController$AgregarPerfilListener.class
 /NuevoPerfilController$CrearPerfilListener.class
 /BienvenidaController$CargaPeliculasTask.class
-/CalificarPeliculaController$GuardarListener.class
-/InfoPeliculaController$ContinuarListener.class
-/InfoPeliculaController.class
