@@ -3,17 +3,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class VentanaCalificarPelicula extends JFrame {
+public class VentanaCalificarPelicula extends JPanel {
     private JLabel[] estrellas = new JLabel[5];
     private int puntuacionSeleccionada = 0;
     private JTextArea campoComentario = new JTextArea(5, 30);
     private JButton botonGuardar = new JButton("Guardar");
 
     public VentanaCalificarPelicula() {
-        setTitle("Calificar Película");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         
@@ -40,7 +36,6 @@ public class VentanaCalificarPelicula extends JFrame {
         panelInferior.add(botonGuardar, BorderLayout.SOUTH);
 
         add(panelInferior, BorderLayout.SOUTH);
-        setVisible(true);
     }
 
     

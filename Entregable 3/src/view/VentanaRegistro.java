@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class VentanaRegistro extends JFrame {
+public class VentanaRegistro extends JPanel {
 	private JLabel lblNombres = new JLabel("Nombres");
 	private JTextField tfNombres = new JTextField(10);
 	private JLabel lblApellidos = new JLabel("Apellidos");
@@ -18,11 +18,6 @@ public class VentanaRegistro extends JFrame {
 	private JButton btnRegistrar = new JButton("Registrarse");
 	
 	public VentanaRegistro () {
-		setTitle("Registro");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 250);
-		setResizable(false);
-		setLocationRelativeTo(null); //abre la ventana en el centro de la pantalla
 		setLayout(new GridLayout(6,1));
 		
 		lblNombres.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -52,8 +47,6 @@ public class VentanaRegistro extends JFrame {
 		add(new JLabel(" "));
 		
 		add(btnRegistrar);
-		
-		setVisible(true);
 	}
 	
 	public void addRegistrarListener(ActionListener l) {

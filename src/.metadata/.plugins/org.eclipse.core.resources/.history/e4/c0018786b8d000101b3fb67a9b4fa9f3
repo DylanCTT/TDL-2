@@ -1,0 +1,19 @@
+package view;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class VentanaPrincipal extends JFrame {
+
+    private VentanaLogin ventanaLogin;
+    private VentanaRegistro ventanaRegistro;
+    private VentanaPerfiles ventanaPerfiles;
+    private VentanaNuevoPerfil ventanaNuevoPerfil;
+    private VentanaInfoPelicula ventanaInfoPelicula;
+    private VentanaBienvenida ventanaBienvenida;
+    private VentanaCalificarPelicula ventanaCalificarPelicula;
+    
+    
+}

@@ -5,15 +5,18 @@ import java.awt.*;
 import javax.swing.*;
 import model.Pelicula;
 import view.VentanaBienvenida;
+import view.VentanaPrincipal;
 import service.PeliculaService;
 
 public class BienvenidaController {
 	private VentanaBienvenida view;
 	private PeliculaService service;
+	private VentanaPrincipal ventanaPrincipal;
 	
-	public BienvenidaController(VentanaBienvenida view, PeliculaService service) {
+	public BienvenidaController(VentanaBienvenida view, PeliculaService service, VentanaPrincipal ventanaPrincipal) {
 		this.view = view;
 		this.service = service;
+		this.ventanaPrincipal = ventanaPrincipal;
 		
 		view.mostrarPantalla("espera");
 		

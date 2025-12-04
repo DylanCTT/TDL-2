@@ -1,0 +1,46 @@
+package view;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class VentanaPrincipal extends JFrame {
+
+    private CardLayout cardLayout;
+    private JPanel contenedorVistas;
+    private Map<String, JPanel> vistas;
+
+    public VentanaPrincipal() {
+        setTitle("App de Películas");
+        setSize(900, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        cardLayout = new CardLayout();
+        contenedorVistas = new JPanel(cardLayout);
+        vistas = new HashMap<>();
+
+        // Instanciar todas las vistas
+        agregarVista("LOGIN", new VentanaLogin());
+        agregarVista("REGISTRO", new VentanaRegistro());
+        agregarVista("PERFILES", new VentanaPerfiles(this));
+        agregarVista("NUEVO_PERFIL", new VentanaNuevoPerfil());
+        agregarVista("BIENVENIDA", new VentanaBienvenida(Peliculas));
+        agregarVista("CALIFICAR", new VentanaCalificarPelicula());
+        agregarVista("INFO", new VentanaInfoPelicula());
+
+        add(contenedorVistas);
+        mostrarVista("LOGIN"); // vista inicial
+    }
+
+    private void agregarVista(String nombre, JFrame vista) {
+        vistas.put(nombre, vista);
+        contenedorVistas.add(vista, nombre);
+    }
+
+    public void mostrarVista(String nombre) {
+        cardLayout.show(contenedorVistas, nombre);
+    }
+}
+

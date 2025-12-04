@@ -30,9 +30,14 @@ public class Main {
 			System.out.println("Error de Base de datos: " + e.getMessage());
 		}
 		
-		VentanaLogin view = new VentanaLogin();
+		// Crear la vista principal
+		Vista vista = new Vista();
+		VentanaPrincipal ventanaPrincipal = vista.getPanelMain();
+		
+		// Obtener la ventana de login y crear el controlador
+		VentanaLogin ventanaLogin = ventanaPrincipal.getVentanaLogin();
 		ClienteService service = new ClienteService();
 		
-		LoginController controller = new LoginController(view, service);
+		LoginController controller = new LoginController(ventanaLogin, service, ventanaPrincipal);
 	}
 }

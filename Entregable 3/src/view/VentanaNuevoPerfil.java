@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class VentanaNuevoPerfil extends JFrame {
+public class VentanaNuevoPerfil extends JPanel {
 	private JLabel lblNombre = new JLabel("Nombre perfil");
 	private JTextField tfNombre = new JTextField(50);
 	private JLabel lblColores = new JLabel("Color");
@@ -13,11 +13,6 @@ public class VentanaNuevoPerfil extends JFrame {
 	private JButton btnCrearPerfil = new JButton("Crear perfil");
 	
 	public VentanaNuevoPerfil() {
-		setTitle("Creacion perfil");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 300);
-		setResizable(false);
-		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 2, 5, 5));
 		
 		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -30,8 +25,6 @@ public class VentanaNuevoPerfil extends JFrame {
 		add(lblNombre); add(tfNombre);
 		add(lblColores); add(color);
 		add(btnCrearPerfil);
-		
-		setVisible(true);
 	}
 	
 	public void addCrearPerfilListener(ActionListener l) {

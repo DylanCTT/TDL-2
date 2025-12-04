@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+/home/dylan/Escritorio/Informatica/TDL-2/src/.metadata/.plugins/org.eclipse.jdt.core
+900586112.index
+1865797976.index
+2863757875.index

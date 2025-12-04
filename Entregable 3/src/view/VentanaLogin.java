@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class VentanaLogin extends JFrame {
+public class VentanaLogin extends JPanel {
 	private JLabel lblEmail = new JLabel("E-mail");
 	private JTextField tfEmail = new JTextField(50);
 	private JLabel lblPassword = new JLabel("Contrasenia");
@@ -13,11 +13,6 @@ public class VentanaLogin extends JFrame {
 	private JButton btnRegistrate = new JButton("Registrarte");
 	
 	public VentanaLogin() {
-		setTitle("Bienvenido a la Plataforma de Streaming");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 300);
-		setResizable(false);
-		setLocationRelativeTo(null);
 		setLayout(new GridLayout(4,2));
 
 		//Agrego colores lindos
@@ -40,8 +35,6 @@ public class VentanaLogin extends JFrame {
 		add(btnIngresar);
 		add(new JLabel("¿Todavia no tenes cuenta?"));
 		add(btnRegistrate);
-
-		setVisible(true);
 	}
 
 	public void addIngresarListener(ActionListener l) {

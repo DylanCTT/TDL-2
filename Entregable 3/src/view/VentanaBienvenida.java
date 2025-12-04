@@ -1,86 +1,90 @@
 package view;
 
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import model.Pelicula;
 
-public class VentanaBienvenida extends JFrame {
-	private JLabel lblBienvenida= new JLabel("Bienvenido a la plataforma de streaming");
-	private CardLayout layout = new CardLayout();
-	private JPanel pnlContenedor = new JPanel(layout);
-	private JPanel pnlEspera = new JPanel(new BorderLayout());
-	private JLabel msjEspera = new JLabel("Cargando películas... Un momento por favor...", SwingConstants.CENTER);
-	private JPanel pnlPeliculas = new JPanel();
-	private JScrollPane scroll;
-	private JLabel lblPoster = new JLabel("Poster");
-	private JLabel lblTitulo = new JLabel("Titulo");
-	private JLabel lblGenero = new JLabel("Genero");
-	private JLabel lblResumen = new JLabel("Resumen");
-	private JButton[] botonesCalificar;
-	private ArrayList<JPanel> tarjetasPeliculas = new ArrayList<>();
+public class VentanaBienvenida extends JPanel {
 
-	public VentanaBienvenida() {
-		setTitle("Plataforma de Streaming");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 600);
-		setResizable(false);
-		setLocationRelativeTo(null);
+    private JPanel panelPrincipal;
+    private CardLayout cardLayout;
+    private JPanel panelCargando;
+    private JPanel panelPeliculas;
 
-		add(pnlContenedor); 	
+    public VentanaBienvenida(List<Pelicula> peliculas) {
+        cardLayout = new CardLayout();
+        panelPrincipal = new JPanel(cardLayout);
+        setLayout(new BorderLayout());
 
-		lblBienvenida.setFont(new Font("Calibri", Font.BOLD, 22));
-		
-		/*msjEspera.setFont(new Font("Calibri", Font.BOLD, 20));
-		pnlEspera.add(msjEspera, BorderLayout.CENTER);
-		pnlEspera.add(lblBienvenida);
-		pnlContenedor.add(pnlEspera, "espera");*/
-		
-		// vista de películas con un panel con scroll
-		
-		lblPoster.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblGenero.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblResumen.setFont(new Font("Calibri", Font.BOLD, 20));
-		
-		pnlPeliculas.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
-		pnlPeliculas.add(lblBienvenida);
-		pnlPeliculas.add(lblPoster);
-		pnlPeliculas.add(lblTitulo);
-		pnlPeliculas.add(lblGenero);
-		pnlPeliculas.add(lblResumen);
-		
-		scroll = new JScrollPane(pnlPeliculas);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		pnlContenedor.add(scroll, "peliculas"); //se agrega el scroll y no el panelPeliculas porque el scroll envuelve al panel
-		
-		setVisible(true);
-	}
-	
-	public JPanel getPanelContenedor() {
-		return pnlContenedor;
-	}
-	
-	public void mostrarPantalla(String pantalla) {
-		switch (pantalla) {
-			case "espera": 
-				layout.show(pnlContenedor, "espera");
-				break;
-			case "pelicula":
-				layout.show(pnlContenedor, "peliculas");
-				break;
-		}
-	}
-	
-	public void mostrarPeliculas(List<Pelicula> peliculas) {
-		for (Pelicula p : peliculas) {
-		
-		}
-	}
-	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new VentanaBienvenida());
-	}
+        // Panel de carga
+        panelCargando = new JPanel(new BorderLayout());
+        JLabel lblCargando = new JLabel("Cargando películas...", SwingConstants.CENTER);
+        lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
+        panelCargando.add(lblCargando, BorderLayout.CENTER);
+
+        // Panel de películas
+        panelPeliculas = new JPanel();
+        panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
+
+        if (peliculas != null) {
+            for (Pelicula p : peliculas) {
+                agregarPelicula(p);
+            }
+        }
+
+        panelPrincipal.add(panelCargando, "CARGANDO");
+        panelPrincipal.add(new JScrollPane(panelPeliculas), "PELICULAS");
+
+        add(panelPrincipal, BorderLayout.CENTER);
+        
+        // Mostrar pantalla de carga por defecto
+        mostrarPantalla("espera");
+    }
+    
+    public void mostrarPantalla(String pantalla) {
+        if (pantalla.equals("espera") || pantalla.equals("CARGANDO")) {
+            cardLayout.show(panelPrincipal, "CARGANDO");
+        } else if (pantalla.equals("peliculas") || pantalla.equals("PELICULAS")) {
+            cardLayout.show(panelPrincipal, "PELICULAS");
+        }
+    }
+    
+    public void mostrarPeliculas(List<Pelicula> peliculas) {
+        panelPeliculas.removeAll();
+        
+        for (Pelicula p : peliculas) {
+            agregarPelicula(p);
+        }
+        
+        panelPeliculas.revalidate();
+        panelPeliculas.repaint();
+    }
+    
+    private void agregarPelicula(Pelicula p) {
+        JPanel tarjeta = new JPanel(new BorderLayout());
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel lblTitulo = new JLabel(p.getTitulo());
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+
+        JTextArea txtResumen = new JTextArea(p.getResumen());
+        txtResumen.setLineWrap(true);
+        txtResumen.setWrapStyleWord(true);
+        txtResumen.setEditable(false);
+
+        JButton btnCalificar = new JButton("Calificar");
+        
+        tarjeta.add(lblTitulo, BorderLayout.NORTH);
+        tarjeta.add(new JScrollPane(txtResumen), BorderLayout.CENTER);
+        tarjeta.add(btnCalificar, BorderLayout.SOUTH);
+
+        panelPeliculas.add(tarjeta);
+    }
+    
+    public void mostrarMensajeError(String msj) {
+        JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+   
 }

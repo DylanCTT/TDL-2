@@ -1,0 +1,24 @@
+package view;
+
+public enum VentanasEnum {
+	ACTIVOS("activos"),
+	COTIZACIONES("cotizaciones"),
+	LOGIN("login"),
+	HISTORIAL("historial"),
+	REGISTRO("registro"),
+	COMPRA("compra");
+	
+	private String nombre;
+	
+	 VentanasEnum(String nombre) {
+		this.setNombre(nombre);
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+}

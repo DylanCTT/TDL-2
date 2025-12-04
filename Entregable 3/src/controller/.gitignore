@@ -9,3 +9,5 @@
 /PerfilesController.class
 /NuevoPerfilController.class
 /PerfilesController$AgregarPerfilListener.class
+/NuevoPerfilController$CrearPerfilListener.class
+/BienvenidaController$CargaPeliculasTask.class

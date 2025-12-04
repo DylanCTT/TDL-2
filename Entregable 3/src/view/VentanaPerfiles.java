@@ -7,18 +7,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import model.Perfil;
 
-public class VentanaPerfiles extends JFrame {
+public class VentanaPerfiles extends JPanel {
 	private JLabel lblTitulo = new JLabel("Quien esta viendo ahora?");
 	private JPanel pnlPerfiles = new JPanel(new GridLayout(0, 3, 10, 10));
 	private List<JButton> botonesSeleccionar = new ArrayList<>();
 	private JButton btnAgregarPerfil = new JButton("Agregar perfil");
 	
 	public VentanaPerfiles(ArrayList<Perfil> perfiles) {
-		setTitle("Seleccion de perfil");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600, 300);
-		setResizable(false);
-		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -46,8 +41,6 @@ public class VentanaPerfiles extends JFrame {
 		add(pnlPerfiles, BorderLayout.CENTER);
 		
 		add(btnAgregarPerfil, BorderLayout.SOUTH);
-
-		setVisible(true);
 	}
 	
 	public void addSeleccionarListener(ActionListener l) {
@@ -86,5 +79,36 @@ public class VentanaPerfiles extends JFrame {
 	
 	public void mostrarMensajeError(String msj) {
 		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void actualizarPerfiles(ArrayList<Perfil> perfiles) {
+		// Limpiar perfiles existentes
+		pnlPerfiles.removeAll();
+		botonesSeleccionar.clear();
+		
+		// Agregar nuevos perfiles
+		if (perfiles != null) {
+			for (Perfil p : perfiles) {
+				JPanel pnlPerfil = new JPanel(new BorderLayout());
+				pnlPerfil.setBackground(Color.GREEN);
+				
+				JLabel lblNombre = new JLabel(p.getNombre());
+				lblNombre.setForeground(Color.WHITE);
+				lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+				lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+
+				JButton btnSeleccion = new JButton("Seleccionar");
+				botonesSeleccionar.add(btnSeleccion);
+				
+				pnlPerfil.add(lblNombre, BorderLayout.CENTER);
+				pnlPerfil.add(btnSeleccion, BorderLayout.SOUTH);
+				
+				pnlPerfiles.add(pnlPerfil);
+			}
+		}
+		
+		// Refrescar la vista
+		pnlPerfiles.revalidate();
+		pnlPerfiles.repaint();
 	}
 }

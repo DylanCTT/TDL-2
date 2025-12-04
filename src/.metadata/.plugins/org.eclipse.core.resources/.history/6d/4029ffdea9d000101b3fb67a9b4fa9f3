@@ -1,0 +1,75 @@
+package view;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+import model.Pelicula;
+
+public class VentanaBienvenida extends JFrame {
+
+    private JPanel panelPrincipal;
+    private CardLayout cardLayout;
+    private JPanel panelCargando;
+    private JPanel panelPeliculas;
+
+    public VentanaBienvenida(List<Pelicula> peliculas) {
+        setTitle("Bienvenido a la App de Películas");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        cardLayout = new CardLayout();
+        panelPrincipal = new JPanel(cardLayout);
+
+        // Panel de carga
+        panelCargando = new JPanel(new BorderLayout());
+        JLabel lblCargando = new JLabel("Cargando películas...", SwingConstants.CENTER);
+        lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
+        panelCargando.add(lblCargando, BorderLayout.CENTER);
+
+        // Panel de películas
+        panelPeliculas = new JPanel();
+        panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
+
+        for (Pelicula p : peliculas) {
+            JPanel tarjeta = new JPanel(new BorderLayout());
+            tarjeta.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            JLabel lblTitulo = new JLabel(p.getTitulo());
+            lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+
+            JTextArea txtResumen = new JTextArea(p.getResumen());
+            txtResumen.setLineWrap(true);
+            txtResumen.setWrapStyleWord(true);
+            txtResumen.setEditable(false);
+
+            JButton btnCalificar = new JButton("Calificar");
+            
+            tarjeta.add(lblTitulo, BorderLayout.NORTH);
+            tarjeta.add(new JScrollPane(txtResumen), BorderLayout.CENTER);
+            tarjeta.add(btnCalificar, BorderLayout.SOUTH);
+
+            panelPeliculas.add(tarjeta);
+        }
+
+        panelPrincipal.add(panelCargando, "CARGANDO");
+        panelPrincipal.add(new JScrollPane(panelPeliculas), "PELICULAS");
+
+        add(panelPrincipal);
+
+        // Simular carga con un Timer
+        Timer timer = new Timer(2000, e -> cardLayout.show(panelPrincipal, "PELICULAS"));
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    public static void main(String[] args) {
+        // Simulación: lista de películas en memoria
+        List<Pelicula> peliculas = List.of(
+                new Pelicula()
+        );
+
+        SwingUtilities.invokeLater(() -> {
+            new VentanaBienvenida(peliculas).setVisible(true);
+        });
+    }
+}
