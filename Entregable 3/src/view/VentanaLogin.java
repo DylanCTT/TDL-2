@@ -1,8 +1,8 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class VentanaLogin extends JFrame {
 	private JLabel lblEmail = new JLabel("E-mail");
@@ -26,14 +26,15 @@ public class VentanaLogin extends JFrame {
 		tfEmail.setFont(new Font("Calibri", Font.BOLD, 14));
 		lblPassword.setFont(new Font("Calibri", Font.BOLD, 14));
 		//lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		btnIngresar.setBackground(Color.BLUE);
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setFont(new Font("Calibri", Font.BOLD, 14));
+		
 		btnRegistrate.setBackground(Color.BLUE);
 		btnRegistrate.setForeground(Color.WHITE);
 		btnRegistrate.setFont(new Font("Calibri", Font.BOLD, 14));
 		
-		// Agregado de componentes al layout
 		add(lblEmail); add(tfEmail);
 		add(lblPassword); add(tfPassword);
 		add(new JLabel(" "));

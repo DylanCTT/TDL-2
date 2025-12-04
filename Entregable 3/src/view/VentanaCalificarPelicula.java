@@ -1,70 +1,100 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import model.Pelicula;
 
 public class VentanaCalificarPelicula extends JFrame {
-    private JLabel[] estrellas = new JLabel[5];
-    private int puntuacionSeleccionada = 0;
-    private JTextArea campoComentario = new JTextArea(5, 30);
-    private JButton botonGuardar = new JButton("Guardar");
+	private JLabel lblTitulo;
+	private JPanel pnlCentro = new JPanel();
+	private JLabel lblCalificacion = new JLabel("Calificacion");
+	private JButton[] estrellas;
+	private JPanel pnlCalificacion = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private int puntaje = 0;
+	private JPanel pnlComentario = new JPanel(new BorderLayout());
+    private JLabel lblComentario = new JLabel("Comentario");
+    private JTextArea taComentario = new JTextArea(5, 30);
+    private JScrollPane scrollComentario;
+    private JButton btnGuardar = new JButton("Guardar");
 
-    public VentanaCalificarPelicula() {
+    public VentanaCalificarPelicula(Pelicula p) {
         setTitle("Calificar Película");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-
+   
+        lblTitulo = new JLabel(p.getTitulo(), SwingConstants.CENTER);         
+        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
         
-        JLabel titulo = new JLabel("Título de la Película", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 18));
-        add(titulo, BorderLayout.NORTH);
-
-        // Panel de estrellas
-        JPanel panelEstrellas = new JPanel();
-        for (int i = 0; i < estrellas.length; i++) {
-            estrellas[i] = new JLabel("☆");
-            estrellas[i].setFont(new Font("Arial", Font.PLAIN, 30));
-            estrellas[i].setForeground(Color.BLUE);
-            panelEstrellas.add(estrellas[i]);
-        }
-        add(panelEstrellas, BorderLayout.CENTER);
-
+        lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
+        crearEstrellas(pnlCalificacion);
         
-        JPanel panelInferior = new JPanel(new BorderLayout());
-        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-
-        panelInferior.add(new JLabel("Comentario:"), BorderLayout.NORTH);
-        panelInferior.add(new JScrollPane(campoComentario), BorderLayout.CENTER);
-        panelInferior.add(botonGuardar, BorderLayout.SOUTH);
-
-        add(panelInferior, BorderLayout.SOUTH);
+        lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
+        
+        taComentario.setFont(new Font("Calibri", Font.BOLD, 13));
+        taComentario.setLineWrap(true); // para que el texto baje automaticamente
+        
+        scrollComentario = new JScrollPane(taComentario);
+        
+        pnlComentario.add(lblComentario, BorderLayout.NORTH);
+        pnlComentario.add(scrollComentario, BorderLayout.CENTER);
+        
+        pnlCentro.setLayout(new GridLayout(2,2));
+        pnlCentro.add(pnlCalificacion);
+        pnlCentro.add(pnlComentario);
+        
+        btnGuardar.setBackground(Color.BLUE);
+        btnGuardar.setForeground(Color.WHITE);
+        btnGuardar.setFont(new Font("Calibri", Font.BOLD, 14));
+                
+        add(lblTitulo, BorderLayout.NORTH);
+        add(pnlCentro, BorderLayout.CENTER);
+        add(btnGuardar, BorderLayout.SOUTH);
+           
         setVisible(true);
     }
 
+    private void crearEstrellas(JPanel pnlCalifiacion) {
+    	estrellas = new JButton[5];
+    	
+    	for (int i = 0; i < 5; i++) {
+    		estrellas[i] = new JButton("\u2606");
+    		estrellas[i].setFont(new Font("SansSerif", Font.BOLD, 30));
+    		estrellas[i].setForeground(Color.orange);
+    		//estrellas[i].setBorderPainted(false);
+    		//estrellas[i].setContentAreaFilled(false);
+    		//estrellas[i].setFocusPainted(false);
+    		
+    		pnlCalificacion.add(estrellas[i]);
+    	}
+    }
     
-    public JLabel[] getEstrellas() {
-        return estrellas;
+    public void addEstrellasListener(ActionListener l) {
+    	for (int i = 0; i < 5; i++) {
+    		estrellas[i].addActionListener(l);
+    	}
     }
-
-    public int getPuntuacionSeleccionada() {
-        return puntuacionSeleccionada;
+    
+    public void addGuardarListener(ActionListener l) {
+    	btnGuardar.addActionListener(l);
     }
-
-    public void setPuntuacionSeleccionada(int puntuacion) {
-        this.puntuacionSeleccionada = puntuacion;
+    
+    public int getPuntaje() {
+    	return puntaje;
     }
-
-    public JTextArea getCampoComentario() {
-        return campoComentario;
+    
+    public String getTaComentario() {
+    	return taComentario.getText();
     }
-
+    
     public JButton getBotonGuardar() {
-        return botonGuardar;
+    	return btnGuardar;
     }
     
     public static void main(String args[]) {
-		VentanaCalificarPelicula califPeli = new VentanaCalificarPelicula();
+    	Pelicula p = new Pelicula();
+		VentanaCalificarPelicula califPeli = new VentanaCalificarPelicula(p);
 	}
 }
