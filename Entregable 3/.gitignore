@@ -1,3 +1,10 @@
 /bin/
-Entregable 3/plataforma.db
+/out/
+
+.metadata/
+.recommenders/
+
 *.db
+*.log
+
+.settings/
