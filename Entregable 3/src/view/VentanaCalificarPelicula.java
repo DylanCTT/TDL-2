@@ -10,7 +10,7 @@ public class VentanaCalificarPelicula extends JPanel {
 	private JPanel pnlCentro = new JPanel();
 	private JLabel lblCalificacion = new JLabel("Calificacion");
 	private JButton[] estrellas;
-	private JPanel pnlCalificacion = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel pnlEstrellas = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	private int puntaje = 0;
 	private JPanel pnlComentario = new JPanel(new BorderLayout());
     private JLabel lblComentario = new JLabel("Comentario");
@@ -33,11 +33,11 @@ public class VentanaCalificarPelicula extends JPanel {
         lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
         
         lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
-        crearEstrellas(pnlCalificacion);
+        crearEstrellas(pnlEstrellas);
         
         JPanel pnlCalificacion = new JPanel(new BorderLayout());
         pnlCalificacion.add(lblCalificacion, BorderLayout.NORTH);
-        pnlCalificacion.add(pnlCalificacion, BorderLayout.CENTER);
+        pnlCalificacion.add(pnlEstrellas, BorderLayout.CENTER);
         
         lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
         
@@ -95,7 +95,7 @@ public class VentanaCalificarPelicula extends JPanel {
         }
     }
 
-    private void crearEstrellas(JPanel pnlCalificacion) {
+    private void crearEstrellas(JPanel pnlEstrellas) {
     	estrellas = new JButton[5];
     	
     	for (int i = 0; i < 5; i++) {
@@ -112,7 +112,7 @@ public class VentanaCalificarPelicula extends JPanel {
     			actualizarEstrellas();
     		});
     		
-    		pnlCalificacion.add(estrellas[i]);
+    		pnlEstrellas.add(estrellas[i]);
     	}
     }
     

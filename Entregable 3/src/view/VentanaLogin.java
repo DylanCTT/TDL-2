@@ -15,13 +15,13 @@ public class VentanaLogin extends JPanel {
 	public VentanaLogin() {
 		        setLayout(new BorderLayout());
 		        
-		        JLabel imagen = new JLabel(new ImageIcon("C:\\Users\\clatd\\OneDrive\\Escritorio\\Informatica\\TDL-2\\Entregable 3\\Logo Popcorn Caricatura.png"));
+		        JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caticatura.png"));
 		        imagen.setPreferredSize(new Dimension(500, 500)); // ajustá según tu imagen
 		        add(imagen, BorderLayout.WEST);
 		            setLayout(new BorderLayout());
 
 		            // Imagen decorativa a la izquierda
-		            JLabel imagenDecorativa = new JLabel(new ImageIcon("assets/login_banner.png")); // ajustá la ruta
+		            JLabel imagenDecorativa = new JLabel(new ImageIcon("assets/login_banner.png")); 
 		            imagenDecorativa.setPreferredSize(new Dimension(300, 600));
 		            add(imagenDecorativa, BorderLayout.WEST);
 
