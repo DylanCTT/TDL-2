@@ -18,6 +18,7 @@ public class RegistroController {
 		this.ventanaPrincipal = ventanaPrincipal;
 		
 		this.view.getBotonRegistro().addActionListener(new RegistarListener());
+		this.view.getBotonRetroceso().addActionListener(new RetrocesoListener());
 	}
 	
 	class RegistarListener implements ActionListener {
@@ -40,6 +41,12 @@ public class RegistroController {
 				view.mostarMensajeError(exc.getMessage());
 			}
 		}
+	}
+	
+	class RetrocesoListener implements ActionListener {
+	    public void actionPerformed(ActionEvent e) {
+	        ventanaPrincipal.mostrarCarta(VentanasEnum.LOGIN);
+	    }
 	}
 	
 }

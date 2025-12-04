@@ -17,6 +17,7 @@ public class VentanaRegistro extends JPanel {
     private JLabel lblPassword = new JLabel("Contrasenia");
     private JPasswordField tfPassword = new JPasswordField(10);
     private JButton btnRegistrar = new JButton("Registrarse");
+    private JButton btnRetroceso = new JButton("← Volver");
 
     public VentanaRegistro() {
         setLayout(new BorderLayout());
@@ -98,6 +99,10 @@ public class VentanaRegistro extends JPanel {
         gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         panelCentro.add(btnRegistrar, gbc);
+        
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelSuperior.add(btnRetroceso);
+        add(panelSuperior, BorderLayout.NORTH);
 
         add(panelCentro, BorderLayout.CENTER);
     }
@@ -130,6 +135,10 @@ public class VentanaRegistro extends JPanel {
 	public JButton getBotonRegistro() {
 		return btnRegistrar;
 	}
+	
+	public JButton getBotonRetroceso() {
+        return btnRetroceso;
+    }
 	
 	public void mostrarMensaje(String msj) {
 		JOptionPane.showMessageDialog(this, msj);

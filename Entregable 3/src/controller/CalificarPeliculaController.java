@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import view.VentanaPrincipal;
+import view.VentanasEnum;
 import view.VentanaCalificarPelicula;
 import service.ReseniaService;
 import model.Pelicula;
@@ -18,6 +19,7 @@ public class CalificarPeliculaController {
 		this.ventanaPrincipal = ventanaPrincipal;
 		
 		this.view.getBotonGuardar().addActionListener(new GuardarListener());
+		this.view.getBotonRetroceso().addActionListener(new RetrocesoListener());
 	}
 	
 	class GuardarListener implements ActionListener {
@@ -50,5 +52,10 @@ public class CalificarPeliculaController {
 				view.mostrarMensajeError(exc.getMessage());
 			}
 		}
+	}
+	class RetrocesoListener implements ActionListener {
+	    public void actionPerformed(ActionEvent e) {
+	        ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
+	    }
 	}
 }

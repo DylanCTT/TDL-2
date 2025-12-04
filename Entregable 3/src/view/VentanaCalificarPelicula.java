@@ -19,6 +19,7 @@ public class VentanaCalificarPelicula extends JPanel {
     private JButton btnGuardar = new JButton("Guardar");
     private Pelicula peliculaActual;
     private Integer idPerfilActual;
+    private JButton btnRetroceso = new JButton("← Volver");
 
     public VentanaCalificarPelicula() {
         this(null);
@@ -26,41 +27,59 @@ public class VentanaCalificarPelicula extends JPanel {
     
     public VentanaCalificarPelicula(Pelicula p) {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(600, 400));
-   
+        setPreferredSize(new Dimension(950, 950));
+
         String titulo = (p != null) ? p.getTitulo() : "Calificar Película";
         lblTitulo = new JLabel(titulo, SwingConstants.CENTER);         
-        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
-        
-        lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
+        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 26));
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+
+        //Estrellas
+        lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 18));
         crearEstrellas(pnlEstrellas);
-        
+
         JPanel pnlCalificacion = new JPanel(new BorderLayout());
+        pnlCalificacion.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         pnlCalificacion.add(lblCalificacion, BorderLayout.NORTH);
         pnlCalificacion.add(pnlEstrellas, BorderLayout.CENTER);
-        
-        lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
-        
-        taComentario.setFont(new Font("Calibri", Font.BOLD, 13));
-        taComentario.setLineWrap(true); // para que el texto baje automaticamente
-        
+
+        //Comentario
+        lblComentario.setFont(new Font("Calibri", Font.BOLD, 18));
+        taComentario.setFont(new Font("Calibri", Font.PLAIN, 16));
+        taComentario.setLineWrap(true);
         scrollComentario = new JScrollPane(taComentario);
-        
+
+        pnlComentario.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         pnlComentario.add(lblComentario, BorderLayout.NORTH);
         pnlComentario.add(scrollComentario, BorderLayout.CENTER);
-        
-        pnlCentro.setLayout(new GridLayout(2,1));
+
+        //Panel central agrupado
+        pnlCentro = new JPanel();
+        pnlCentro.setLayout(new BoxLayout(pnlCentro, BoxLayout.Y_AXIS));
+        pnlCentro.setBorder(BorderFactory.createEmptyBorder(20, 200, 20, 200)); // centrado horizontal
         pnlCentro.add(pnlCalificacion);
+        pnlCentro.add(Box.createVerticalStrut(20));
         pnlCentro.add(pnlComentario);
-        
+
+        //Botón guardar
         btnGuardar.setBackground(Color.BLUE);
         btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setFont(new Font("Calibri", Font.BOLD, 14));
-                
+        btnGuardar.setFont(new Font("Calibri", Font.BOLD, 16));
+        btnGuardar.setPreferredSize(new Dimension(150, 40));
+
+        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelBoton.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        panelBoton.add(btnGuardar);
+        
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelSuperior.add(btnRetroceso);
+        add(panelSuperior, BorderLayout.NORTH);
+
         add(lblTitulo, BorderLayout.NORTH);
         add(pnlCentro, BorderLayout.CENTER);
-        add(btnGuardar, BorderLayout.SOUTH);
+        add(panelBoton, BorderLayout.SOUTH);
     }
+
     
     public void actualizarPelicula(Pelicula p) {
         this.peliculaActual = p;
@@ -149,6 +168,14 @@ public class VentanaCalificarPelicula extends JPanel {
     
     public JButton[] getEstrellas() {
     	return estrellas;
+    }
+    
+    public void addRetrocesoListener(ActionListener l) {
+        btnRetroceso.addActionListener(l);
+    }
+
+    public JButton getBotonRetroceso() {
+        return btnRetroceso;
     }
     
     public void mostrarMensaje(String msj) {
