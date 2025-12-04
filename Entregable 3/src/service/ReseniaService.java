@@ -23,13 +23,7 @@ public class ReseniaService {
 			throw new Exception("Debe especificar el perfil y la película");
 		}
 		
-		Resenia r = new Resenia();
-		r.setContenido(comentario.trim());
-		r.setPuntaje(puntaje);
-		r.setAprobada(false); // Por defecto no está aprobada
-		r.setFecha(LocalDateTime.now());
-		r.setIdCliente(idPerfil);
-		r.setIdContenido(idPelicula);
+		Resenia r = new Resenia(comentario.trim(), puntaje, false, LocalDateTime.now(), idPerfil, idPelicula);
 		
 		reseniaDAO.guardar(r);
 	}

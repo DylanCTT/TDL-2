@@ -17,6 +17,7 @@ public class BienvenidaController {
 	private VentanaBienvenida view;
 	private PeliculaService service;
 	private VentanaPrincipal ventanaPrincipal;
+	private List<Pelicula> peliculas;
 	
 	public BienvenidaController(VentanaBienvenida view, PeliculaService service, VentanaPrincipal ventanaPrincipal) {
 		this.view = view;
@@ -31,7 +32,7 @@ public class BienvenidaController {
 	
 	class CargaPeliculasTask implements Runnable {
 		public void run() {
-			List<Pelicula> peliculas = service.cargarPeliculas("src/resources/movies_database.csv");
+			peliculas = service.cargarPeliculas("src/resources/movies_database.csv");
 			
 			SwingUtilities.invokeLater(() -> {
 				view.mostrarPeliculas(peliculas);
@@ -49,10 +50,20 @@ public class BienvenidaController {
 	class CalificarListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				// me da el boton que aprete
+				JButton btnPresionado = (JButton) e.getSource();
+				
+				//tomo pos del boton que presione
+				int pos = view.getBotonesCalificar().indexOf(btnPresionado);
+				
+				Pelicula peliculaAclasificar = peliculas.get(pos);
+				
 				VentanaCalificarPelicula ventanaCalificarPelicula = ventanaPrincipal.getVentanaCalificarPelicula();
+				ventanaCalificarPelicula.actualizarPelicula(peliculaAclasificar);
+				
 				ReseniaService reseniaService = new ReseniaService();
 				
-				CalificarPeliculaController controller = new CalificarPeliculaController(ventanaCalificarPelicula, reseniaService);
+				CalificarPeliculaController controller = new CalificarPeliculaController(ventanaCalificarPelicula, reseniaService, ventanaPrincipal);
 			
 				ventanaPrincipal.mostrarCarta(VentanasEnum.CALIFICARPELICULA);
 			}
