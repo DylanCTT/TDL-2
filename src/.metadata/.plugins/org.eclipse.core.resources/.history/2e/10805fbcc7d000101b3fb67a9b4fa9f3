@@ -21,20 +21,13 @@ public class VentanaPrincipal extends JPanel {
     	cardLayout = new CardLayout();
     	this.setLayout(cardLayout);
         
-        // Crear todas las ventanas (algunas con null porque los datos se cargan después)
-        // Los datos reales se actualizan cuando están disponibles:
-        // - VentanaPerfiles: se actualiza en LoginController después del login con perfiles de la BD
-        // - VentanaBienvenida: se actualiza en BienvenidaController con películas del CSV/BD
-        // - VentanaInfoPelicula: se actualiza cuando se selecciona una película
-        // - VentanaCalificarPelicula: se actualiza cuando se selecciona una película para calificar
-        
         ventanaLogin = new VentanaLogin();
         ventanaRegistro = new VentanaRegistro();
-        ventanaPerfiles = new VentanaPerfiles(); // Se actualiza con actualizarPerfiles() en LoginController
+        ventanaPerfiles = new VentanaPerfiles(null);
         ventanaNuevoPerfil = new VentanaNuevoPerfil();
-        ventanaInfoPelicula = new VentanaInfoPelicula(); // Se actualiza con actualizarPelicula() cuando se necesita
-        ventanaBienvenida = new VentanaBienvenida(); // Se actualiza con mostrarPeliculas() en BienvenidaController
-        ventanaCalificarPelicula = new VentanaCalificarPelicula(); // Se actualiza con actualizarPelicula() cuando se necesita
+        ventanaInfoPelicula = new VentanaInfoPelicula();
+        ventanaBienvenida = new VentanaBienvenida(null);
+        ventanaCalificarPelicula = new VentanaCalificarPelicula();
    
         add(ventanaLogin, VentanasEnum.LOGIN.getNombre());
         add(ventanaRegistro, VentanasEnum.REGISTRO.getNombre());

@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import model.Pelicula;
 
-public class VentanaCalificarPelicula extends JFrame {
+public class VentanaCalificarPelicula extends JPanel {
 	private JLabel lblTitulo;
 	private JPanel pnlCentro = new JPanel();
 	private JLabel lblCalificacion = new JLabel("Calificacion");
@@ -17,19 +17,28 @@ public class VentanaCalificarPelicula extends JFrame {
     private JTextArea taComentario = new JTextArea(5, 30);
     private JScrollPane scrollComentario;
     private JButton btnGuardar = new JButton("Guardar");
+    private Pelicula peliculaActual;
+    private Integer idPerfilActual;
 
+    public VentanaCalificarPelicula() {
+        this(null);
+    }
+    
     public VentanaCalificarPelicula(Pelicula p) {
-        setTitle("Calificar Película");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(600, 400));
    
-        lblTitulo = new JLabel(p.getTitulo(), SwingConstants.CENTER);         
+        String titulo = (p != null) ? p.getTitulo() : "Calificar Película";
+        lblTitulo = new JLabel(titulo, SwingConstants.CENTER);         
         lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
         
         lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 15));
         crearEstrellas(pnlCalificacion);
+        
+        // Panel para la calificación
+        JPanel pnlCalificacionCompleto = new JPanel(new BorderLayout());
+        pnlCalificacionCompleto.add(lblCalificacion, BorderLayout.NORTH);
+        pnlCalificacionCompleto.add(pnlCalificacion, BorderLayout.CENTER);
         
         lblComentario.setFont(new Font("Calibri", Font.BOLD, 15));
         
@@ -41,8 +50,8 @@ public class VentanaCalificarPelicula extends JFrame {
         pnlComentario.add(lblComentario, BorderLayout.NORTH);
         pnlComentario.add(scrollComentario, BorderLayout.CENTER);
         
-        pnlCentro.setLayout(new GridLayout(2,2));
-        pnlCentro.add(pnlCalificacion);
+        pnlCentro.setLayout(new GridLayout(2,1));
+        pnlCentro.add(pnlCalificacionCompleto);
         pnlCentro.add(pnlComentario);
         
         btnGuardar.setBackground(Color.BLUE);
@@ -52,20 +61,57 @@ public class VentanaCalificarPelicula extends JFrame {
         add(lblTitulo, BorderLayout.NORTH);
         add(pnlCentro, BorderLayout.CENTER);
         add(btnGuardar, BorderLayout.SOUTH);
-           
-        setVisible(true);
+    }
+    
+    public void actualizarPelicula(Pelicula p) {
+        this.peliculaActual = p;
+        if (p != null) {
+            lblTitulo.setText(p.getTitulo());
+        }
+        // Resetear el puntaje y comentario
+        puntaje = 0;
+        taComentario.setText("");
+        actualizarEstrellas();
+    }
+    
+    public void setIdPerfil(Integer idPerfil) {
+        this.idPerfilActual = idPerfil;
+    }
+    
+    public Pelicula getPeliculaActual() {
+        return peliculaActual;
+    }
+    
+    public Integer getIdPerfilActual() {
+        return idPerfilActual;
+    }
+    
+    private void actualizarEstrellas() {
+        for (int i = 0; i < estrellas.length; i++) {
+            if (i < puntaje) {
+                estrellas[i].setText("\u2605"); // Estrella llena
+            } else {
+                estrellas[i].setText("\u2606"); // Estrella vacía
+            }
+        }
     }
 
-    private void crearEstrellas(JPanel pnlCalifiacion) {
+    private void crearEstrellas(JPanel pnlCalificacion) {
     	estrellas = new JButton[5];
     	
     	for (int i = 0; i < 5; i++) {
     		estrellas[i] = new JButton("\u2606");
     		estrellas[i].setFont(new Font("SansSerif", Font.BOLD, 30));
     		estrellas[i].setForeground(Color.orange);
-    		//estrellas[i].setBorderPainted(false);
-    		//estrellas[i].setContentAreaFilled(false);
-    		//estrellas[i].setFocusPainted(false);
+    		estrellas[i].setBorderPainted(false);
+    		estrellas[i].setContentAreaFilled(false);
+    		estrellas[i].setFocusPainted(false);
+    		
+    		final int index = i;
+    		estrellas[i].addActionListener(e -> {
+    			puntaje = index + 1;
+    			actualizarEstrellas();
+    		});
     		
     		pnlCalificacion.add(estrellas[i]);
     	}
@@ -85,16 +131,32 @@ public class VentanaCalificarPelicula extends JFrame {
     	return puntaje;
     }
     
+    public void setPuntaje(int puntaje) {
+    	this.puntaje = puntaje;
+    	actualizarEstrellas();
+    }
+    
     public String getTaComentario() {
     	return taComentario.getText();
+    }
+    
+    public JTextArea getTaComentarioComponent() {
+    	return taComentario;
     }
     
     public JButton getBotonGuardar() {
     	return btnGuardar;
     }
     
-    public static void main(String args[]) {
-    	Pelicula p = new Pelicula();
-		VentanaCalificarPelicula califPeli = new VentanaCalificarPelicula(p);
-	}
+    public JButton[] getEstrellas() {
+    	return estrellas;
+    }
+    
+    public void mostrarMensaje(String msj) {
+        JOptionPane.showMessageDialog(this, msj);
+    }
+    
+    public void mostrarMensajeError(String msj) {
+        JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

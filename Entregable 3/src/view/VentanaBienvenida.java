@@ -12,6 +12,10 @@ public class VentanaBienvenida extends JPanel {
     private JPanel panelCargando;
     private JPanel panelPeliculas;
 
+    public VentanaBienvenida() {
+        this(new java.util.ArrayList<Pelicula>());
+    }
+
     public VentanaBienvenida(List<Pelicula> peliculas) {
         cardLayout = new CardLayout();
         panelPrincipal = new JPanel(cardLayout);

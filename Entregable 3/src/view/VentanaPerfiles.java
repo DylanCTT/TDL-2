@@ -13,6 +13,10 @@ public class VentanaPerfiles extends JPanel {
 	private List<JButton> botonesSeleccionar = new ArrayList<>();
 	private JButton btnAgregarPerfil = new JButton("Agregar perfil");
 	
+	public VentanaPerfiles() {
+		this(new ArrayList<Perfil>());
+	}
+	
 	public VentanaPerfiles(ArrayList<Perfil> perfiles) {
 		setLayout(new BorderLayout());
 

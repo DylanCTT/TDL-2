@@ -5,28 +5,29 @@ import java.awt.event.*;
 import javax.swing.*;
 import model.Pelicula;
 
-public class VentanaInfoPelicula extends JFrame{
+public class VentanaInfoPelicula extends JPanel {
 	private JLabel lblTitulo;
-	JPanel pnlCentro = new JPanel();
+	private JPanel pnlCentro = new JPanel();
 	private JLabel lblAnio;
 	private JLabel lblResumen;
 	private JButton btnContinuar = new JButton("Continuar");
 	
+	public VentanaInfoPelicula() {
+		this(null);
+	}
+	
 	public VentanaInfoPelicula(Pelicula p) {
-		setTitle("Informacion pelicula");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 300);
-		setResizable(false);
-		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		setPreferredSize(new Dimension(600, 400));
 		
-		lblTitulo = new JLabel(p.getTitulo());
-		lblAnio = new JLabel("Anio: " + String.valueOf(p.getFechaSalida().getYear()));
-		lblResumen = new JLabel(p.getResumen());
-			
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblTitulo = new JLabel("", SwingConstants.CENTER);
+		lblAnio = new JLabel("");
+		lblResumen = new JLabel("");
+		
+		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
 		lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblResumen.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblResumen.setFont(new Font("Calibri", Font.PLAIN, 12));
+		lblResumen.setVerticalAlignment(SwingConstants.TOP);
 		
 		btnContinuar.setBackground(Color.BLUE);
 		btnContinuar.setForeground(Color.WHITE);
@@ -40,7 +41,21 @@ public class VentanaInfoPelicula extends JFrame{
 		add(pnlCentro, BorderLayout.CENTER);
 		add(btnContinuar, BorderLayout.SOUTH);
 		
-		setVisible(true);
+		if (p != null) {
+			actualizarPelicula(p);
+		}
+	}
+	
+	public void actualizarPelicula(Pelicula p) {
+		if (p != null) {
+			lblTitulo.setText(p.getTitulo());
+			if (p.getFechaSalida() != null) {
+				lblAnio.setText("Año: " + String.valueOf(p.getFechaSalida().getYear()));
+			} else {
+				lblAnio.setText("Año: No disponible");
+			}
+			lblResumen.setText(p.getResumen() != null ? p.getResumen() : "Sin resumen disponible");
+		}
 	}
 	
 	public void addContinuarListener(ActionListener l) {
@@ -55,8 +70,7 @@ public class VentanaInfoPelicula extends JFrame{
 		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
-	public static void main(String[] args) {
-		Pelicula p = new Pelicula();
-		SwingUtilities.invokeLater(() -> new VentanaInfoPelicula(p));
+	public void mostrarMensaje(String msj) {
+		JOptionPane.showMessageDialog(this, msj);
 	}
 }

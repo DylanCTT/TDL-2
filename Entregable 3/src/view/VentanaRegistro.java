@@ -18,7 +18,9 @@ public class VentanaRegistro extends JPanel {
 	private JButton btnRegistrar = new JButton("Registrarse");
 	
 	public VentanaRegistro () {
-		setLayout(new GridLayout(6,1));
+		setLayout(new BorderLayout());
+		JPanel panelCentral = new JPanel(new GridLayout(6,2));
+		panelCentral.setPreferredSize(new Dimension(500, 250));
 		
 		lblNombres.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfNombres.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -38,15 +40,17 @@ public class VentanaRegistro extends JPanel {
 		btnRegistrar.setForeground(Color.WHITE);
 		btnRegistrar.setFont(new Font("Calibri", Font.BOLD, 14));
 		
-		add(lblNombres); add(tfNombres);
-		add(lblApellidos); add(tfApellidos);
-		add(lblDni); add(tfDni);
-		add(lblEmail); add(tfEmail);
-		add(lblPassword); add(tfPassword);
+		panelCentral.add(lblNombres); panelCentral.add(tfNombres);
+		panelCentral.add(lblApellidos); panelCentral.add(tfApellidos);
+		panelCentral.add(lblDni); panelCentral.add(tfDni);
+		panelCentral.add(lblEmail); panelCentral.add(tfEmail);
+		panelCentral.add(lblPassword); panelCentral.add(tfPassword);
 		
-		add(new JLabel(" "));
+		panelCentral.add(new JLabel(" "));
+		panelCentral.add(btnRegistrar);
 		
-		add(btnRegistrar);
+		// Centrar el panel en la ventana grande
+		add(panelCentral, BorderLayout.CENTER);
 	}
 	
 	public void addRegistrarListener(ActionListener l) {

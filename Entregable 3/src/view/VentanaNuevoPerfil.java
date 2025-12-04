@@ -13,7 +13,9 @@ public class VentanaNuevoPerfil extends JPanel {
 	private JButton btnCrearPerfil = new JButton("Crear perfil");
 	
 	public VentanaNuevoPerfil() {
-		setLayout(new GridLayout(3, 2, 5, 5));
+		setLayout(new BorderLayout());
+		JPanel panelCentral = new JPanel(new GridLayout(3, 2, 5, 5));
+		panelCentral.setPreferredSize(new Dimension(500, 300));
 		
 		lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
 		tfNombre.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -22,9 +24,13 @@ public class VentanaNuevoPerfil extends JPanel {
 		btnCrearPerfil.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnCrearPerfil.setHorizontalAlignment(SwingConstants.CENTER);
 	
-		add(lblNombre); add(tfNombre);
-		add(lblColores); add(color);
-		add(btnCrearPerfil);
+		panelCentral.add(lblNombre); panelCentral.add(tfNombre);
+		panelCentral.add(lblColores); panelCentral.add(color);
+		panelCentral.add(btnCrearPerfil);
+		panelCentral.add(new JLabel()); // Espacio vacío para completar el grid
+		
+		// Centrar el panel en la ventana grande
+		add(panelCentral, BorderLayout.CENTER);
 	}
 	
 	public void addCrearPerfilListener(ActionListener l) {
