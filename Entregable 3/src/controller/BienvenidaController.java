@@ -30,7 +30,7 @@ public class BienvenidaController {
 		
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
-		this.view.getBtnBuscar().addActionListener(new BuscarPelicula());
+		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
@@ -76,8 +76,22 @@ public class BienvenidaController {
 		}
 	}
 	
-	class BuscarPelicula implements ActionListener{
-		
+	class BuscarPeliculaXtitulo implements ActionListener {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        try {
+	            String titulo = view.getTextoBusqueda().trim();
+	            Pelicula p = service.BuscarPelicula(titulo);
+
+	            if (p != null)
+	                ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
+	            else {
+	                view.mostrarMensajeError("Película no encontrada");
+	            }
+	        } catch (Exception exc) {
+	            view.mostrarMensajeError("Error en la búsqueda: " + exc.getMessage());
+	        }
+	    }
 	}
 	
 }

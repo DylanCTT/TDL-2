@@ -3,6 +3,8 @@ package dao.implJDBC;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+
+import model.Cliente;
 import model.Generos;
 import model.Pelicula;
 import util.Conexion;
@@ -92,6 +94,60 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			System.out.println("Error al validar ID: " + e.getMessage());
 		}
 		return existe;
+	}
+	
+	public boolean existePelicula(String titulo) {
+	    boolean existe = false;
+	    String sql = "SELECT COUNT(*) AS total FROM PELICULA WHERE TITULO = ?";
+	    
+	    try (Connection conn = Conexion.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        
+	        ps.setString(1, titulo);
+	        
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                existe = true;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al buscar película: " + e.getMessage());
+	    }
+	    
+	    return existe;
+	}
+	
+	public Pelicula devolverPeliculaXtitulo(String peli) {
+		String sql = "SELECT * FROM CLIENTE WHERE EMAIL = ?";
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, peli);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next() && rs.getInt(1) > 0) {
+					Pelicula p = new Pelicula();
+					p.setId(rs.getInt("ID"));
+					p.setFechaSalida(rs.getTimestamp("FECHA_SALIDA").toLocalDateTime().toLocalDate());
+					p.setTitulo(rs.getString("TITULO"));
+					p.setResumen(rs.getString("RESUMEN"));
+					p.setPopularidad(rs.getDouble("POPULARIDAD"));
+					p.setCantVotos(rs.getInt("CANT_VOTOS"));
+					p.setVotosPromedio(rs.getDouble("VOTOS_PROMEDIO"));
+					p.setIdioma(rs.getString("IDIOMA"));
+					p.setGenero(Generos.valueOf(rs.getString("GENERO")));
+					p.setPoster(rs.getString("POSTER"));
+					p.setDirector(rs.getString("DIRECTOR"));
+					p.setDuracion(rs.getFloat("DURACION"));
+					p.setStatus(rs.getString("STATUS"));
+					p.setUrl(rs.getString("URL"));
+					return p;
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al devolver Pelicula: " + e.getMessage());
+		}
+		return null;
 	}
 	
 }

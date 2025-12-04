@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+
+import model.Cliente;
 import model.Generos;
 import model.Pelicula;
 import dao.FactoryDAO;
@@ -19,6 +21,8 @@ public class PeliculaService {
 	public PeliculaService() {
 		this.peliculaDAO = FactoryDAO.getPeliculaDAO();
 	}
+	
+	
 	
 	//lee una pelicula incluso si esta en lineas distintas en el csv
 	private String leerRegistroCompleto(FileReader fr) throws IOException{
@@ -151,4 +155,14 @@ public class PeliculaService {
 
         return lista;
     }
+	
+	public Pelicula BuscarPelicula(String peli) throws Exception {
+		if (!peliculaDAO.existePelicula(peli)) throw new Exception("La pelicula no se encuentra");
+		
+		if ((peli.isEmpty())) throw new Exception("Ingrese una pelicula valida");
+		
+		Pelicula p = peliculaDAO.devolverPeliculaXtitulo(peli);
+		
+		return p;
+	}
 }
