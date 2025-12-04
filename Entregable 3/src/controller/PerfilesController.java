@@ -42,7 +42,6 @@ public class PerfilesController {
 				
 				BienvenidaController controller = new BienvenidaController(ventanaBienvenida, peliculaService, ventanaPrincipal);
 				
-				// Cambiar a la vista de bienvenida
 				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}
 			catch (Exception exc) {

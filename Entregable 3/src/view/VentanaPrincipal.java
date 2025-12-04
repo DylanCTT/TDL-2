@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VentanaPrincipal extends JPanel {
-
     private CardLayout cardLayout;
     private VentanaLogin ventanaLogin;
     private VentanaRegistro ventanaRegistro;
@@ -15,8 +14,7 @@ public class VentanaPrincipal extends JPanel {
     private VentanaInfoPelicula ventanaInfoPelicula;
     private VentanaBienvenida ventanaBienvenida;
     private VentanaCalificarPelicula ventanaCalificarPelicula;
-    
-    
+       
     public VentanaPrincipal() {
     	cardLayout = new CardLayout();
     	this.setLayout(cardLayout);
@@ -59,46 +57,57 @@ public class VentanaPrincipal extends JPanel {
 	public VentanaLogin getVentanaLogin() {
 		return ventanaLogin;
 	}
+	
 	public void setVentanaLogin(VentanaLogin ventanaLogin) {
 		this.ventanaLogin = ventanaLogin;
 	}
+	
+	
 	public VentanaRegistro getVentanaRegistro() {
 		return ventanaRegistro;
 	}
+	
 	public void setVentanaRegistro(VentanaRegistro ventanaRegistro) {
 		this.ventanaRegistro = ventanaRegistro;
 	}
+	
 	public VentanaPerfiles getVentanaPerfiles() {
 		return ventanaPerfiles;
 	}
+	
 	public void setVentanaPerfiles(VentanaPerfiles ventanaPerfiles) {
 		this.ventanaPerfiles = ventanaPerfiles;
 	}
+	
 	public VentanaNuevoPerfil getVentanaNuevoPerfil() {
 		return ventanaNuevoPerfil;
 	}
+	
 	public void setVentanaNuevoPerfil(VentanaNuevoPerfil ventanaNuevoPerfil) {
 		this.ventanaNuevoPerfil = ventanaNuevoPerfil;
 	}
+	
 	public VentanaInfoPelicula getVentanaInfoPelicula() {
 		return ventanaInfoPelicula;
 	}
+	
 	public void setVentanaInfoPelicula(VentanaInfoPelicula ventanaInfoPelicula) {
 		this.ventanaInfoPelicula = ventanaInfoPelicula;
 	}
+	
 	public VentanaBienvenida getVentanaBienvenida() {
 		return ventanaBienvenida;
 	}
+	
 	public void setVentanaBienvenida(VentanaBienvenida ventanaBienvenida) {
 		this.ventanaBienvenida = ventanaBienvenida;
 	}
+	
 	public VentanaCalificarPelicula getVentanaCalificarPelicula() {
 		return ventanaCalificarPelicula;
 	}
+	
 	public void setVentanaCalificarPelicula(VentanaCalificarPelicula ventanaCalificarPelicula) {
 		this.ventanaCalificarPelicula = ventanaCalificarPelicula;
 	}
-    
-    
-    
 }

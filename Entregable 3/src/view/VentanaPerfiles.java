@@ -86,11 +86,9 @@ public class VentanaPerfiles extends JPanel {
 	}
 	
 	public void actualizarPerfiles(ArrayList<Perfil> perfiles) {
-		// Limpiar perfiles existentes
 		pnlPerfiles.removeAll();
 		botonesSeleccionar.clear();
 		
-		// Agregar nuevos perfiles
 		if (perfiles != null) {
 			for (Perfil p : perfiles) {
 				JPanel pnlPerfil = new JPanel(new BorderLayout());
@@ -111,7 +109,6 @@ public class VentanaPerfiles extends JPanel {
 			}
 		}
 		
-		// Refrescar la vista
 		pnlPerfiles.revalidate();
 		pnlPerfiles.repaint();
 	}

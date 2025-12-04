@@ -8,11 +8,10 @@ public enum VentanasEnum {
 	REGISTRO("registro"),
 	INFOPELICULA("infoPelicula"),
 	BIENVENIDA("bienvenida");
-	
-	
+		
 	private String nombre;
 	
-	 VentanasEnum(String nombre) {
+	VentanasEnum(String nombre) {
 		this.setNombre(nombre);
 	}
 
