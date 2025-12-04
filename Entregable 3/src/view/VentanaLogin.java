@@ -16,7 +16,7 @@ public class VentanaLogin extends JPanel {
             setLayout(new BorderLayout());
 
             // Imagen a la izquierda
-            JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caticatura.png"));
+            JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caricatura.png"));
             imagen.setPreferredSize(new Dimension(500, 500)); 
             add(imagen, BorderLayout.WEST);
 
