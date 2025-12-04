@@ -53,7 +53,10 @@ public class VentanaRegistro extends JPanel {
         tfPassword.setFont(fuenteCampo);
         tfPassword.setPreferredSize(new Dimension(300, 35));
 
-        btnRegistrar.setPreferredSize(new Dimension(120, 30));
+        btnRegistrar.setFont(fuenteBoton);
+        btnRegistrar.setBackground(Color.BLUE);
+        btnRegistrar.setForeground(Color.WHITE);
+        btnRegistrar.setPreferredSize(new Dimension(150, 40));
 
         // Panel central con campos
         JPanel panelCentro = new JPanel(new GridBagLayout());

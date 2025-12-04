@@ -5,22 +5,22 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class VentanaLogin extends JPanel {
-    private JLabel lblEmail = new JLabel("E-mail: ");
-    private JTextField tfEmail = new JTextField(20);
-    private JLabel lblPassword = new JLabel("Contrasenia: ");
-    private JPasswordField tfPassword = new JPasswordField(20);
+    private JLabel lblEmail = new JLabel("E-mail");
+    private JTextField tfEmail = new JTextField();
+    private JLabel lblPassword = new JLabel("Contrasenia");
+    private JPasswordField tfPassword = new JPasswordField();
     private JButton btnIngresar = new JButton("Ingresar");
-    private JButton btnRegistrarte = new JButton("Registrarte");
+    private JButton btnRegistrate = new JButton("Registrarte");
 
         public VentanaLogin() {
             setLayout(new BorderLayout());
 
             // Imagen a la izquierda
-            JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caticatura.png"));
-            imagen.setPreferredSize(new Dimension(500, 500)); 
+            JLabel imagen = new JLabel(new ImageIcon("ruta/a/tu/imagen.png"));
+            imagen.setPreferredSize(new Dimension(300, 600)); // ajustá según tu imagen
             add(imagen, BorderLayout.WEST);
 
-            // anel central con campos
+            // Panel central con campos
             JPanel panelCentro = new JPanel();
             panelCentro.setLayout(new GridBagLayout());
             panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50)); // margen interno
@@ -30,21 +30,25 @@ public class VentanaLogin extends JPanel {
             gbc.anchor = GridBagConstraints.WEST;   // alinear a la izquierda
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.gridx = 0; gbc.gridy = 0;
-            panelCentro.add(lblEmail, gbc);
+            panelCentro.add(new JLabel("E-mail:"), gbc);
 
             gbc.gridx = 1;
-            panelCentro.add(tfEmail, gbc);
+            JTextField campoEmail = new JTextField(20);
+            panelCentro.add(campoEmail, gbc);
 
             gbc.gridx = 0; gbc.gridy = 1;
-            panelCentro.add(lblPassword, gbc);
+            panelCentro.add(new JLabel("Contraseña:"), gbc);
 
             gbc.gridx = 1;
-            panelCentro.add(tfPassword, gbc);
+            JPasswordField campoPass = new JPasswordField(20);
+            panelCentro.add(campoPass, gbc);
 
             gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
             gbc.anchor = GridBagConstraints.CENTER;
 
             JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+            JButton btnIngresar = new JButton("Ingresar");
+            JButton btnRegistrarte = new JButton("Registrarte");
 
             btnIngresar.setPreferredSize(new Dimension(120, 30));
             btnRegistrarte.setPreferredSize(new Dimension(120, 30));
@@ -61,7 +65,7 @@ public class VentanaLogin extends JPanel {
 	}
 	
 	public void addRegistrateListener(ActionListener l) {
-		btnRegistrarte.addActionListener(l);
+		btnRegistrate.addActionListener(l);
 	}
 	
 	public String getEmail() {
@@ -77,7 +81,7 @@ public class VentanaLogin extends JPanel {
 	}
 
 	public JButton getBotonRegistrate() {
-		return btnRegistrarte;
+		return btnRegistrate;
 	}
 	
 	public void mostrarMensaje(String msj) {

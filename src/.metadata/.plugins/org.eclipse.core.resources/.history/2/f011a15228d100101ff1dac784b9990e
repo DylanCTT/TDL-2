@@ -1,0 +1,117 @@
+package view;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class VentanaLogin extends JPanel {
+	private JLabel lblEmail = new JLabel("E-mail");
+	private JTextField tfEmail = new JTextField(50);
+	private JLabel lblPassword = new JLabel("Contrasenia");
+	private JPasswordField tfPassword = new JPasswordField(50);
+	private JButton btnIngresar = new JButton("Ingresar");
+	private JButton btnRegistrate = new JButton("Registrarte");
+	
+	public VentanaLogin() {
+		// Layout principal: imagen a la izquierda, formulario a la derecha
+		setLayout(new BorderLayout());
+
+		// Imagen a la izquierda (ajustá la ruta de la imagen según tu proyecto)
+		// Sugerencia: colocá la imagen dentro del proyecto (por ejemplo, carpeta "assets")
+		// y usá una ruta relativa en lugar de una ruta absoluta de Windows.
+		ImageIcon icono = new ImageIcon("assets/LogoPopcorn.png"); // ajustá nombre/ruta
+		JLabel imagen = new JLabel(icono);
+		imagen.setHorizontalAlignment(SwingConstants.CENTER);
+		imagen.setVerticalAlignment(SwingConstants.CENTER);
+		imagen.setPreferredSize(new Dimension(500, 500)); // similar al tamaño de la foto
+		add(imagen, BorderLayout.WEST);
+
+		// Estilos de textos y botones (como en la versión original)
+		lblEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		tfEmail.setFont(new Font("Calibri", Font.BOLD, 14));
+		lblPassword.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnIngresar.setBackground(Color.BLUE);
+		btnIngresar.setForeground(Color.WHITE);
+		btnIngresar.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnRegistrate.setBackground(Color.BLUE);
+		btnRegistrate.setForeground(Color.WHITE);
+		btnRegistrate.setFont(new Font("Calibri", Font.BOLD, 14));
+
+		// Panel central con campos y botones
+		JPanel panelCentro = new JPanel(new GridBagLayout());
+		panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50)); // margen interno
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+
+		// Fila 0: Email
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panelCentro.add(lblEmail, gbc);
+
+		gbc.gridx = 1;
+		panelCentro.add(tfEmail, gbc);
+
+		// Fila 1: Contraseña
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		panelCentro.add(lblPassword, gbc);
+
+		gbc.gridx = 1;
+		panelCentro.add(tfPassword, gbc);
+
+		// Fila 2: panel de botones (uno debajo del otro), centrado
+		btnIngresar.setPreferredSize(new Dimension(120, 30));
+		btnRegistrate.setPreferredSize(new Dimension(120, 30));
+
+		JPanel panelBotones = new JPanel(new GridLayout(2, 1, 0, 5));
+		panelBotones.add(btnIngresar);
+		panelBotones.add(btnRegistrate);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.CENTER;
+		panelCentro.add(panelBotones, gbc);
+
+		add(panelCentro, BorderLayout.CENTER);
+	}
+
+	public void addIngresarListener(ActionListener l) {
+		btnIngresar.addActionListener(l);
+	}
+	
+	public void addRegistrateListener(ActionListener l) {
+		btnRegistrate.addActionListener(l);
+	}
+	
+	public String getEmail() {
+		return tfEmail.getText();
+	}
+
+	public String getPassword() {
+		return String.valueOf(tfPassword.getPassword());
+	}
+
+	public JButton getBotonIngresar() {
+		return btnIngresar;
+	}
+
+	public JButton getBotonRegistrate() {
+		return btnRegistrate;
+	}
+	
+	public void mostrarMensaje(String msj) {
+		JOptionPane.showMessageDialog(this, msj);
+	}
+	
+	public void mostrarMensajeError(String msj) {
+		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new VentanaLogin());
+	}
+}
