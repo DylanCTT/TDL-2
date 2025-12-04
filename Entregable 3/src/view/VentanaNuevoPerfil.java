@@ -72,7 +72,7 @@ public class VentanaNuevoPerfil extends JPanel {
 
         add(panelCentral, BorderLayout.CENTER);
 
-        // 🔄 Actualización dinámica del panel demo
+        //Actualización dinámica del panel demo
         tfNombre.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { actualizarDemo(); }
             public void removeUpdate(DocumentEvent e) { actualizarDemo(); }

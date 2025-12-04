@@ -97,8 +97,12 @@ public class VentanaBienvenida extends JPanel {
     public List<JButton> getBotonesCalificar() {
         return botonesCalificar;
     }
+    
+    public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
 
-    public void mostrarPantalla(String pantalla) {
+	public void mostrarPantalla(String pantalla) {
         if (pantalla.equals("espera") || pantalla.equals("CARGANDO")) {
             cardLayout.show(panelPrincipal, "CARGANDO");
         } else if (pantalla.equals("peliculas") || pantalla.equals("PELICULAS")) {
@@ -165,6 +169,8 @@ public class VentanaBienvenida extends JPanel {
     public void mostrarMensajeError(String msj) {
         JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    
     
     
 }

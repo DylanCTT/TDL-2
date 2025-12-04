@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+
+import controller.LoginController.IngresarListener;
 import model.Pelicula;
 import view.VentanaPrincipal;
 import view.VentanasEnum;
@@ -28,6 +30,7 @@ public class BienvenidaController {
 		
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
+		this.view.getBtnBuscar().addActionListener(new BuscarPelicula());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
@@ -71,6 +74,10 @@ public class BienvenidaController {
 				view.mostrarMensajeError(exc.getMessage());
 			}
 		}
+	}
+	
+	class BuscarPelicula implements ActionListener{
+		
 	}
 	
 }
