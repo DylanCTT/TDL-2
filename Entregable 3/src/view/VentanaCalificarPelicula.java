@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import model.Pelicula;
+import model.Perfil;
 
 public class VentanaCalificarPelicula extends JPanel {
 	private JLabel lblTitulo;
@@ -80,7 +81,6 @@ public class VentanaCalificarPelicula extends JPanel {
         add(panelBoton, BorderLayout.SOUTH);
     }
 
-    
     public void actualizarPelicula(Pelicula p) {
         this.peliculaActual = p;
         if (p != null) {
@@ -90,6 +90,10 @@ public class VentanaCalificarPelicula extends JPanel {
         puntaje = 0;
         taComentario.setText("");
         actualizarEstrellas();
+    }
+    
+    public void actualizarPerfil(Perfil p) {
+    	this.idPerfilActual = p.getId();
     }
     
     public void setIdPerfil(Integer idPerfil) {

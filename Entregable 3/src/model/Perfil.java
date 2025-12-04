@@ -104,12 +104,11 @@ public class Perfil implements Comparable<Perfil> {
 
 	@Override
 	public String toString() {
-		return "Perfil [nombre=" + nombre + ", idCliente=" + idCliente + "]";
+		return "Perfil [id=" + id + ", nombre=" + nombre + ", idCliente=" + idCliente + "]";
 	}
 	
 	@Override
 	public int compareTo(Perfil o) {
 		return this.nombre.compareTo(o.getNombre());
 	}
-	
 }

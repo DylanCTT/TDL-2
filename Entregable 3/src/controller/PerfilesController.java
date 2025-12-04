@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.Cliente;
+import model.Perfil;
 import view.VentanaPerfiles;
 import view.VentanaBienvenida;
 import view.VentanaNuevoPerfil;
@@ -18,6 +19,7 @@ public class PerfilesController {
 	private PerfilService service;
 	private Cliente c;
 	private VentanaPrincipal ventanaPrincipal;
+	private List<Perfil> perfiles;
 	
 	public PerfilesController(VentanaPerfiles view, PerfilService service, Cliente c, VentanaPrincipal ventanaPrincipal) {
 		this.view = view;
@@ -27,8 +29,14 @@ public class PerfilesController {
 		
 		List<JButton> botones = view.getBotonesSeleccionar();
 		
-		for (int i = 0 ; i < botones.size(); i++) {
-			botones.get(i).addActionListener(new SeleccionarListener());
+		perfiles = service.getPerfilesXidCliente(c.getId());
+		
+		for (Perfil p : perfiles) {
+			System.out.println(p.toString());
+		}
+		
+		for (JButton b : botones) {
+			b.addActionListener(new SeleccionarListener());
 		}
 		
 		this.view.getBotonAgregarPerfiles().addActionListener(new AgregarPerfilListener());
@@ -37,10 +45,16 @@ public class PerfilesController {
 	class SeleccionarListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				JButton btnPresionado = (JButton) e.getSource();
+				
+				int pos = view.getBotonesSeleccionar().indexOf(btnPresionado);
+				
+				Perfil perfilSeleccionado = perfiles.get(pos);
+				
 				VentanaBienvenida ventanaBienvenida = ventanaPrincipal.getVentanaBienvenida();
 				PeliculaService peliculaService = new PeliculaService();
 				
-				BienvenidaController controller = new BienvenidaController(ventanaBienvenida, peliculaService, ventanaPrincipal);
+				BienvenidaController controller = new BienvenidaController(ventanaBienvenida, peliculaService, ventanaPrincipal, perfilSeleccionado);
 				
 				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}

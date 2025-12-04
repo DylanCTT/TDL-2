@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-
 import controller.LoginController.IngresarListener;
 import model.Pelicula;
+import model.Perfil;
 import view.VentanaPrincipal;
 import view.VentanasEnum;
 import view.VentanaBienvenida;
@@ -20,11 +20,13 @@ public class BienvenidaController {
 	private PeliculaService service;
 	private VentanaPrincipal ventanaPrincipal;
 	private List<Pelicula> peliculas;
+	private Perfil perfilActual;
 	
-	public BienvenidaController(VentanaBienvenida view, PeliculaService service, VentanaPrincipal ventanaPrincipal) {
+	public BienvenidaController(VentanaBienvenida view, PeliculaService service, VentanaPrincipal ventanaPrincipal, Perfil perfilActual) {
 		this.view = view;
 		this.service = service;
 		this.ventanaPrincipal = ventanaPrincipal;
+		this.perfilActual = perfilActual;
 		
 		view.mostrarPantalla("espera");
 		
@@ -63,6 +65,7 @@ public class BienvenidaController {
 				
 				VentanaCalificarPelicula ventanaCalificarPelicula = ventanaPrincipal.getVentanaCalificarPelicula();
 				ventanaCalificarPelicula.actualizarPelicula(peliculaAclasificar);
+				ventanaCalificarPelicula.actualizarPerfil(perfilActual);
 				
 				ReseniaService reseniaService = new ReseniaService();
 				
