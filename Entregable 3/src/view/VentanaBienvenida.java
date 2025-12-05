@@ -166,15 +166,45 @@ public class VentanaBienvenida extends JPanel {
             tarjeta.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
             tarjeta.setPreferredSize(new Dimension(850, 150));
 
-            //Imagen o ícono por defecto
             JLabel lblImagen = new JLabel();
             lblImagen.setPreferredSize(new Dimension(100, 140));
             lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
-            lblImagen.setText("Imagen no disponible");
             lblImagen.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             lblImagen.setFont(new Font("Arial", Font.PLAIN, 12));
+            
+            String urlPoster = p.getPoster();
+            
+            if ((urlPoster != null) && (!urlPoster.isEmpty()) && !urlPoster.equals("N/A")) {
+            	urlPoster = urlPoster.trim();
+            	
+            	lblImagen.setText("Cargando...");
+            	
+            	try { 
+            		java.net.URL url = new java.net.URI(urlPoster).toURL();
+            		
+            		java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
+            		
+            		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            		
+            		java.io.InputStream stream = connection.getInputStream();
+            		java.awt.image.BufferedImage poster = javax.imageio.ImageIO.read(stream);
+            		
+            		if (poster != null) {
+            			Image posterEscalado = poster.getScaledInstance(100, 140, Image.SCALE_SMOOTH);
+            			ImageIcon icono = new ImageIcon(posterEscalado);
+            			
+            			lblImagen.setIcon(icono);
+            			lblImagen.setText("");
+            		}               		
+            	}
+            	
+            	catch(Exception e) {
+            		System.out.println("Errr al descargar imagen (" + urlPoster + "): " + e.getMessage());
+            		lblImagen.setText("Poster no disponible");
+            	}
+            }
+            else lblImagen.setText("Imagen no disponible");
 
-            //Datos de la película
             JPanel panelDatos = new JPanel();
             panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
             panelDatos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
