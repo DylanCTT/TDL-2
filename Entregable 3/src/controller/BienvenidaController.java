@@ -37,9 +37,11 @@ public class BienvenidaController {
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
 		
+		this.view.getBtnCerrarSesion().addActionListener(new CerrarSesionListener());
+		
 		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaListener());
 		
-		this.view.getBtnCerrarSesion().addActionListener(new CerrarSesionListener());
+		this.view.getCmbOrden().addActionListener(new OrdenListener());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
@@ -53,10 +55,8 @@ public class BienvenidaController {
 			SwingUtilities.invokeLater(() -> {
 				view.mostrarPeliculas(peliculas);
 				view.mostrarPantalla("peliculas");
-				
-				List<JButton> botones = view.getBotonesCalificar();
-				
-				for (JButton b : botones) {
+								
+				for (JButton b : view.getBotonesCalificar()) {
 					b.addActionListener(new CalificarListener());
 				}
 			});
@@ -119,6 +119,10 @@ public class BienvenidaController {
 		        	view.mostrarMensajeError("El titulo ingresado no existe");
 		        }
 	        } 
+	        catch(MovieNotFoundException exc) {
+	        	view.mostrarMensajeError(exc.getMessage());
+	        }
+	        
 	        catch(Exception exc) {
 	            view.mostrarMensajeError(exc.getMessage());
 	        }
@@ -140,6 +144,37 @@ public class BienvenidaController {
 			
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());
+			}
+		}
+	}
+	
+	class OrdenListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JComboBox<String> cmbOrden = (JComboBox<String>) e.getSource();
+			String orden = (String) cmbOrden.getSelectedItem();
+			
+			if ((peliculas == null) || (peliculas.isEmpty()) || orden.equals("Ordenar por...")) return;
+		
+			switch (orden) {
+				case "Titulo (Descendente)":
+					peliculas.sort((p1, p2) -> p1.getTitulo().compareToIgnoreCase(p2.getTitulo()));
+					break;
+				case "Titulo (Ascendente)":
+					peliculas.sort((p1, p2) -> p2.getTitulo().compareToIgnoreCase(p1.getTitulo()));
+					break;
+				case "Genero (Descendente)":
+					peliculas.sort((p1, p2) -> p1.getGenero().toString().compareToIgnoreCase(p2.getGenero().toString()));
+					break;
+				case "Genero (Ascendente)":
+					peliculas.sort((p1, p2) -> p2.getGenero().toString().compareToIgnoreCase(p1.getGenero().toString()));
+					break;
+			}
+			
+			view.mostrarPeliculas(peliculas);
+			
+			for (JButton b : view.getBotonesCalificar()) {
+				b.addActionListener(new CalificarListener());
 			}
 		}
 	}

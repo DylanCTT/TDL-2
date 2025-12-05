@@ -1,7 +1,13 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import util.Conexion;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import org.json.JSONObject;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -9,12 +15,7 @@ import model.Generos;
 import model.Pelicula;
 import dao.FactoryDAO;
 import dao.interfaces.PeliculaDAO;
-import util.Conexion;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import org.json.JSONObject;
+import exceptions.MovieNotFoundException;
 
 public class PeliculaService {
 	private PeliculaDAO peliculaDAO;
@@ -203,7 +204,7 @@ public class PeliculaService {
 	            return p;
 	        } 
 	        else {
-	        	return null;
+	        	throw new MovieNotFoundException("No se encontro la pelicula: " + titulo);
 	        }
 	    } 
 	    catch (Exception e) {

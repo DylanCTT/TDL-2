@@ -15,9 +15,11 @@ public class VentanaBienvenida extends JPanel {
     private JPanel panelPeliculas;
     private JLabel lblNombre;
     private JButton btnCerrarSesion;
+    private JComboBox<String> cmbOrden;
     private List<JButton> botonesCalificar = new ArrayList<>();
     private JTextField campoBusqueda = new JTextField(20);
     private JButton btnBuscar;
+    private JScrollPane scrollPeliculas;
 
     public VentanaBienvenida() {
         this(new ArrayList<Pelicula>());
@@ -36,6 +38,10 @@ public class VentanaBienvenida extends JPanel {
         panelPeliculas = new JPanel();
         panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
 
+        scrollPeliculas = new JScrollPane(panelPeliculas);
+        scrollPeliculas.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        scrollPeliculas.getVerticalScrollBar().setUnitIncrement(20);
+        
         mostrarPeliculas(peliculas);
 
         JPanel panelSuperior = new JPanel(new BorderLayout());
@@ -59,29 +65,30 @@ public class VentanaBienvenida extends JPanel {
         
         JPanel pnlCerrarSesion = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         lblNombre = new JLabel("Nombre perfil");
-        lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
-        
+        lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));       
         btnCerrarSesion = new JButton("Cerrar sesion");
-        btnCerrarSesion.setFont(new Font("Calibri", Font.BOLD, 14));
+        btnCerrarSesion.setFont(new Font("Calibri", Font.BOLD, 14));       
+        pnlCerrarSesion.add(lblNombre);
+        pnlCerrarSesion.add(btnCerrarSesion);
+        
+        String[] opcionesOrden = {"Ordenar por...", "Titulo (Descendente)", "Titulo (Ascendente)", "Genero (Descendente)", "Genero (Ascendente)"};        
+        cmbOrden = new JComboBox<>(opcionesOrden);
+        cmbOrden.setPreferredSize(new Dimension(150, 30));
         
         JPanel pnlBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         campoBusqueda.setFont(new Font("Calibri", Font.PLAIN, 14));
         btnBuscar = new JButton("Buscar");
         btnBuscar.setFont(new Font("Calibri", Font.BOLD, 14));
+        pnlBusqueda.add(cmbOrden);
+        pnlBusqueda.add(Box.createHorizontalStrut(10));
         pnlBusqueda.add(campoBusqueda);
         pnlBusqueda.add(btnBuscar);
-        
-        pnlCerrarSesion.add(lblNombre);
-        pnlCerrarSesion.add(btnCerrarSesion);
         
         pnlEste.add(pnlCerrarSesion);
         pnlEste.add(pnlBusqueda);
         
         panelSuperior.add(panelTextos, BorderLayout.CENTER);
         panelSuperior.add(pnlEste, BorderLayout.EAST);
-
-        JScrollPane scrollPeliculas = new JScrollPane(panelPeliculas);
-        scrollPeliculas.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
 
         JPanel panelContenido = new JPanel(new BorderLayout());
         panelContenido.add(panelSuperior, BorderLayout.NORTH);
@@ -108,6 +115,10 @@ public class VentanaBienvenida extends JPanel {
     	btnCerrarSesion.addActionListener(l);
     }
     
+    public void addOrdenListener(ActionListener l) {
+    	cmbOrden.addActionListener(l);
+    }
+    
     public void actualizarPerfil(Perfil p) {
     	if (p != null) {
     		lblNombre.setText(p.getNombre() != null ? p.getNombre() : "Nombre no disponible");
@@ -122,6 +133,10 @@ public class VentanaBienvenida extends JPanel {
     	this.campoBusqueda.setText(texto);
     }
 
+    public JComboBox<String> getCmbOrden() {
+    	return cmbOrden;
+    }
+    
     public List<JButton> getBotonesCalificar() {
         return botonesCalificar;
     }
@@ -196,6 +211,12 @@ public class VentanaBienvenida extends JPanel {
 
         panelPeliculas.revalidate();
         panelPeliculas.repaint();
+        
+        SwingUtilities.invokeLater(() -> {
+        	if (scrollPeliculas != null) {
+        		scrollPeliculas.getVerticalScrollBar().setValue(0);
+        	}
+        });
     }
 
     public void mostrarMensajeError(String msj) {
