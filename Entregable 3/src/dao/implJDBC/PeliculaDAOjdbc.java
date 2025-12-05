@@ -126,7 +126,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	    return existe;
 	}
 	
-	public Pelicula devolverPeliculaXtitulo(String peli) {
+	/*public Pelicula devolverPeliculaXtitulo(String peli) {
 		String sql = "SELECT * FROM PELICULA WHERE EMAIL = ?";
 		Connection conn = Conexion.getConnection();
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -157,6 +157,6 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			System.out.println("Error al devolver Pelicula: " + e.getMessage());
 		}
 		return null;
-	}
+	}*/
 	
 }

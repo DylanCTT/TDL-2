@@ -8,5 +8,5 @@ public interface PeliculaDAO {
 	List<Pelicula> listar();
 	boolean validarID(Integer id);
 	boolean existePelicula(String peli);
-	Pelicula devolverPeliculaXtitulo(String peli);
+	/*Pelicula devolverPeliculaXtitulo(String peli);*/
 }

@@ -12,8 +12,11 @@ import view.VentanaPrincipal;
 import view.VentanasEnum;
 import view.VentanaBienvenida;
 import view.VentanaCalificarPelicula;
+import view.VentanaInfoPelicula;
 import service.PeliculaService;
+import service.PeliculaService.ConsultaPeliculasOMDb;
 import service.ReseniaService;
+
 
 public class BienvenidaController {
 	private VentanaBienvenida view;
@@ -80,22 +83,23 @@ public class BienvenidaController {
 		}
 	}
 	
-	/*class BuscarPeliculaXtitulo implements ActionListener {
+	class BuscarPeliculaXtitulo implements ActionListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-	        try {
-	            String titulo = view.getTextoBusqueda().trim();
-	            Pelicula p = service.BuscarPelicula(titulo);
+	        String titulo = view.getTextoBusqueda().trim();
+	        Pelicula p = ConsultaPeliculasOMDb.consultarPelicula(titulo);
 
-	            if (p != null)
-	                ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
-	            else {
-	                view.mostrarMensajeError("Película no encontrada");
-	            }
-	        } catch (Exception exc) {
-	            view.mostrarMensajeError("Error en la búsqueda: " + exc.getMessage());
+	        if (p != null) {
+	            // Actualizar VentanaInfoPelicula con la película encontrada
+	            VentanaInfoPelicula ventanaInfo = ventanaPrincipal.getVentanaInfoPelicula();
+	            ventanaInfo.actualizarPelicula(p);
+
+	            // Mostrar la carta de información
+	            ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
+	        } else {
+	            view.mostrarMensajeError("Película no encontrada");
 	        }
 	    }
-	}*/
+	}
 	
 }

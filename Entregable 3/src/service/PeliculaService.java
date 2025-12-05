@@ -12,6 +12,12 @@ import model.Pelicula;
 import dao.FactoryDAO;
 import dao.interfaces.PeliculaDAO;
 import util.Conexion;
+import java.net.URI;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import org.json.JSONObject;
 
 public class PeliculaService {
 	private PeliculaDAO peliculaDAO;
@@ -152,8 +158,47 @@ public class PeliculaService {
 
         return lista;
     }
+
+	public class ConsultaPeliculasOMDb {
+	    // Reemplazá con tu API Key obtenida en https://www.omdbapi.com/apikey.aspx
+	    private static final String API_KEY = "TU_API_KEY";
+
+	    public static Pelicula consultarPelicula(String titulo) {
+	        try {
+	            String url = "https://www.omdbapi.com/?t=" + titulo.replace(" ", "+") + "&apikey=" + API_KEY;
+
+	            HttpClient cliente = HttpClient.newHttpClient();
+	            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+
+	            HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
+
+	            JSONObject json = new JSONObject(response.body());
+
+	            if (json.has("Response") && json.getString("Response").equals("True")) {
+	                // Crear objeto Pelicula con los datos de la API
+	                Pelicula p = new Pelicula();
+	                p.setTitulo(json.getString("Title"));
+	                p.setResumen(json.optString("Plot", "Sin resumen disponible"));
+	                p.setGenero(json.optString("Genre", "Desconocido"));
+	                p.setAnio(json.optString("Year", "No disponible")); 
+	                // Ajustá según cómo esté tu clase Pelicula (Date, String, etc.)
+
+	                return p;
+	            } else {
+	                return null; // No encontrada
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Error al consultar la API: " + e.getMessage());
+	            return null;
+	        }
+	    }
+	}
+		
+		
+	}
+
 	
-	public Pelicula BuscarPelicula(String peli) throws Exception {
+	/*public Pelicula BuscarPelicula(String peli) throws Exception {
 		if (!peliculaDAO.existePelicula(peli)) throw new Exception("La pelicula no se encuentra");
 		
 		if ((peli.isEmpty())) throw new Exception("Ingrese una pelicula valida");
@@ -161,5 +206,4 @@ public class PeliculaService {
 		Pelicula p = peliculaDAO.devolverPeliculaXtitulo(peli);
 		
 		return p;
-	}
-}
+	}*/
