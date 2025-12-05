@@ -42,7 +42,7 @@ public class NuevoPerfilController {
 				ventanaPerfiles.actualizarPerfiles(perfiles);
 				
 				// Actualizar los listeners de los botones
-				PerfilesController perfilesController = new PerfilesController(ventanaPerfiles, service, c, ventanaPrincipal);
+				PerfilesController perfilesController = new PerfilesController(ventanaPerfiles, service, c, ventanaPrincipal, perfiles);
 				
 				// Volver a la vista de perfiles después de crear el perfil
 				ventanaPrincipal.mostrarCarta(VentanasEnum.PERFILES);

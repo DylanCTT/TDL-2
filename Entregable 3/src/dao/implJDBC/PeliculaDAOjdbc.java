@@ -13,12 +13,12 @@ import dao.interfaces.PeliculaDAO;
 public class PeliculaDAOjdbc implements PeliculaDAO {
 
 	@Override
-	public void guardar(Pelicula pelicula) {
+	public Integer guardar(Pelicula pelicula) {
 		String sql = "INSERT INTO PELICULA (FECHA_SALIDA, TITULO, RESUMEN, POPULARIDAD, CANT_VOTOS, VOTOS_PROMEDIO, IDIOMA, GENERO, POSTER, DIRECTOR, DURACION, STATUS, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+		Integer id = null;
+		
 		Connection conn = Conexion.getConnection();
-
-	    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+	    try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 	        ps.setDate(1, java.sql.Date.valueOf(pelicula.getFechaSalida()));
 	        ps.setString(2, pelicula.getTitulo());
 	        ps.setString(3, pelicula.getResumen());
@@ -34,11 +34,20 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	        ps.setString(13, pelicula.getUrl());
 
 	        ps.executeUpdate();
-	        System.out.println("Película guardada exitosamente");
 	        
-	    } catch (SQLException e) {
+	        try (ResultSet rs = ps.getGeneratedKeys()) {
+				if (rs.next()) {
+					id = rs.getInt(1);
+				}
+			}
+	        
+	        System.out.println("Película guardada exitosamente");        
+	    } 
+	    catch (SQLException e) {
 	        System.out.println("Error al guardar película: " + e.getMessage());
 	    }
+	    
+	    return id;
 	}
 	
 	@Override
@@ -118,7 +127,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 	}
 	
 	public Pelicula devolverPeliculaXtitulo(String peli) {
-		String sql = "SELECT * FROM CLIENTE WHERE EMAIL = ?";
+		String sql = "SELECT * FROM PELICULA WHERE EMAIL = ?";
 		Connection conn = Conexion.getConnection();
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, peli);

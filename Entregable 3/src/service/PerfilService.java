@@ -18,7 +18,9 @@ public class PerfilService {
 		
 		Perfil p = new Perfil(nombre, idCliente);
 		
-		perfilDAO.guardar(p);
+		Integer id = perfilDAO.guardar(p);
+		
+		p.setId(id);
 	}
 	
 	public List<Perfil> getPerfilesXidCliente(Integer id) {

@@ -32,7 +32,7 @@ public class BienvenidaController {
 		
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
-		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
+		//this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
@@ -65,6 +65,7 @@ public class BienvenidaController {
 				
 				VentanaCalificarPelicula ventanaCalificarPelicula = ventanaPrincipal.getVentanaCalificarPelicula();
 				ventanaCalificarPelicula.actualizarPelicula(peliculaAclasificar);
+				System.out.println(peliculaAclasificar.getTitulo());
 				ventanaCalificarPelicula.actualizarPerfil(perfilActual);
 				
 				ReseniaService reseniaService = new ReseniaService();
@@ -79,7 +80,7 @@ public class BienvenidaController {
 		}
 	}
 	
-	class BuscarPeliculaXtitulo implements ActionListener {
+	/*class BuscarPeliculaXtitulo implements ActionListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 	        try {
@@ -95,6 +96,6 @@ public class BienvenidaController {
 	            view.mostrarMensajeError("Error en la búsqueda: " + exc.getMessage());
 	        }
 	    }
-	}
+	}*/
 	
 }

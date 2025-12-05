@@ -50,9 +50,7 @@ public class CreacionTablas {
 	          "GENERO TEXT NOT NULL," +
 			  "POSTER TEXT NOT NULL," +
 	          "DIRECTOR TEXT(100)," +
-	          "DURACION REAL," +	             	             	             	           	          
-	          "STATUS TEXT," +
-	          "URL TEXT" +
+	          "DURACION REAL" +	             	             	             	           	          
 	          ");";
 		stmt.executeUpdate(sql);
   

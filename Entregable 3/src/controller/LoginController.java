@@ -45,7 +45,7 @@ public class LoginController {
 				VentanaPerfiles ventanaPerfiles = ventanaPrincipal.getVentanaPerfiles();
 				ventanaPerfiles.actualizarPerfiles(perfiles);
 				
-				PerfilesController controller = new PerfilesController(ventanaPerfiles, perfilService, c, ventanaPrincipal);
+				PerfilesController controller = new PerfilesController(ventanaPerfiles, perfilService, c, ventanaPrincipal, perfiles);
 				
 				// Cambiar a la vista de perfiles
 				ventanaPrincipal.mostrarCarta(VentanasEnum.PERFILES);

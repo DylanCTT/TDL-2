@@ -35,7 +35,7 @@ public class CalificarPeliculaController {
 					return;
 				}
 				
-				if (pelicula == null || pelicula.getId() == null) {
+				if (pelicula == null) {
 					view.mostrarMensajeError("No se ha seleccionado una película");
 					return;
 				}
@@ -44,15 +44,17 @@ public class CalificarPeliculaController {
 				
 				view.mostrarMensaje("Reseña guardada exitosamente");
 				
-				// Resetear el formulario
 				view.setPuntaje(0);
 				view.getTaComentarioComponent().setText("");
+				
+				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());
 			}
 		}
 	}
+	
 	class RetrocesoListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
 	        ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);

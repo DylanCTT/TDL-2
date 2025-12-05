@@ -21,19 +21,14 @@ public class PerfilesController {
 	private VentanaPrincipal ventanaPrincipal;
 	private List<Perfil> perfiles;
 	
-	public PerfilesController(VentanaPerfiles view, PerfilService service, Cliente c, VentanaPrincipal ventanaPrincipal) {
+	public PerfilesController(VentanaPerfiles view, PerfilService service, Cliente c, VentanaPrincipal ventanaPrincipal, List<Perfil> perfiles) {
 		this.view = view;
 		this.service = service;
 		this.c = c;
 		this.ventanaPrincipal = ventanaPrincipal;
+		this.perfiles = perfiles;
 		
 		List<JButton> botones = view.getBotonesSeleccionar();
-		
-		perfiles = service.getPerfilesXidCliente(c.getId());
-		
-		for (Perfil p : perfiles) {
-			System.out.println(p.toString());
-		}
 		
 		for (JButton b : botones) {
 			b.addActionListener(new SeleccionarListener());

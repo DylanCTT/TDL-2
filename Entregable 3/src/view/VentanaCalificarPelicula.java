@@ -21,21 +21,15 @@ public class VentanaCalificarPelicula extends JPanel {
     private Pelicula peliculaActual;
     private Integer idPerfilActual;
     private JButton btnRetroceso = new JButton("← Volver");
-
-    public VentanaCalificarPelicula() {
-        this(null);
-    }
     
-    public VentanaCalificarPelicula(Pelicula p) {
+    public VentanaCalificarPelicula() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(950, 950));
-
-        String titulo = (p != null) ? p.getTitulo() : "Calificar Película";
-        lblTitulo = new JLabel(titulo, SwingConstants.CENTER);         
+ 
+        lblTitulo = new JLabel("", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Calibri", Font.BOLD, 26));
         lblTitulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 
-        //Estrellas
         lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 18));
         crearEstrellas(pnlEstrellas);
 
@@ -44,7 +38,6 @@ public class VentanaCalificarPelicula extends JPanel {
         pnlCalificacion.add(lblCalificacion, BorderLayout.NORTH);
         pnlCalificacion.add(pnlEstrellas, BorderLayout.CENTER);
 
-        //Comentario
         lblComentario.setFont(new Font("Calibri", Font.BOLD, 18));
         taComentario.setFont(new Font("Calibri", Font.PLAIN, 16));
         taComentario.setLineWrap(true);
@@ -54,7 +47,6 @@ public class VentanaCalificarPelicula extends JPanel {
         pnlComentario.add(lblComentario, BorderLayout.NORTH);
         pnlComentario.add(scrollComentario, BorderLayout.CENTER);
 
-        //Panel central agrupado
         pnlCentro = new JPanel();
         pnlCentro.setLayout(new BoxLayout(pnlCentro, BoxLayout.Y_AXIS));
         pnlCentro.setBorder(BorderFactory.createEmptyBorder(20, 200, 20, 200)); // centrado horizontal
@@ -62,7 +54,6 @@ public class VentanaCalificarPelicula extends JPanel {
         pnlCentro.add(Box.createVerticalStrut(20));
         pnlCentro.add(pnlComentario);
 
-        //Botón guardar
         btnGuardar.setBackground(Color.BLUE);
         btnGuardar.setForeground(Color.WHITE);
         btnGuardar.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -86,7 +77,6 @@ public class VentanaCalificarPelicula extends JPanel {
         if (p != null) {
             lblTitulo.setText(p.getTitulo());
         }
-        // Resetear el puntaje y comentario
         puntaje = 0;
         taComentario.setText("");
         actualizarEstrellas();

@@ -4,7 +4,7 @@ import java.util.List;
 import model.Perfil;
 
 public interface PerfilDAO {
-	void guardar(Perfil perfil);
+	Integer guardar(Perfil perfil);
 	List<Perfil> listar();
 	List<Perfil> getPerfilesXidCliente(Integer id);
 }

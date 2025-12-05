@@ -2,7 +2,6 @@ package dao.implJDBC;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import java.sql.*;
 import model.Perfil;
 import util.Conexion;
@@ -11,22 +10,32 @@ import dao.interfaces.PerfilDAO;
 public class PerfilDAOjdbc implements PerfilDAO {
 
 	@Override
-	public void guardar(Perfil perfil) {
+	public Integer guardar(Perfil perfil) {
 		String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE) VALUES (?, ?)";
+		Integer id = null;
 		
 		Connection conn = Conexion.getConnection();
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
 			ps.setString(1, perfil.getNombre());
 			ps.setInt(2, perfil.getIdCliente());
 			
 			ps.executeUpdate();
 			
+			try (ResultSet rs = ps.getGeneratedKeys()) {
+				if (rs.next()) {
+					id = rs.getInt("ID");
+				}
+			}
+			
 			System.out.println("Perfil guardado exitosamente");
 		}
+		
 		catch (SQLException e) {
 		  System.out.println("Error al guardar perfil: " + e.getMessage());  
 		}
+		
+		return id;
 	}
 	
 	@Override
@@ -62,7 +71,9 @@ public class PerfilDAOjdbc implements PerfilDAO {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next() && rs.getInt(1) > 0) {
 					Perfil p = new Perfil();
+					p.setId(rs.getInt("ID"));
 					p.setNombre(rs.getString("NOMBRE"));
+					p.setIdCliente(rs.getInt("ID_CLIENTE"));
 					perfiles.add(p);
 				}
 			}
