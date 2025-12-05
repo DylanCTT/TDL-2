@@ -6,12 +6,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.Pelicula;
+import model.Perfil;
 
 public class VentanaBienvenida extends JPanel {
     private JPanel panelPrincipal;
     private CardLayout cardLayout;
     private JPanel panelCargando;
     private JPanel panelPeliculas;
+    private JLabel lblNombre;
+    private JButton btnCerrarSesion;
     private List<JButton> botonesCalificar = new ArrayList<>();
 
     private JTextField campoBusqueda = new JTextField(20);
@@ -26,19 +29,16 @@ public class VentanaBienvenida extends JPanel {
         panelPrincipal = new JPanel(cardLayout);
         setLayout(new BorderLayout());
 
-        //Panel de carga
         panelCargando = new JPanel(new BorderLayout());
         JLabel lblCargando = new JLabel("Cargando películas...", SwingConstants.CENTER);
         lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
         panelCargando.add(lblCargando, BorderLayout.CENTER);
 
-        // Panel de películas
         panelPeliculas = new JPanel();
         panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
 
         mostrarPeliculas(peliculas);
 
-        // Panel superior con título, subtítulo y buscador
         JPanel panelSuperior = new JPanel(new BorderLayout());
         panelSuperior.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
@@ -46,7 +46,7 @@ public class VentanaBienvenida extends JPanel {
         lblTitulo.setFont(new Font("Calibri", Font.BOLD, 26));
         lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JLabel lblSubtitulo = new JLabel("Seguro viste alguna de estas películas, haznos saber qué te pareció dejando una reseña");
+        JLabel lblSubtitulo = new JLabel("Hacenos saber que te parecieron estas peliculas dejando una resena");
         lblSubtitulo.setFont(new Font("Calibri", Font.PLAIN, 16));
         lblSubtitulo.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -55,20 +55,34 @@ public class VentanaBienvenida extends JPanel {
         panelTextos.add(lblTitulo);
         panelTextos.add(lblSubtitulo);
 
-        JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel pnlEste = new JPanel();
+        pnlEste.setLayout(new BoxLayout(pnlEste, BoxLayout.Y_AXIS));
+        
+        JPanel pnlCerrarSesion = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        lblNombre = new JLabel("Nombre perfil");
+        lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));
+        
+        btnCerrarSesion = new JButton("Cerrar sesion");
+        btnCerrarSesion.setFont(new Font("Calibri", Font.BOLD, 14));
+        
+        JPanel pnlBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         campoBusqueda.setFont(new Font("Calibri", Font.PLAIN, 14));
         btnBuscar.setFont(new Font("Calibri", Font.BOLD, 14));
-        panelBusqueda.add(campoBusqueda);
-        panelBusqueda.add(btnBuscar);
-
+        pnlBusqueda.add(campoBusqueda);
+        pnlBusqueda.add(btnBuscar);
+        
+        pnlCerrarSesion.add(lblNombre);
+        pnlCerrarSesion.add(btnCerrarSesion);
+        
+        pnlEste.add(pnlCerrarSesion);
+        pnlEste.add(pnlBusqueda);
+        
         panelSuperior.add(panelTextos, BorderLayout.CENTER);
-        panelSuperior.add(panelBusqueda, BorderLayout.EAST);
+        panelSuperior.add(pnlEste, BorderLayout.EAST);
 
-        // Panel scrollable con películas
         JScrollPane scrollPeliculas = new JScrollPane(panelPeliculas);
         scrollPeliculas.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
 
-        // Panel final armado
         JPanel panelContenido = new JPanel(new BorderLayout());
         panelContenido.add(panelSuperior, BorderLayout.NORTH);
         panelContenido.add(scrollPeliculas, BorderLayout.CENTER);
@@ -88,6 +102,12 @@ public class VentanaBienvenida extends JPanel {
 
     public void addBuscarListener(ActionListener l) {
         btnBuscar.addActionListener(l);
+    }
+    
+    public void actualizarPerfil(Perfil p) {
+    	if (p != null) {
+    		lblNombre.setText(p.getNombre() != null ? p.getNombre() : "Nombre no disponible");
+    	}
     }
 
     public String getTextoBusqueda() {
@@ -132,7 +152,7 @@ public class VentanaBienvenida extends JPanel {
             panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
             panelDatos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JLabel lblTitulo = new JLabel("Título: " + p.getTitulo());
+            JLabel lblTitulo = new JLabel(p.getTitulo());
             lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
 
             JLabel lblGenero = new JLabel("Género: " + p.getGenero());
@@ -168,9 +188,5 @@ public class VentanaBienvenida extends JPanel {
 
     public void mostrarMensajeError(String msj) {
         JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    
-    
-    
+    }  
 }

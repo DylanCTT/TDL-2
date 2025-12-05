@@ -27,4 +27,8 @@ public class PerfilService {
 		List<Perfil> perfiles = perfilDAO.getPerfilesXidCliente(id);
 		return perfiles;
 	}
+	
+	public void sumarNroAccesos(Perfil p) {
+		perfilDAO.sumarNroAccesos(p);
+	}
 }

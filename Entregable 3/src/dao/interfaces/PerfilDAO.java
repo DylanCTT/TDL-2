@@ -7,4 +7,5 @@ public interface PerfilDAO {
 	Integer guardar(Perfil perfil);
 	List<Perfil> listar();
 	List<Perfil> getPerfilesXidCliente(Integer id);
+	void sumarNroAccesos(Perfil p);
 }

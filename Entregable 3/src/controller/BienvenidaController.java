@@ -13,19 +13,21 @@ import view.VentanaBienvenida;
 import view.VentanaCalificarPelicula;
 import view.VentanaInfoPelicula;
 import service.PeliculaService;
+import service.PerfilService;
 import service.ReseniaService;
-
 
 public class BienvenidaController {
 	private VentanaBienvenida view;
-	private PeliculaService service;
+	private PeliculaService peliculaService;
+	private PerfilService perfilService;
 	private VentanaPrincipal ventanaPrincipal;
 	private List<Pelicula> peliculas;
 	private Perfil perfilActual;
 	
-	public BienvenidaController(VentanaBienvenida view, PeliculaService service, VentanaPrincipal ventanaPrincipal, Perfil perfilActual) {
+	public BienvenidaController(VentanaBienvenida view, PeliculaService peliculaService, PerfilService perfilService, VentanaPrincipal ventanaPrincipal, Perfil perfilActual) {
 		this.view = view;
-		this.service = service;
+		this.peliculaService = peliculaService;
+		this.perfilService = perfilService;
 		this.ventanaPrincipal = ventanaPrincipal;
 		this.perfilActual = perfilActual;
 		
@@ -33,12 +35,16 @@ public class BienvenidaController {
 		
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
-		//this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
+		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
 		public void run() {
-			peliculas = service.cargarPeliculas("src/resources/movies_database.csv");
+			if (!peliculaService.hayPeliculas()) peliculas = peliculaService.cargarPeliculas("src/resources/movies_database.csv");
+			else {
+				if (perfilActual.getCantAccesos() == 0) peliculas = peliculaService.listar();
+				else peliculas = peliculaService.listar();
+			}
 			
 			SwingUtilities.invokeLater(() -> {
 				view.mostrarPeliculas(peliculas);
@@ -50,10 +56,14 @@ public class BienvenidaController {
 					b.addActionListener(new CalificarListener());
 				}
 			});
+			
+			perfilService.sumarNroAccesos(perfilActual);
+			perfilActual.setCantAccesos(perfilActual.getCantAccesos() + 1);
 		}
 	}
 	
 	class CalificarListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				// me da el boton que aprete
@@ -66,7 +76,6 @@ public class BienvenidaController {
 				
 				VentanaCalificarPelicula ventanaCalificarPelicula = ventanaPrincipal.getVentanaCalificarPelicula();
 				ventanaCalificarPelicula.actualizarPelicula(peliculaAclasificar);
-				System.out.println(peliculaAclasificar.getTitulo());
 				ventanaCalificarPelicula.actualizarPerfil(perfilActual);
 				
 				ReseniaService reseniaService = new ReseniaService();
@@ -86,13 +95,11 @@ public class BienvenidaController {
 	    public void actionPerformed(ActionEvent e) {
 	        try {
 	        	String titulo = view.getTextoBusqueda().trim();
-		        Pelicula p = service.buscar(titulo);
+		        Pelicula p = peliculaService.buscar(titulo);
 	        	
-	            // Actualizar VentanaInfoPelicula con la película encontrada
 	            VentanaInfoPelicula ventanaInfo = ventanaPrincipal.getVentanaInfoPelicula();
 	            ventanaInfo.actualizarPelicula(p);
 
-	            // Mostrar la carta de información
 	            ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
 	        } 
 	        catch(Exception exc) {
@@ -100,5 +107,4 @@ public class BienvenidaController {
 	        }
 	    }
 	}
-	
 }

@@ -46,12 +46,12 @@ public class VentanaInfoPelicula extends JPanel {
 	
 	public void actualizarPelicula(Pelicula p) {
 		if (p != null) {
-			lblTitulo.setText(p.getTitulo());
+			lblTitulo.setText(p.getTitulo() != null ? p.getTitulo() : "Titulo no disponilbe");
 			
 			if (p.getAnioSalida() > 0) lblAnio.setText("Año: " + p.getAnioSalida());		
 			else lblAnio.setText("Año: No disponible");
 			
-			lblResumen.setText(p.getResumen() != null ? p.getResumen() : "Sin resumen disponible");
+			lblResumen.setText(p.getResumen() != null ? p.getResumen() : "Resumen no disponible");
 		}
 	}
 	

@@ -15,10 +15,12 @@ public class Main {
 		//conexion y creacion tablas
 		try {
 			Connection conn = Conexion.getConnection();	
+			
 			if (conn == null) {
 				System.out.println("No se pudo establecer la conexion");
 				return;
 			}
+			
 			System.out.println("Conexion obtenida");
 	    
 			CreacionTablas creadorTablas = new CreacionTablas();
@@ -26,15 +28,15 @@ public class Main {
 	    
 			System.out.println("Tablas creadas correctamente");
 		}
+		
 		catch(SQLException e) {
 			System.out.println("Error de Base de datos: " + e.getMessage());
+			return;
 		}
 		
-		// Crear la vista principal
 		Vista vista = new Vista();
 		VentanaPrincipal ventanaPrincipal = vista.getPanelMain();
 		
-		// Obtener la ventana de login y crear el controlador
 		VentanaLogin ventanaLogin = ventanaPrincipal.getVentanaLogin();
 		ClienteService service = new ClienteService();
 		

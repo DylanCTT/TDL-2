@@ -16,14 +16,14 @@ import service.PeliculaService;
 
 public class PerfilesController {
 	private VentanaPerfiles view;
-	private PerfilService service;
+	private PerfilService perfilService;
 	private Cliente c;
 	private VentanaPrincipal ventanaPrincipal;
 	private List<Perfil> perfiles;
 	
-	public PerfilesController(VentanaPerfiles view, PerfilService service, Cliente c, VentanaPrincipal ventanaPrincipal, List<Perfil> perfiles) {
+	public PerfilesController(VentanaPerfiles view, PerfilService perfilService, Cliente c, VentanaPrincipal ventanaPrincipal, List<Perfil> perfiles) {
 		this.view = view;
-		this.service = service;
+		this.perfilService = perfilService;
 		this.c = c;
 		this.ventanaPrincipal = ventanaPrincipal;
 		this.perfiles = perfiles;
@@ -38,6 +38,7 @@ public class PerfilesController {
 	}
 	
 	class SeleccionarListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				JButton btnPresionado = (JButton) e.getSource();
@@ -47,9 +48,11 @@ public class PerfilesController {
 				Perfil perfilSeleccionado = perfiles.get(pos);
 				
 				VentanaBienvenida ventanaBienvenida = ventanaPrincipal.getVentanaBienvenida();
+				ventanaBienvenida.actualizarPerfil(perfilSeleccionado);
+				
 				PeliculaService peliculaService = new PeliculaService();
 				
-				BienvenidaController controller = new BienvenidaController(ventanaBienvenida, peliculaService, ventanaPrincipal, perfilSeleccionado);
+				BienvenidaController controller = new BienvenidaController(ventanaBienvenida, peliculaService, perfilService, ventanaPrincipal, perfilSeleccionado);
 				
 				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}
@@ -60,6 +63,7 @@ public class PerfilesController {
 	}
 	
 	class AgregarPerfilListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				VentanaNuevoPerfil ventanaNuevoPerfil = ventanaPrincipal.getVentanaNuevoPerfil();
@@ -67,7 +71,6 @@ public class PerfilesController {
 				
 				NuevoPerfilController controller = new NuevoPerfilController(ventanaNuevoPerfil, perfilService, c, ventanaPrincipal);
 				
-				// Cambiar a la vista de nuevo perfil
 				ventanaPrincipal.mostrarCarta(VentanasEnum.NUEVOPERFIL);
 			}
 			catch (Exception exc) {

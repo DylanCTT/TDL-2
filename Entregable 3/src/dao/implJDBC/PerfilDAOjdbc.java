@@ -11,7 +11,7 @@ public class PerfilDAOjdbc implements PerfilDAO {
 
 	@Override
 	public Integer guardar(Perfil perfil) {
-		String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE) VALUES (?, ?)";
+		String sql = "INSERT INTO PERFIL (NOMBRE, ID_CLIENTE, CANT_ACCESOS) VALUES (?, ?, ?)";
 		Integer id = null;
 		
 		Connection conn = Conexion.getConnection();
@@ -19,12 +19,13 @@ public class PerfilDAOjdbc implements PerfilDAO {
 			
 			ps.setString(1, perfil.getNombre());
 			ps.setInt(2, perfil.getIdCliente());
+			ps.setInt(3, perfil.getCantAccesos());
 			
 			ps.executeUpdate();
 			
 			try (ResultSet rs = ps.getGeneratedKeys()) {
 				if (rs.next()) {
-					id = rs.getInt("ID");
+					id = rs.getInt(1);
 				}
 			}
 			
@@ -50,6 +51,7 @@ public class PerfilDAOjdbc implements PerfilDAO {
 				Perfil p = new Perfil();
 				p.setId(rs.getInt("ID"));
 				p.setNombre(rs.getString("NOMBRE"));
+				p.setCantAccesos(rs.getInt("CANT_ACCESOS"));
 				lista.add(p);
 			}
 			
@@ -74,6 +76,7 @@ public class PerfilDAOjdbc implements PerfilDAO {
 					p.setId(rs.getInt("ID"));
 					p.setNombre(rs.getString("NOMBRE"));
 					p.setIdCliente(rs.getInt("ID_CLIENTE"));
+					p.setCantAccesos(rs.getInt("CANT_ACCESOS"));
 					perfiles.add(p);
 				}
 			}
@@ -82,5 +85,21 @@ public class PerfilDAOjdbc implements PerfilDAO {
 			System.out.println("Error al devolver perfiles: " + e.getMessage());
 		}
 		return perfiles;
+	}
+	
+	@Override
+	public void sumarNroAccesos(Perfil p) {
+		String sql = "UPDATE PERFIL SET CANT_ACCESOS = CANT_ACCESOS + 1 WHERE ID = ?";
+		Connection conn = Conexion.getConnection();
+		
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, p.getId());
+			
+			ps.executeUpdate();
+		}
+		
+		catch (SQLException e) {
+			System.out.println("Error al incrementar numero de accesos: " + e.getMessage());
+		}
 	}
 }

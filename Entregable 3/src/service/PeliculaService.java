@@ -27,6 +27,12 @@ public class PeliculaService {
 		this.peliculaDAO = FactoryDAO.getPeliculaDAO();
 	}
 
+	public boolean hayPeliculas() {
+		boolean hay = false;
+		hay = peliculaDAO.hayPeliculas();
+		return hay;
+	}
+	
 	//lee una pelicula incluso si esta en lineas distintas en el csv
 	private String leerRegistroCompleto(FileReader fr) throws IOException{
 		StringBuilder linea = new StringBuilder();
@@ -209,4 +215,8 @@ public class PeliculaService {
 	        return null;
 	    }
 	}	
+	
+	public List<Pelicula> listar() {
+		return peliculaDAO.listar();
+	}
 }

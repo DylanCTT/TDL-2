@@ -20,6 +20,7 @@ public class Perfil implements Comparable<Perfil> {
 	private List<Resenia> misResenias;
 	private List<Contenido> historial;
 	private Integer idCliente;
+	private Integer cantAccesos;
 	
 	public Perfil(Integer id, String nombre, String idioma, List<String> preferenciasGenero, List<Contenido> miLista, List<Contenido> recomendaciones, List<Resenia> misResenias, List<Contenido> historial, Integer idCliente) {
 		this.id = id;
@@ -31,11 +32,13 @@ public class Perfil implements Comparable<Perfil> {
 		this.misResenias = new ArrayList<Resenia>();
 		this.historial = new ArrayList<Contenido>();
 		this.idCliente = idCliente;
+		this.cantAccesos = 0;
 	}
 	
 	public Perfil(String nombre, Integer idCliente) {
 		this.nombre = nombre;
 		this.idCliente = idCliente;
+		this.cantAccesos = 0;
 	}
 	
 	public Perfil() {
@@ -72,6 +75,14 @@ public class Perfil implements Comparable<Perfil> {
 
 	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public Integer getCantAccesos() {
+		return cantAccesos;
+	}
+
+	public void setCantAccesos(Integer cantAccesos) {
+		this.cantAccesos = cantAccesos;
 	}
 
 	public void agregarPreferenciaGenero() {
