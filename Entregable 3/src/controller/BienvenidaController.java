@@ -80,7 +80,7 @@ public class BienvenidaController {
 				
 				VentanaCalificarPelicula ventanaCalificarPelicula = ventanaPrincipal.getVentanaCalificarPelicula();
 				ventanaCalificarPelicula.actualizarPelicula(peliculaAclasificar);
-				ventanaCalificarPelicula.actualizarPerfil(perfilActual);
+				ventanaCalificarPelicula.actualizarPerfil(perfilActual);			
 				
 				ReseniaService reseniaService = new ReseniaService();
 				
@@ -99,12 +99,25 @@ public class BienvenidaController {
 	    public void actionPerformed(ActionEvent e) {
 	        try {
 	        	String titulo = view.getTextoBusqueda().trim();
-		        Pelicula p = peliculaService.buscar(titulo);
 	        	
-	            VentanaInfoPelicula ventanaInfo = ventanaPrincipal.getVentanaInfoPelicula();
-	            ventanaInfo.actualizarPelicula(p);
+	        	if (titulo.isEmpty()) {
+	        		view.mostrarMensajeError("Por favor, ingrese el titulo de una pelicula");
+	        		return;
+	        	}
+	        	
+		        Pelicula p = peliculaService.buscar(titulo);
+	        			        
+		        if (p!= null) {
+		        	VentanaInfoPelicula ventanaInfo = ventanaPrincipal.getVentanaInfoPelicula();
+		        	ventanaInfo.actualizarPelicula(p);
+	            
+		        	InfoPeliculaController controller = new InfoPeliculaController(ventanaInfo, ventanaPrincipal);
 
-	            ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
+		        	ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
+		        }
+		        else {
+		        	view.mostrarMensajeError("El titulo ingresado no existe");
+		        }
 	        } 
 	        catch(Exception exc) {
 	            view.mostrarMensajeError(exc.getMessage());
@@ -118,6 +131,7 @@ public class BienvenidaController {
 			try {
 				VentanaLogin ventanaLogin = ventanaPrincipal.getVentanaLogin();
 				
+				view.setTextoBusqueda("");
 				ventanaLogin.setEmail("");
 				ventanaLogin.setPassword("");
 				

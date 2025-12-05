@@ -9,7 +9,7 @@ public class VentanaInfoPelicula extends JPanel {
 	private JLabel lblTitulo;
 	private JPanel pnlCentro = new JPanel();
 	private JLabel lblAnio;
-	private JLabel lblResumen;
+	private JTextArea txtResumen;
 	private JButton btnContinuar = new JButton("Continuar");
 	
 	public VentanaInfoPelicula() {
@@ -18,24 +18,25 @@ public class VentanaInfoPelicula extends JPanel {
 	
 	public VentanaInfoPelicula(Pelicula p) {
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(600, 400));
 		
 		lblTitulo = new JLabel("", SwingConstants.CENTER);
-		lblAnio = new JLabel("");
-		lblResumen = new JLabel("");
-		
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
+		
+		txtResumen = new JTextArea("");
+		txtResumen.setWrapStyleWord(true);
+		txtResumen.setEditable(false);
+		txtResumen.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
+		lblAnio = new JLabel("");
 		lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblResumen.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblResumen.setVerticalAlignment(SwingConstants.TOP);
 		
 		btnContinuar.setBackground(Color.BLUE);
 		btnContinuar.setForeground(Color.WHITE);
 		btnContinuar.setFont(new Font("Calibri", Font.BOLD, 14));
 		
-		pnlCentro.setLayout(new GridLayout(2,1));
-		pnlCentro.add(lblAnio);
-		pnlCentro.add(lblResumen);
+		pnlCentro.setLayout(new GridLayout(10,10));
+		pnlCentro.add(lblAnio, BorderLayout.NORTH);
+		pnlCentro.add(new JScrollPane(txtResumen), BorderLayout.CENTER);
 		
 		add(lblTitulo, BorderLayout.NORTH);
 		add(pnlCentro, BorderLayout.CENTER);
@@ -46,12 +47,16 @@ public class VentanaInfoPelicula extends JPanel {
 	
 	public void actualizarPelicula(Pelicula p) {
 		if (p != null) {
-			lblTitulo.setText(p.getTitulo() != null ? p.getTitulo() : "Titulo no disponilbe");
+            
+			lblTitulo.setText(p.getTitulo() != null ? p.getTitulo() : "Titulo no disponible");
 			
 			if (p.getAnioSalida() > 0) lblAnio.setText("Año: " + p.getAnioSalida());		
 			else lblAnio.setText("Año: No disponible");
 			
-			lblResumen.setText(p.getResumen() != null ? p.getResumen() : "Resumen no disponible");
+			txtResumen.setText(p.getResumen() != null ? p.getResumen() : "Resumen no disponible");
+			
+			this.revalidate();
+			this.repaint();
 		}
 	}
 	

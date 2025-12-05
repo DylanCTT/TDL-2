@@ -16,9 +16,8 @@ public class VentanaBienvenida extends JPanel {
     private JLabel lblNombre;
     private JButton btnCerrarSesion;
     private List<JButton> botonesCalificar = new ArrayList<>();
-
     private JTextField campoBusqueda = new JTextField(20);
-    private JButton btnBuscar = new JButton("Buscar");
+    private JButton btnBuscar;
 
     public VentanaBienvenida() {
         this(new ArrayList<Pelicula>());
@@ -67,6 +66,7 @@ public class VentanaBienvenida extends JPanel {
         
         JPanel pnlBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         campoBusqueda.setFont(new Font("Calibri", Font.PLAIN, 14));
+        btnBuscar = new JButton("Buscar");
         btnBuscar.setFont(new Font("Calibri", Font.BOLD, 14));
         pnlBusqueda.add(campoBusqueda);
         pnlBusqueda.add(btnBuscar);
@@ -116,6 +116,10 @@ public class VentanaBienvenida extends JPanel {
 
     public String getTextoBusqueda() {
         return campoBusqueda.getText().trim();
+    }
+    
+    public void setTextoBusqueda(String texto) {
+    	this.campoBusqueda.setText(texto);
     }
 
     public List<JButton> getBotonesCalificar() {

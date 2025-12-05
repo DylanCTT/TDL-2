@@ -63,11 +63,16 @@ public class VentanaCalificarPelicula extends JPanel {
         panelBoton.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
         panelBoton.add(btnGuardar);
         
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelSuperior.add(btnRetroceso);
-        add(panelSuperior, BorderLayout.NORTH);
+        JPanel pnlSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlSuperior.add(btnRetroceso);
+        
+        JPanel pnlNorte = new JPanel();
+        pnlNorte.setLayout(new BoxLayout(pnlNorte, BoxLayout.Y_AXIS));
+        
+        pnlNorte.add(pnlSuperior);
+        pnlNorte.add(lblTitulo);
 
-        add(lblTitulo, BorderLayout.NORTH);
+        add(pnlNorte, BorderLayout.NORTH);
         add(pnlCentro, BorderLayout.CENTER);
         add(panelBoton, BorderLayout.SOUTH);
     }

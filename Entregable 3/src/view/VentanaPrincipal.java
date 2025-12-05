@@ -104,7 +104,7 @@ public class VentanaPrincipal extends JPanel {
 	}
 	
 	public VentanaCalificarPelicula getVentanaCalificarPelicula() {
-		return ventanaCalificarPelicula;
+		return this.ventanaCalificarPelicula;
 	}
 	
 	public void setVentanaCalificarPelicula(VentanaCalificarPelicula ventanaCalificarPelicula) {

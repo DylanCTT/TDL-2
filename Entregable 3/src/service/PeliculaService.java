@@ -5,14 +5,11 @@ import java.util.List;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import model.Cliente;
 import model.Generos;
 import model.Pelicula;
 import dao.FactoryDAO;
 import dao.interfaces.PeliculaDAO;
 import util.Conexion;
-import java.net.URI;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,9 +25,7 @@ public class PeliculaService {
 	}
 
 	public boolean hayPeliculas() {
-		boolean hay = false;
-		hay = peliculaDAO.hayPeliculas();
-		return hay;
+		return peliculaDAO.hayPeliculas();
 	}
 	
 	//lee una pelicula incluso si esta en lineas distintas en el csv
@@ -169,13 +164,14 @@ public class PeliculaService {
 
 	public Pelicula buscar(String titulo) throws Exception {
 	    try {
+	    	if ((titulo == null) || (titulo.isBlank())) return null;
+	    	
 	    	String url = "https://www.omdbapi.com/?t=" + titulo.replace(" ", "+") + "&apikey=" + API_KEY;
 
 	        HttpClient cliente = HttpClient.newHttpClient();
 	        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
-
 	        HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
-
+	        
 	        JSONObject json = new JSONObject(response.body());
 
 	        if (json.has("Response") && json.getString("Response").equals("True")) {
@@ -189,20 +185,20 @@ public class PeliculaService {
 	        		p.setAnioSalida(0);
 	        	}
 	        	
-	            p.setTitulo(json.getString("Title"));
+	            p.setTitulo(json.optString("Title", "Titulo no disponible"));
 	            
-	            p.setResumen(json.optString("Plot", "Sin resumen disponible"));
+	            p.setResumen(json.optString("Plot", "Resumen no disponible"));
 	            
-	            String generoStr = json.optString("Genre", "Desconocido");
-	            try {
-	            	String primerGenero = generoStr.split(",")[0].trim().toUpperCase();
+	            String generoStr = json.optString("Genre", "Genero no disponible");
+	            String primerGenero = generoStr.split(",")[0].trim().toUpperCase();
+	            try {	            	
 		            p.setGenero(Generos.valueOf(primerGenero));
 	            }
 	            catch(IllegalArgumentException e) {
+	            	if (generoStr.equals("SCI-FI")) p.setGenero(Generos.SCIENCEFICTION);
 	            	p.setGenero(null);
 	            }
-	            
-	                     
+	            	          	                     
 	            p.setPoster(json.optString("Poster"));
 	            return p;
 	        } 
