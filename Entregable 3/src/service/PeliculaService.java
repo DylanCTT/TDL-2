@@ -216,7 +216,11 @@ public class PeliculaService {
 	    }
 	}	
 	
-	public List<Pelicula> listar() {
-		return peliculaDAO.listar();
+	public List<Pelicula> listar10mayorVotacionPromedio() {
+		return peliculaDAO.listar10mayorVotacionPromedio();
+	}
+	
+	public List<Pelicula> listar10randomSinCalificar(Integer id) {
+		return peliculaDAO.listar10randomSinCalificar(id);
 	}
 }

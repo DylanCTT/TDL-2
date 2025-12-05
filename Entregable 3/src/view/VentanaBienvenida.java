@@ -104,6 +104,10 @@ public class VentanaBienvenida extends JPanel {
         btnBuscar.addActionListener(l);
     }
     
+    public void addCerrarSesionListener(ActionListener l) {
+    	btnCerrarSesion.addActionListener(l);
+    }
+    
     public void actualizarPerfil(Perfil p) {
     	if (p != null) {
     		lblNombre.setText(p.getNombre() != null ? p.getNombre() : "Nombre no disponible");
@@ -122,6 +126,10 @@ public class VentanaBienvenida extends JPanel {
 		return btnBuscar;
 	}
 
+    public JButton getBtnCerrarSesion() {
+    	return btnCerrarSesion;
+    }
+    
 	public void mostrarPantalla(String pantalla) {
         if (pantalla.equals("espera") || pantalla.equals("CARGANDO")) {
             cardLayout.show(panelPrincipal, "CARGANDO");
@@ -143,7 +151,7 @@ public class VentanaBienvenida extends JPanel {
             JLabel lblImagen = new JLabel();
             lblImagen.setPreferredSize(new Dimension(100, 140));
             lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
-            lblImagen.setText("Imagen");
+            lblImagen.setText("Imagen no disponible");
             lblImagen.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             lblImagen.setFont(new Font("Arial", Font.PLAIN, 12));
 

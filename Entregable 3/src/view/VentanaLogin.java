@@ -67,9 +67,17 @@ public class VentanaLogin extends JPanel {
 	public String getEmail() {
 		return tfEmail.getText();
 	}
+	
+	public void setEmail(String email) {
+		this.tfEmail.setText(email);
+	}
 
 	public String getPassword() {
 		return String.valueOf(tfPassword.getPassword());
+	}
+	
+	public void setPassword(String password) {
+	 this.tfPassword.setText(password);
 	}
 
 	public JButton getBotonIngresar() {

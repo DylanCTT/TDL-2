@@ -9,6 +9,7 @@ import model.Pelicula;
 import model.Perfil;
 import view.VentanaPrincipal;
 import view.VentanasEnum;
+import view.VentanaLogin;
 import view.VentanaBienvenida;
 import view.VentanaCalificarPelicula;
 import view.VentanaInfoPelicula;
@@ -35,15 +36,18 @@ public class BienvenidaController {
 		
 		Thread t = new Thread(new CargaPeliculasTask());
 		t.start();
-		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaXtitulo());
+		
+		this.view.getBtnBuscar().addActionListener(new BuscarPeliculaListener());
+		
+		this.view.getBtnCerrarSesion().addActionListener(new CerrarSesionListener());
 	}
 	
 	class CargaPeliculasTask implements Runnable {
 		public void run() {
 			if (!peliculaService.hayPeliculas()) peliculas = peliculaService.cargarPeliculas("src/resources/movies_database.csv");
 			else {
-				if (perfilActual.getCantAccesos() == 0) peliculas = peliculaService.listar();
-				else peliculas = peliculaService.listar();
+				if (perfilActual.getCantAccesos() == 0) peliculas = peliculaService.listar10mayorVotacionPromedio();
+				else peliculas = peliculaService.listar10randomSinCalificar(perfilActual.getId());
 			}
 			
 			SwingUtilities.invokeLater(() -> {
@@ -90,7 +94,7 @@ public class BienvenidaController {
 		}
 	}
 	
-	class BuscarPeliculaXtitulo implements ActionListener {
+	class BuscarPeliculaListener implements ActionListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 	        try {
@@ -106,5 +110,23 @@ public class BienvenidaController {
 	            view.mostrarMensajeError(exc.getMessage());
 	        }
 	    }
+	}
+	
+	class CerrarSesionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				VentanaLogin ventanaLogin = ventanaPrincipal.getVentanaLogin();
+				
+				ventanaLogin.setEmail("");
+				ventanaLogin.setPassword("");
+				
+				ventanaPrincipal.mostrarCarta(VentanasEnum.LOGIN);
+			}
+			
+			catch (Exception exc) {
+				view.mostrarMensajeError(exc.getMessage());
+			}
+		}
 	}
 }

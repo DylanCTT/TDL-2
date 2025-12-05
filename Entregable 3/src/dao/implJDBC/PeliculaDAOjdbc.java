@@ -116,4 +116,72 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 		}
 		return false;
 	}	
+	
+	@Override
+	public List<Pelicula> listar10mayorVotacionPromedio() {
+		List<Pelicula> lista = new ArrayList<>();
+		String sql = "SELECT * FROM PELICULA ORDER BY VOTOS_PROMEDIO DESC LIMIT 10";
+		Connection conn = Conexion.getConnection();
+		try (Statement st = conn.createStatement();     
+			 ResultSet rs = st.executeQuery(sql);) {   
+			
+			while (rs.next()) {
+				Pelicula p = new Pelicula();
+				p.setId(rs.getInt("ID"));
+				p.setAnioSalida(rs.getInt("ANIO_SALIDA"));
+				p.setTitulo(rs.getString("TITULO"));
+				p.setResumen(rs.getString("RESUMEN"));
+				p.setPopularidad(rs.getDouble("POPULARIDAD"));
+				p.setCantVotos(rs.getInt("CANT_VOTOS"));
+				p.setVotosPromedio(rs.getDouble("VOTOS_PROMEDIO"));
+				p.setIdioma(rs.getString("IDIOMA"));
+				p.setGenero(Generos.valueOf(rs.getString("GENERO")));
+				p.setPoster(rs.getString("POSTER"));
+				p.setDirector(rs.getString("DIRECTOR"));
+				p.setDuracion(rs.getFloat("DURACION"));
+				
+				lista.add(p);
+			}
+		}
+		catch (SQLException e) {
+			System.out.println("Error al listar peliculas: " + e.getMessage());
+		}
+		return lista;
+	}
+	
+	@Override
+	public List<Pelicula> listar10randomSinCalificar(Integer id) {
+		List<Pelicula> lista = new ArrayList<>();
+		String sql = "SELECT * FROM PELICULA WHERE ID NOT IN (SELECT ID_PELICULA FROM RESENIA WHERE ID_PERFIL = ?) ORDER BY RANDOM() LIMIT 10";
+		Connection conn = Conexion.getConnection();
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {   
+			
+			ps.setInt(1, id);
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					Pelicula p = new Pelicula();
+					p.setId(rs.getInt("ID"));
+					p.setAnioSalida(rs.getInt("ANIO_SALIDA"));
+					p.setTitulo(rs.getString("TITULO"));
+					p.setResumen(rs.getString("RESUMEN"));
+					p.setPopularidad(rs.getDouble("POPULARIDAD"));
+					p.setCantVotos(rs.getInt("CANT_VOTOS"));
+					p.setVotosPromedio(rs.getDouble("VOTOS_PROMEDIO"));
+					p.setIdioma(rs.getString("IDIOMA"));
+					p.setGenero(Generos.valueOf(rs.getString("GENERO")));
+					p.setPoster(rs.getString("POSTER"));
+					p.setDirector(rs.getString("DIRECTOR"));
+					p.setDuracion(rs.getFloat("DURACION"));
+					
+					lista.add(p);
+				}	
+			}
+		}
+		
+		catch (SQLException e) {
+			System.out.println("Error al listar peliculas: " + e.getMessage());
+		}
+		return lista;
+	}
 }
