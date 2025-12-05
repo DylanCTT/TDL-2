@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 public class PeliculaService {
 	private PeliculaDAO peliculaDAO;
+	private static final String API_KEY = "103b5adf";
 	
 	public PeliculaService() {
 		this.peliculaDAO = FactoryDAO.getPeliculaDAO();
@@ -93,10 +94,11 @@ public class PeliculaService {
         }
         
         Pelicula p = new Pelicula();
+        	
+        String anioStr = campos[0].split("-")[0];
+        int anio = Integer.parseInt(anioStr);
         
-        LocalDate fecha = null;
-        if (!campos[0].isBlank()) fecha = LocalDate.parse(campos[0]);	
-        p.setFechaSalida(fecha);
+        p.setAnioSalida((anio < 0) ? -1 : anio);
         
         p.setTitulo(campos[1].isBlank() ? "Titulo no disponible" : campos[1]);
         
@@ -159,51 +161,52 @@ public class PeliculaService {
         return lista;
     }
 
-	public class ConsultaPeliculasOMDb {
-	    // Reemplazá con tu API Key obtenida en https://www.omdbapi.com/apikey.aspx
-	    private static final String API_KEY = "TU_API_KEY";
+	public Pelicula buscar(String titulo) throws Exception {
+	    try {
+	    	String url = "https://www.omdbapi.com/?t=" + titulo.replace(" ", "+") + "&apikey=" + API_KEY;
 
-	    public static Pelicula consultarPelicula(String titulo) {
-	        try {
-	            String url = "https://www.omdbapi.com/?t=" + titulo.replace(" ", "+") + "&apikey=" + API_KEY;
+	        HttpClient cliente = HttpClient.newHttpClient();
+	        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 
-	            HttpClient cliente = HttpClient.newHttpClient();
-	            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+	        HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
 
-	            HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
+	        JSONObject json = new JSONObject(response.body());
 
-	            JSONObject json = new JSONObject(response.body());
-
-	            if (json.has("Response") && json.getString("Response").equals("True")) {
-	                // Crear objeto Pelicula con los datos de la API
-	                Pelicula p = new Pelicula();
-	                p.setTitulo(json.getString("Title"));
-	                p.setResumen(json.optString("Plot", "Sin resumen disponible"));
-	                p.setGenero(json.optString("Genre", "Desconocido"));
-	                p.setAnio(json.optString("Year", "No disponible")); 
-	                // Ajustá según cómo esté tu clase Pelicula (Date, String, etc.)
-
-	                return p;
-	            } else {
-	                return null; // No encontrada
+	        if (json.has("Response") && json.getString("Response").equals("True")) {
+	        	Pelicula p = new Pelicula();
+	        	
+	        	String anioSalidaStr = json.optString("Year", "0").replaceAll("\\D", "");
+	        	try {
+	        		p.setAnioSalida(Integer.parseInt(anioSalidaStr));
+	        	}
+	        	catch(NumberFormatException e) {
+	        		p.setAnioSalida(0);
+	        	}
+	        	
+	            p.setTitulo(json.getString("Title"));
+	            
+	            p.setResumen(json.optString("Plot", "Sin resumen disponible"));
+	            
+	            String generoStr = json.optString("Genre", "Desconocido");
+	            try {
+	            	String primerGenero = generoStr.split(",")[0].trim().toUpperCase();
+		            p.setGenero(Generos.valueOf(primerGenero));
 	            }
-	        } catch (Exception e) {
-	            System.out.println("Error al consultar la API: " + e.getMessage());
-	            return null;
+	            catch(IllegalArgumentException e) {
+	            	p.setGenero(null);
+	            }
+	            
+	                     
+	            p.setPoster(json.optString("Poster"));
+	            return p;
+	        } 
+	        else {
+	        	return null;
 	        }
+	    } 
+	    catch (Exception e) {
+	    	System.out.println("Error al consultar la API: " + e.getMessage());
+	        return null;
 	    }
-	}
-		
-		
-	}
-
-	
-	/*public Pelicula BuscarPelicula(String peli) throws Exception {
-		if (!peliculaDAO.existePelicula(peli)) throw new Exception("La pelicula no se encuentra");
-		
-		if ((peli.isEmpty())) throw new Exception("Ingrese una pelicula valida");
-		
-		Pelicula p = peliculaDAO.devolverPeliculaXtitulo(peli);
-		
-		return p;
-	}*/
+	}	
+}

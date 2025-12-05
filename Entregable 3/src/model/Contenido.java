@@ -1,10 +1,8 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Contenido {
 	private Integer id;
-	private LocalDate fechaSalida;
+	private int anioSalida;
 	private String titulo;
 	private String resumen;
 	private double popularidad;
@@ -14,10 +12,10 @@ public class Contenido {
 	private Generos genero;
 	private String poster; 
 	
-	public Contenido(Integer id, LocalDate fechaSalida, String titulo, String resumen, double popularidad,
+	public Contenido(Integer id, int anioSalida, String titulo, String resumen, double popularidad,
 			int cantVotos, double votosPromedio, String idioma, Generos genero, String poster) {
 		this.id = id;
-		this.fechaSalida = fechaSalida;
+		this.anioSalida = anioSalida;
 		this.titulo = titulo;
 		this.resumen = resumen;
 		this.popularidad = popularidad;
@@ -40,12 +38,12 @@ public class Contenido {
 		this.id = id;
 	}
 
-	public LocalDate getFechaSalida() {
-		return fechaSalida;
+	public int getAnioSalida() {
+		return anioSalida;
 	}
 
-	public void setFechaSalida(LocalDate fechaSalida) {
-		this.fechaSalida = fechaSalida;
+	public void setAnioSalida(int anioSalida) {
+		this.anioSalida = anioSalida;
 	}
 
 	public String getTitulo() {
@@ -114,7 +112,7 @@ public class Contenido {
 
 	@Override
 	public String toString() {
-		return "Contenido [id=" + id + ", fechaSalida=" + fechaSalida + ", titulo=" + titulo + ", resumen=" + resumen
+		return "Contenido [id=" + id + ", anioSalida=" + anioSalida + ", titulo=" + titulo + ", resumen=" + resumen
 				+ ", popularidad=" + popularidad + ", cantVotos=" + cantVotos + ", votosPromedio=" + votosPromedio
 				+ ", idioma=" + idioma + ", genero=" + genero + ", poster=" + poster + ", resumen=" + resumen + "]";
 	}

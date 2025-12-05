@@ -1,11 +1,10 @@
 package controller;
 
 import java.util.List;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import controller.LoginController.IngresarListener;
+import exceptions.MovieNotFoundException;
 import model.Pelicula;
 import model.Perfil;
 import view.VentanaPrincipal;
@@ -14,7 +13,6 @@ import view.VentanaBienvenida;
 import view.VentanaCalificarPelicula;
 import view.VentanaInfoPelicula;
 import service.PeliculaService;
-import service.PeliculaService.ConsultaPeliculasOMDb;
 import service.ReseniaService;
 
 
@@ -86,18 +84,19 @@ public class BienvenidaController {
 	class BuscarPeliculaXtitulo implements ActionListener {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-	        String titulo = view.getTextoBusqueda().trim();
-	        Pelicula p = ConsultaPeliculasOMDb.consultarPelicula(titulo);
-
-	        if (p != null) {
+	        try {
+	        	String titulo = view.getTextoBusqueda().trim();
+		        Pelicula p = service.buscar(titulo);
+	        	
 	            // Actualizar VentanaInfoPelicula con la película encontrada
 	            VentanaInfoPelicula ventanaInfo = ventanaPrincipal.getVentanaInfoPelicula();
 	            ventanaInfo.actualizarPelicula(p);
 
 	            // Mostrar la carta de información
 	            ventanaPrincipal.mostrarCarta(VentanasEnum.INFOPELICULA);
-	        } else {
-	            view.mostrarMensajeError("Película no encontrada");
+	        } 
+	        catch(Exception exc) {
+	            view.mostrarMensajeError(exc.getMessage());
 	        }
 	    }
 	}

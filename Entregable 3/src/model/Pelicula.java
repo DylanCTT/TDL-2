@@ -1,17 +1,15 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Pelicula extends Contenido {	
 	private String director;
 	private float duracion;
 	private String status;
 	private String url;
 	
-	public Pelicula(Integer id, LocalDate fechaSalida, String titulo, String resumen, double popularidad,
+	public Pelicula(Integer id, int anioSalida, String titulo, String resumen, double popularidad,
 			int cantVotos, double votosPromedio, String idioma, Generos genero, String poster, String sinopsis,
 			String director, float duracion, String status, String url) {
-		super(id, fechaSalida, titulo, resumen, popularidad, cantVotos, votosPromedio, idioma, genero, poster);
+		super(id, anioSalida, titulo, resumen, popularidad, cantVotos, votosPromedio, idioma, genero, poster);
 		this.director = director;
 		this.duracion = duracion;
 		this.status = status;

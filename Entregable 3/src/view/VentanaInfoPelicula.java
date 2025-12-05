@@ -41,19 +41,16 @@ public class VentanaInfoPelicula extends JPanel {
 		add(pnlCentro, BorderLayout.CENTER);
 		add(btnContinuar, BorderLayout.SOUTH);
 		
-		if (p != null) {
-			actualizarPelicula(p);
-		}
+		if (p != null) actualizarPelicula(p);
 	}
 	
 	public void actualizarPelicula(Pelicula p) {
 		if (p != null) {
 			lblTitulo.setText(p.getTitulo());
-			if (p.getFechaSalida() != null) {
-				lblAnio.setText("Año: " + String.valueOf(p.getFechaSalida().getYear()));
-			} else {
-				lblAnio.setText("Año: No disponible");
-			}
+			
+			if (p.getAnioSalida() > 0) lblAnio.setText("Año: " + p.getAnioSalida());		
+			else lblAnio.setText("Año: No disponible");
+			
 			lblResumen.setText(p.getResumen() != null ? p.getResumen() : "Sin resumen disponible");
 		}
 	}

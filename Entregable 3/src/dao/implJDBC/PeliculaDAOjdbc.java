@@ -3,7 +3,6 @@ package dao.implJDBC;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-
 import model.Cliente;
 import model.Generos;
 import model.Pelicula;
@@ -19,7 +18,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 		
 		Connection conn = Conexion.getConnection();
 	    try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-	        ps.setDate(1, java.sql.Date.valueOf(pelicula.getFechaSalida()));
+	        ps.setInt(1, pelicula.getAnioSalida());
 	        ps.setString(2, pelicula.getTitulo());
 	        ps.setString(3, pelicula.getResumen());
 	        ps.setDouble(4, pelicula.getPopularidad());
@@ -61,7 +60,7 @@ public class PeliculaDAOjdbc implements PeliculaDAO {
 			while (rs.next()) {
 				Pelicula p = new Pelicula();
 				p.setId(rs.getInt("ID"));
-				p.setFechaSalida(rs.getTimestamp("FECHA_SALIDA").toLocalDateTime().toLocalDate());
+				p.setAnioSalida(rs.getInt("ANIO_SALIDA"));
 				p.setTitulo(rs.getString("TITULO"));
 				p.setResumen(rs.getString("RESUMEN"));
 				p.setPopularidad(rs.getDouble("POPULARIDAD"));

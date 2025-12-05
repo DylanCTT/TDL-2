@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import dao.FactoryDAO;
 import dao.interfaces.ClienteDAO;
 import model.Cliente;
+import exceptions.*;
 
 public class ClienteService {
 	private ClienteDAO clienteDAO;
@@ -23,7 +24,7 @@ public class ClienteService {
 	public Cliente ingresar(String email, String password) throws Exception {
 		if (!stringEsMail(email)) throw new Exception("El mail ingresado no es valido");
 		
-		if (!clienteDAO.existeEmail(email)) throw new Exception("El email ingresado no existe");
+		if (!clienteDAO.existeEmail(email)) throw new ClientNotFoundException("El email ingresado no esta registrado");
 		
 		if ((email.isEmpty()) || (password.isEmpty())) throw new Exception("Ingrese todos los campos");
 		
@@ -37,7 +38,7 @@ public class ClienteService {
 		
 		if (!stringEsMail(email)) throw new Exception("El mail ingresado no es valido");
 		
-		if (clienteDAO.existeEmail(email)) throw new Exception("El email ingresado ya existe");
+		if (clienteDAO.existeEmail(email)) throw new ClientAlreadyExistsException("El email ingresado ya esta registrado");
 		
 		if ((nombres.isEmpty()) || (apellidos.isEmpty()) || (dni < 0) || (email.isEmpty()) || password.isEmpty()) throw new Exception("Ingrese todos los campos");
 		
