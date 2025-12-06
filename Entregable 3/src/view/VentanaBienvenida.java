@@ -31,10 +31,31 @@ public class VentanaBienvenida extends JPanel {
         setLayout(new BorderLayout());
 
         panelCargando = new JPanel(new BorderLayout());
-        JLabel lblCargando = new JLabel("Cargando películas...", SwingConstants.CENTER);
-        lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
-        panelCargando.add(lblCargando, BorderLayout.CENTER);
 
+        JPanel panelContenidoGif = new JPanel();
+        panelContenidoGif.setLayout(new BoxLayout(panelContenidoGif, BoxLayout.Y_AXIS));
+        panelContenidoGif.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel lblCargando = new JLabel("Cargando películas...");
+        lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
+        lblCargando.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        ImageIcon gifIcon = new ImageIcon("src/resources/gifCargando.gif");
+        Image gifEscalado = gifIcon.getImage().getScaledInstance(364, 205, Image.SCALE_DEFAULT);
+        ImageIcon gifFinal = new ImageIcon(gifEscalado);
+
+        JLabel lblGif = new JLabel(gifFinal);
+        lblGif.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panelContenidoGif.add(Box.createVerticalGlue()); 
+        panelContenidoGif.add(lblCargando);
+        panelContenidoGif.add(Box.createVerticalStrut(20)); 
+        panelContenidoGif.add(lblGif);
+        panelContenidoGif.add(Box.createVerticalGlue()); 
+
+        panelCargando.add(panelContenidoGif, BorderLayout.CENTER);
+
+        
         panelPeliculas = new JPanel();
         panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
 
@@ -52,7 +73,7 @@ public class VentanaBienvenida extends JPanel {
         lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
 
         JLabel lblSubtitulo = new JLabel("Hacenos saber que te parecieron estas peliculas dejando una resena");
-        lblSubtitulo.setFont(new Font("Calibri", Font.PLAIN, 16));
+        lblSubtitulo.setFont(new Font("Calibri", Font.PLAIN, 	16));
         lblSubtitulo.setHorizontalAlignment(SwingConstants.LEFT);
 
         JPanel panelTextos = new JPanel();
