@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import model.Pelicula;
 import model.Perfil;
 
@@ -13,14 +14,22 @@ public class VentanaBienvenida extends JPanel {
     private CardLayout cardLayout;
     private JPanel panelCargando;
     private JPanel panelPeliculas;
-    private JLabel lblNombre;
-    private JButton btnCerrarSesion;
+    private JLabel lblNombre = new JLabel("Perfil");
+    private JButton btnCerrarSesion = new JButton("Cerrar sesión");
     private JComboBox<String> cmbOrden;
-    private List<JButton> botonesCalificar = new ArrayList<>();
     private JTextField campoBusqueda = new JTextField(20);
-    private JButton btnBuscar;
+    private JButton btnBuscar = new JButton("Buscar");
+    private List<JButton> botonesCalificar = new ArrayList<>(); 
     private JScrollPane scrollPeliculas;
 
+    private Color colorFondo = Color.WHITE;
+    private Color colorBoton = Color.BLUE;
+    private Color colorTextoBoton = Color.WHITE;
+    private Font fuenteTitulo = new Font("Arial", Font.BOLD, 24);
+    private Font fuenteSubtitulo = new Font("Arial", Font.PLAIN, 14);
+    private Font fuenteBotones = new Font("Arial", Font.BOLD, 12);
+    private Font fuenteTexto = new Font("Arial", Font.PLAIN, 14);
+    
     public VentanaBienvenida() {
         this(new ArrayList<Pelicula>());
     }
@@ -29,22 +38,30 @@ public class VentanaBienvenida extends JPanel {
         cardLayout = new CardLayout();
         panelPrincipal = new JPanel(cardLayout);
         setLayout(new BorderLayout());
+        setBackground(colorFondo);
 
         panelCargando = new JPanel(new BorderLayout());
+        panelCargando.setBackground(colorFondo);
 
         JPanel panelContenidoGif = new JPanel();
         panelContenidoGif.setLayout(new BoxLayout(panelContenidoGif, BoxLayout.Y_AXIS));
+        panelContenidoGif.setBackground(colorFondo);
         panelContenidoGif.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblCargando = new JLabel("Cargando películas...");
         lblCargando.setFont(new Font("Arial", Font.BOLD, 24));
         lblCargando.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ImageIcon gifIcon = new ImageIcon("src/resources/gifCargando.gif");
-        Image gifEscalado = gifIcon.getImage().getScaledInstance(364, 205, Image.SCALE_DEFAULT);
-        ImageIcon gifFinal = new ImageIcon(gifEscalado);
-
-        JLabel lblGif = new JLabel(gifFinal);
+        JLabel lblGif = new JLabel();
+        try {
+            ImageIcon gifIcon = new ImageIcon("src/resources/gifCargando.gif");
+            if (gifIcon.getImageLoadStatus() == MediaTracker.COMPLETE) {
+                Image gifEscalado = gifIcon.getImage().getScaledInstance(364, 205, Image.SCALE_DEFAULT);
+                lblGif.setIcon(new ImageIcon(gifEscalado));
+            }
+        } catch (Exception e) {
+            lblGif.setText("...");
+        }
         lblGif.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panelContenidoGif.add(Box.createVerticalGlue()); 
@@ -55,61 +72,81 @@ public class VentanaBienvenida extends JPanel {
 
         panelCargando.add(panelContenidoGif, BorderLayout.CENTER);
 
-        
         panelPeliculas = new JPanel();
         panelPeliculas.setLayout(new BoxLayout(panelPeliculas, BoxLayout.Y_AXIS));
+        panelPeliculas.setBackground(colorFondo);
 
         scrollPeliculas = new JScrollPane(panelPeliculas);
-        scrollPeliculas.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        scrollPeliculas.setBorder(null);
         scrollPeliculas.getVerticalScrollBar().setUnitIncrement(20);
         
-        mostrarPeliculas(peliculas);
-
         JPanel panelSuperior = new JPanel(new BorderLayout());
-        panelSuperior.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        panelSuperior.setBackground(colorFondo);
+        panelSuperior.setBorder(new EmptyBorder(15, 30, 15, 30));
 
-        JLabel lblTitulo = new JLabel("Bienvenido a la Plataforma de Streaming");
-        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 26));
-        lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-
-        JLabel lblSubtitulo = new JLabel("Hacenos saber que te parecieron estas peliculas dejando una resena");
-        lblSubtitulo.setFont(new Font("Calibri", Font.PLAIN, 	16));
-        lblSubtitulo.setHorizontalAlignment(SwingConstants.LEFT);
-
-        JPanel panelTextos = new JPanel();
-        panelTextos.setLayout(new BoxLayout(panelTextos, BoxLayout.Y_AXIS));
-        panelTextos.add(lblTitulo);
-        panelTextos.add(lblSubtitulo);
-
-        JPanel pnlEste = new JPanel();
-        pnlEste.setLayout(new BoxLayout(pnlEste, BoxLayout.Y_AXIS));
+        JPanel pnlHeaderTop = new JPanel(new BorderLayout());
+        pnlHeaderTop.setBackground(colorFondo);
         
-        JPanel pnlCerrarSesion = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        lblNombre = new JLabel("Nombre perfil");
-        lblNombre.setFont(new Font("Calibri", Font.BOLD, 14));       
-        btnCerrarSesion = new JButton("Cerrar sesion");
-        btnCerrarSesion.setFont(new Font("Calibri", Font.BOLD, 14));       
-        pnlCerrarSesion.add(lblNombre);
-        pnlCerrarSesion.add(btnCerrarSesion);
+        JLabel lblTitulo = new JLabel("Bienvenido a Vizyalize");
+        lblTitulo.setFont(fuenteTitulo);
+        
+        JPanel pnlUsuario = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlUsuario.setBackground(colorFondo);
+        
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        btnCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 12));
+        btnCerrarSesion.setForeground(Color.GRAY);
+        btnCerrarSesion.setBackground(colorFondo);
+        btnCerrarSesion.setBorder(null);
+        btnCerrarSesion.setFocusPainted(false);
+        btnCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        pnlUsuario.add(lblNombre);
+        pnlUsuario.add(new JLabel(" | "));
+        pnlUsuario.add(btnCerrarSesion);
+        
+        pnlHeaderTop.add(lblTitulo, BorderLayout.WEST);
+        pnlHeaderTop.add(pnlUsuario, BorderLayout.EAST);
+        
+        JPanel pnlHeaderBottom = new JPanel(new BorderLayout());
+        pnlHeaderBottom.setBackground(colorFondo);
+        pnlHeaderBottom.setBorder(new EmptyBorder(15, 0, 0, 0));
+
+        JLabel lblSubtitulo = new JLabel("Explora el catálogo y deja tu reseña.");
+        lblSubtitulo.setFont(fuenteSubtitulo);
+        lblSubtitulo.setForeground(Color.DARK_GRAY);
+
+        JPanel pnlBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlBusqueda.setBackground(colorFondo);
         
         String[] opcionesOrden = {"Ordenar por...", "Titulo (Descendente)", "Titulo (Ascendente)", "Genero (Descendente)", "Genero (Ascendente)"};        
         cmbOrden = new JComboBox<>(opcionesOrden);
-        cmbOrden.setPreferredSize(new Dimension(150, 30));
+        cmbOrden.setPreferredSize(new Dimension(180, 35));
+        cmbOrden.setBackground(Color.WHITE);
+        cmbOrden.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        JPanel pnlBusqueda = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        campoBusqueda.setFont(new Font("Calibri", Font.PLAIN, 14));
-        btnBuscar = new JButton("Buscar");
-        btnBuscar.setFont(new Font("Calibri", Font.BOLD, 14));
+        campoBusqueda.setFont(fuenteTexto);
+        campoBusqueda.setPreferredSize(new Dimension(200, 35));
+        
+        btnBuscar.setFont(fuenteBotones);
+        btnBuscar.setBackground(colorBoton);
+        btnBuscar.setForeground(colorTextoBoton);
+        btnBuscar.setFocusPainted(false);
+        btnBuscar.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        btnBuscar.setPreferredSize(new Dimension(100, 35));
+        btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         pnlBusqueda.add(cmbOrden);
         pnlBusqueda.add(Box.createHorizontalStrut(10));
         pnlBusqueda.add(campoBusqueda);
         pnlBusqueda.add(btnBuscar);
         
-        pnlEste.add(pnlCerrarSesion);
-        pnlEste.add(pnlBusqueda);
-        
-        panelSuperior.add(panelTextos, BorderLayout.CENTER);
-        panelSuperior.add(pnlEste, BorderLayout.EAST);
+        pnlHeaderBottom.add(lblSubtitulo, BorderLayout.WEST);
+        pnlHeaderBottom.add(pnlBusqueda, BorderLayout.EAST);
+
+        panelSuperior.add(pnlHeaderTop, BorderLayout.NORTH);
+        panelSuperior.add(pnlHeaderBottom, BorderLayout.SOUTH);
 
         JPanel panelContenido = new JPanel(new BorderLayout());
         panelContenido.add(panelSuperior, BorderLayout.NORTH);
@@ -251,7 +288,6 @@ public class VentanaBienvenida extends JPanel {
             panelDatos.add(lblGenero);
             panelDatos.add(txtResumen);
 
-            //Botón calificar
             JButton btnCalificar = new JButton("Calificar");
             btnCalificar.setPreferredSize(new Dimension(100, 30));
             botonesCalificar.add(btnCalificar);
