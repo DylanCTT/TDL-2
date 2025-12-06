@@ -157,6 +157,41 @@ public class VentanaBienvenida extends JPanel {
         }
     }
 
+	private void cargarPosters(JLabel lblImagen, String urlPoster) {
+		if ((urlPoster == null) || (urlPoster.isEmpty()) || urlPoster.equals("N/A")) {
+			lblImagen.setText("Imagen no disponible");
+			return;
+		}
+		
+		Thread threadImagen = new Thread(() -> {
+			try {
+				java.net.URL url = new java.net.URI(urlPoster.trim()).toURL();
+				java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();      		
+        		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+        		
+        		java.io.InputStream stream = connection.getInputStream();
+        		java.awt.image.BufferedImage poster = javax.imageio.ImageIO.read(stream);
+        		
+        		if (poster != null) {
+        			Image posterEscalado = poster.getScaledInstance(100, 140, Image.SCALE_SMOOTH);
+        			ImageIcon icono = new ImageIcon(posterEscalado);
+        			
+        			lblImagen.setIcon(icono);
+        			lblImagen.setText("");
+        		} 
+			}
+			catch (Exception e) {
+				SwingUtilities.invokeLater(() -> {
+					System.out.println("Errr al descargar imagen (" + urlPoster + "): " + e.getMessage());
+					lblImagen.setText("Error");
+				});
+			}
+		});
+		
+		threadImagen.setDaemon(true);
+		threadImagen.start();
+	}
+	
     public void mostrarPeliculas(List<Pelicula> peliculas) {
         panelPeliculas.removeAll();
         botonesCalificar.clear();
@@ -172,38 +207,7 @@ public class VentanaBienvenida extends JPanel {
             lblImagen.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             lblImagen.setFont(new Font("Arial", Font.PLAIN, 12));
             
-            String urlPoster = p.getPoster();
-            
-            if ((urlPoster != null) && (!urlPoster.isEmpty()) && !urlPoster.equals("N/A")) {
-            	urlPoster = urlPoster.trim();
-            	
-            	lblImagen.setText("Cargando...");
-            	
-            	try { 
-            		java.net.URL url = new java.net.URI(urlPoster).toURL();
-            		
-            		java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
-            		
-            		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            		
-            		java.io.InputStream stream = connection.getInputStream();
-            		java.awt.image.BufferedImage poster = javax.imageio.ImageIO.read(stream);
-            		
-            		if (poster != null) {
-            			Image posterEscalado = poster.getScaledInstance(100, 140, Image.SCALE_SMOOTH);
-            			ImageIcon icono = new ImageIcon(posterEscalado);
-            			
-            			lblImagen.setIcon(icono);
-            			lblImagen.setText("");
-            		}               		
-            	}
-            	
-            	catch(Exception e) {
-            		System.out.println("Errr al descargar imagen (" + urlPoster + "): " + e.getMessage());
-            		lblImagen.setText("Poster no disponible");
-            	}
-            }
-            else lblImagen.setText("Imagen no disponible");
+            cargarPosters(lblImagen, p.getPoster());                  
 
             JPanel panelDatos = new JPanel();
             panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));

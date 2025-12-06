@@ -45,10 +45,10 @@ public class CalificarPeliculaController {
 				
 				view.mostrarMensaje("Reseña guardada exitosamente");
 				
+				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
+				
 				view.setPuntaje(0);
 				view.getTaComentarioComponent().setText("");
-				
-				ventanaPrincipal.mostrarCarta(VentanasEnum.BIENVENIDA);
 			}
 			catch (Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());

@@ -3,58 +3,111 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.*;
 
 public class VentanaLogin extends JPanel {
     private JLabel lblEmail = new JLabel("E-mail: ");
-    private JTextField tfEmail = new JTextField(20);
+    private JTextField tfEmail = new JTextField();
     private JLabel lblPassword = new JLabel("Contrasenia: ");
-    private JPasswordField tfPassword = new JPasswordField(20);
+    private JPasswordField tfPassword = new JPasswordField();
     private JButton btnIngresar = new JButton("Ingresar");
-    private JButton btnRegistrarte = new JButton("Registrarte");
+    private JButton btnRegistrarte = new JButton("Registrarse");
 
-        public VentanaLogin() {
-            setLayout(new BorderLayout());
+    private Color colorFondo = Color.WHITE;
+    private Color colorBoton = Color.BLUE;
+    private Color colorTextoBoton = Color.WHITE;
+    private Font fuentePrincipal = new Font("Arial", Font.BOLD, 14);
+    private Font fuenteCampos = new Font("Calibri", Font.PLAIN, 14);   		
+    
+    public VentanaLogin() {
+    	setLayout(new BorderLayout());
+    	setBackground(colorFondo);
 
-            // Imagen a la izquierda
-            JLabel imagen = new JLabel(new ImageIcon("src/resources/Logo Popcorn Caricatura.png"));
-            imagen.setPreferredSize(new Dimension(500, 500)); 
-            add(imagen, BorderLayout.WEST);
+    	JPanel pnlImagen = new JPanel(new BorderLayout());
+    	pnlImagen.setBackground(new Color(245, 245, 245));
+    	pnlImagen.setPreferredSize(new Dimension(350, 0));
+    	
+    	ImageIcon imagen = new ImageIcon("src/resources/Logo Popcorn Caricatura.png");
+    	Image imagenEscalada = imagen.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+    	JLabel lblImagen = new JLabel(new ImageIcon(imagenEscalada));
+    	lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+    	
+    	pnlImagen.add(lblImagen, BorderLayout.CENTER);
+    	add(pnlImagen, BorderLayout.WEST);
 
-            // anel central con campos
-            JPanel panelCentro = new JPanel();
-            panelCentro.setLayout(new GridBagLayout());
-            panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50)); // margen interno
+    	JPanel pnlCentro = new JPanel(new GridBagLayout());
+    	pnlCentro.setBackground(colorFondo);
+        pnlCentro.setBorder(new EmptyBorder(20, 40, 20, 40));
 
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(10, 10, 10, 10); // espacio entre componentes
-            gbc.anchor = GridBagConstraints.WEST;   // alinear a la izquierda
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.gridx = 0; gbc.gridy = 0;
-            panelCentro.add(lblEmail, gbc);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.WEST;  
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        lblEmail.setFont(fuentePrincipal);
+        lblPassword.setFont(fuentePrincipal);
+        
+        tfEmail.setFont(fuenteCampos);
+        tfEmail.setPreferredSize(new Dimension(200, 30));
+        
+        tfPassword.setFont(fuenteCampos);
+        tfPassword.setPreferredSize(new Dimension(200, 30));
+        
+        JLabel lblTitulo = new JLabel("Iniciar Sesión");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 0, 30, 0);
+        pnlCentro.add(lblTitulo, gbc);
 
-            gbc.gridx = 1;
-            panelCentro.add(tfEmail, gbc);
+        gbc.gridwidth = 1;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-            gbc.gridx = 0; gbc.gridy = 1;
-            panelCentro.add(lblPassword, gbc);
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.weightx = 0;
+        pnlCentro.add(lblEmail, gbc);
 
-            gbc.gridx = 1;
-            panelCentro.add(tfPassword, gbc);
+        gbc.gridx = 1; 
+        gbc.weightx = 1.0;
+        pnlCentro.add(tfEmail, gbc);
 
-            gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
-            gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.weightx = 0;
+        pnlCentro.add(lblPassword, gbc);
 
-            JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        pnlCentro.add(tfPassword, gbc);
 
-            btnIngresar.setPreferredSize(new Dimension(120, 30));
-            btnRegistrarte.setPreferredSize(new Dimension(120, 30));
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        panelBotones.setBackground(colorFondo);
+        panelBotones.setBorder(new EmptyBorder(20, 0, 0, 0));
 
-            panelBotones.add(btnIngresar);
-            panelBotones.add(btnRegistrarte);
-            panelCentro.add(panelBotones, gbc);
+        btnIngresar.setFont(fuentePrincipal);
+        btnIngresar.setBackground(colorBoton);
+        btnIngresar.setForeground(colorTextoBoton);
+        btnIngresar.setFocusPainted(false);
+        btnIngresar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnIngresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-            add(panelCentro, BorderLayout.CENTER);
-        }
+        btnRegistrarte.setFont(fuentePrincipal);
+        btnRegistrarte.setBackground(Color.WHITE);
+        btnRegistrarte.setForeground(colorBoton);
+        btnRegistrarte.setBorder(BorderFactory.createLineBorder(colorBoton, 1));
+        btnRegistrarte.setFocusPainted(false);
+        btnRegistrarte.setPreferredSize(new Dimension(120, 40));
+        btnRegistrarte.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        panelBotones.add(btnIngresar);
+        panelBotones.add(btnRegistrarte);
+
+        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        pnlCentro.add(panelBotones, gbc);
+
+        add(pnlCentro, BorderLayout.CENTER);
+    }
 
 	public void addIngresarListener(ActionListener l) {
 		btnIngresar.addActionListener(l);

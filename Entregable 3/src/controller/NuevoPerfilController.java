@@ -23,29 +23,40 @@ public class NuevoPerfilController {
 		this.c = c;
 		this.ventanaPrincipal = ventanaPrincipal;
 		
+		this.view.removerListenersVolver();
+		this.view.removerListenersCrearPerfil();
+		
+		this.view.getBotonVolver().addActionListener(new VolverListener());
 		this.view.getBotonCrearPerfil().addActionListener(new CrearPerfilListener());
+	}
+	
+	class VolverListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ventanaPrincipal.mostrarCarta(VentanasEnum.PERFILES);
+		}
 	}
 	
 	class CrearPerfilListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String nombre = view.getNombre().trim();
+				String color = view.getColorSeleccionado();
 				Integer idCliente = c.getId();
 				
-				service.crear(nombre, idCliente);
+				service.crear(nombre, color, idCliente);
 				
 				view.mostrarMensaje("Perfil creado con exito");
 				
-				// Recargar los perfiles actualizados
 				VentanaPerfiles ventanaPerfiles = ventanaPrincipal.getVentanaPerfiles();
 				ArrayList<Perfil> perfiles = (ArrayList<Perfil>) service.getPerfilesXidCliente(c.getId());
 				ventanaPerfiles.actualizarPerfiles(perfiles);
 				
-				// Actualizar los listeners de los botones
 				PerfilesController perfilesController = new PerfilesController(ventanaPerfiles, service, c, ventanaPrincipal, perfiles);
 				
-				// Volver a la vista de perfiles después de crear el perfil
 				ventanaPrincipal.mostrarCarta(VentanasEnum.PERFILES);
+				
+				view.setNombre("");
 			}
 			catch(Exception exc) {
 				view.mostrarMensajeError(exc.getMessage());

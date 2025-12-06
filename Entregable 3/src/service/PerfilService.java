@@ -13,10 +13,10 @@ public class PerfilService {
 		this.perfilDAO = FactoryDAO.getPerfilDAO();
 	}
 	
-	public void crear(String nombre, Integer idCliente) throws Exception {
+	public void crear(String nombre, String color, Integer idCliente) throws Exception {
 		if (nombre.isEmpty()) throw new Exception("Ingrese todos los campos");
 		
-		Perfil p = new Perfil(nombre, idCliente);
+		Perfil p = new Perfil(nombre, color, idCliente);
 		
 		Integer id = perfilDAO.guardar(p);
 		

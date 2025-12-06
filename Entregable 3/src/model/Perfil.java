@@ -14,6 +14,7 @@ public class Perfil implements Comparable<Perfil> {
 	private Integer id;
 	private String nombre;
 	private String idioma;
+	private String color;
 	private List<String> preferenciasGenero;
 	private List<Contenido> miLista;
 	private List<Contenido> recomendaciones;
@@ -35,8 +36,9 @@ public class Perfil implements Comparable<Perfil> {
 		this.cantAccesos = 0;
 	}
 	
-	public Perfil(String nombre, Integer idCliente) {
+	public Perfil(String nombre, String color, Integer idCliente) {
 		this.nombre = nombre;
+		this.color = color;
 		this.idCliente = idCliente;
 		this.cantAccesos = 0;
 	}
@@ -69,6 +71,14 @@ public class Perfil implements Comparable<Perfil> {
 		this.idioma = idioma;
 	}
 	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	public Integer getIdCliente() {
 		return idCliente;
 	}

@@ -14,9 +14,9 @@ public class CreacionTablas {
   * @throws SQLException 
   */ 
 	
-	public void creacionDeTablasEnDB(Connection connection) throws SQLException { //connection es la conexion activa con la base de datos. usa la connection ya abierta en pruebaDB
-																				   //que haya un throws de una exception significa que quien llame al metodo este debera encargarse con un try/catch de manejar el error
-		Statement stmt = connection.createStatement(); //se crea un objeto que maneje sentencias SQL sobre esta conexion (crea, modifica, inserta o elimina tablas)
+	public void creacionDeTablasEnDB(Connection connection) throws SQLException { 
+																				    
+		Statement stmt = connection.createStatement();
     
 		//nuestro "DATOS_PERSONALES"
 		String sql = "CREATE TABLE IF NOT EXISTS CLIENTE (" +
@@ -27,12 +27,13 @@ public class CreacionTablas {
 					 "EMAIL TEXT NOT NULL," + 
 					 "CONTRASENIA TEXT NOT NULL" + 
 					 ");";       
-		stmt.executeUpdate(sql); //executeUpdate modifica la base de datos con el string sql que escribimos
+		stmt.executeUpdate(sql);
  
 		//nuestro "USUARIO"
 		sql = "CREATE TABLE IF NOT EXISTS PERFIL (" +
 			  "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
 			  "NOMBRE TEXT NOT NULL," +
+			  "COLOR TEXT NOT NULL," +
 			  "ID_CLIENTE INTEGER NOT NULL," +
 			  "CANT_ACCESOS INTEGER NOT NULL," +
 			  "CONSTRAINT PERFIL_CLIENTE_FK FOREIGN KEY (ID_CLIENTE) REFERENCES CLIENTE(ID)" +
@@ -68,6 +69,6 @@ public class CreacionTablas {
 			  ");";   
 		stmt.executeUpdate(sql); 
       
-		stmt.close(); //cierra el objeto statement, para no dejar conexiones abiertas
+		stmt.close();
 	}
 }

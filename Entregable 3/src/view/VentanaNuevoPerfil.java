@@ -13,29 +13,31 @@ public class VentanaNuevoPerfil extends JPanel {
     String[] colores = {"Rojo", "Verde", "Azul"};
     private JComboBox<String> color = new JComboBox<>(colores);
     private JButton btnCrearPerfil = new JButton("Crear perfil");
-
-    // Panel de vista previa
-    private JPanel panelDemo = new JPanel(new BorderLayout());
-    private JLabel lblDemoNombre = new JLabel("Ejemplo", SwingConstants.CENTER);
+    private JButton btnVolver;
+    private JPanel panelColor = new JPanel(new BorderLayout());
+    private JLabel lblColorNombre = new JLabel("Ejemplo", SwingConstants.CENTER);
 
     public VentanaNuevoPerfil() {
         setLayout(new BorderLayout());
 
-        // 🎨 Panel izquierdo: vista previa del perfil
-        panelDemo.setPreferredSize(new Dimension(350, 950));
-        panelDemo.setBackground(Color.RED); // color inicial
-        lblDemoNombre.setFont(new Font("Calibri", Font.BOLD, 24));
-        lblDemoNombre.setForeground(Color.WHITE);
-        panelDemo.add(lblDemoNombre, BorderLayout.CENTER);
-        add(panelDemo, BorderLayout.WEST);
+        btnVolver = new JButton("Volver");
+        
+        JPanel pnlSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlSuperior.add(btnVolver);        
+        add(pnlSuperior, BorderLayout.NORTH);
+        
+        panelColor.setPreferredSize(new Dimension(350, 950));
+        panelColor.setBackground(Color.RED);
+        lblColorNombre.setFont(new Font("Calibri", Font.BOLD, 24));
+        lblColorNombre.setForeground(Color.WHITE);
+        panelColor.add(lblColorNombre, BorderLayout.CENTER);
+        add(panelColor, BorderLayout.WEST);
 
-        // 🧱 Panel derecho: formulario
         JPanel panelCentral = new JPanel(new GridBagLayout());
         panelCentral.setBorder(BorderFactory.createEmptyBorder(100, 50, 100, 50));
 
         lblNombre.setFont(new Font("Calibri", Font.BOLD, 18));
         
-
         tfNombre.setPreferredSize(new Dimension(300, 35));
 
         lblColores.setFont(new Font("Calibri", Font.BOLD, 18));
@@ -48,7 +50,6 @@ public class VentanaNuevoPerfil extends JPanel {
         gbc.insets = new Insets(20, 10, 20, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Campo nombre
         gbc.gridx = 0; gbc.gridy = 0;
         panelCentral.add(lblNombre, gbc);
 
@@ -58,55 +59,94 @@ public class VentanaNuevoPerfil extends JPanel {
         gbc.weightx = 1.0;
         panelCentral.add(tfNombre, gbc);
 
-
-        // Campo color
         gbc.gridx = 0; gbc.gridy = 1;
         panelCentral.add(lblColores, gbc);
         gbc.gridx = 1;
         panelCentral.add(color, gbc);
-
-        // Botón
+        
         gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         panelCentral.add(btnCrearPerfil, gbc);
 
         add(panelCentral, BorderLayout.CENTER);
 
-        //Actualización dinámica del panel demo
-        tfNombre.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { actualizarDemo(); }
-            public void removeUpdate(DocumentEvent e) { actualizarDemo(); }
-            public void changedUpdate(DocumentEvent e) { actualizarDemo(); }
+        color.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		actualizarColor();
+        	}
         });
-        color.addActionListener(e -> actualizarDemo());
+        
+        actualizarColor();
+        
+        tfNombre.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { actualizarColor(); }
+            public void removeUpdate(DocumentEvent e) { actualizarColor(); }
+            public void changedUpdate(DocumentEvent e) { actualizarColor(); }
+        });
     }
 
-    private void actualizarDemo() {
+    private void actualizarColor() {
         String nombre = tfNombre.getText().trim();
-        lblDemoNombre.setText(nombre.isEmpty() ? "Ejemplo" : nombre);
+        lblColorNombre.setText(nombre.isEmpty() ? "Ejemplo" : nombre);
 
         String colorSeleccionado = (String) color.getSelectedItem();
         switch (colorSeleccionado) {
-            case "Rojo":  panelDemo.setBackground(Color.RED); break;
-            case "Verde": panelDemo.setBackground(Color.GREEN); break;
-            case "Azul":  panelDemo.setBackground(Color.BLUE); break;
+            case "Rojo":  panelColor.setBackground(Color.RED); break;
+            case "Verde": panelColor.setBackground(Color.GREEN); break;
+            case "Azul":  panelColor.setBackground(Color.BLUE); break;
         }
-        panelDemo.repaint();
+        panelColor.repaint();
     }
 
-    // Métodos existentes (sin cambios)
+    public void addVolverListener(ActionListener l) {
+    	btnVolver.addActionListener(l);
+    }
+    
+    public void removerListenersVolver() {
+    	for (ActionListener l : btnVolver.getActionListeners()) {
+    		btnVolver.removeActionListener(l);
+    	}
+    }
+    
+    public void addColorListener(ActionListener l) {
+    	color.addActionListener(l);
+    }
+    
     public void addCrearPerfilListener(ActionListener l) {
         btnCrearPerfil.addActionListener(l);
     }
+    
+    public void removerListenersCrearPerfil() {
+    	for (ActionListener l : btnCrearPerfil.getActionListeners()) {
+    		btnCrearPerfil.removeActionListener(l);
+    	}
+    }
+    
     public String getNombre() {
         return tfNombre.getText();
     }
+    
+    public void setNombre(String nombre) {
+    	this.tfNombre.setText(nombre);
+    }
+    
+    public String getColorSeleccionado() {
+    	return (String) color.getSelectedItem();
+    }
+    
+    public JButton getBotonVolver() {
+    	return btnVolver;
+    }
+    
     public JButton getBotonCrearPerfil() {
         return btnCrearPerfil;
     }
+    
     public void mostrarMensaje(String msj) {
         JOptionPane.showMessageDialog(this, msj);
     }
+    
     public void mostrarMensajeError(String msj) {
         JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
     }

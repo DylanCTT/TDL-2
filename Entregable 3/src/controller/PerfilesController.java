@@ -30,11 +30,20 @@ public class PerfilesController {
 		
 		List<JButton> botones = view.getBotonesSeleccionar();
 		
+		this.view.getBotonCerrarSesion().addActionListener(new CerrarSesionListener());
+		
 		for (JButton b : botones) {
 			b.addActionListener(new SeleccionarListener());
 		}
 		
 		this.view.getBotonAgregarPerfiles().addActionListener(new AgregarPerfilListener());
+	}
+	
+	class CerrarSesionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ventanaPrincipal.mostrarCarta(VentanasEnum.LOGIN);
+		}
 	}
 	
 	class SeleccionarListener implements ActionListener {

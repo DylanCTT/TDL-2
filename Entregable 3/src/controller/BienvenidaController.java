@@ -46,7 +46,11 @@ public class BienvenidaController {
 	
 	class CargaPeliculasTask implements Runnable {
 		public void run() {
-			if (!peliculaService.hayPeliculas()) peliculas = peliculaService.cargarPeliculas("src/resources/movies_database.csv");
+			if (!peliculaService.hayPeliculas()) {
+				peliculaService.cargarPeliculas("src/resources/movies_database.csv");
+				
+				peliculas = peliculaService.listar10mayorVotacionPromedio();
+			}
 			else {
 				if (perfilActual.getCantAccesos() == 0) peliculas = peliculaService.listar10mayorVotacionPromedio();
 				else peliculas = peliculaService.listar10randomSinCalificar(perfilActual.getId());
