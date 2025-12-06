@@ -3,7 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 public class VentanaRegistro extends JPanel {
 
@@ -15,90 +14,95 @@ public class VentanaRegistro extends JPanel {
     private JTextField tfDni = new JTextField();
     private JLabel lblEmail = new JLabel("Email: ");
     private JTextField tfEmail = new JTextField();
-    private JLabel lblPassword = new JLabel("Contrasenia: ");
+    private JLabel lblPassword = new JLabel("Contraseña: ");
     private JPasswordField tfPassword = new JPasswordField();
     private JButton btnRegistrar = new JButton("Registrarse");
     private JButton btnRetroceso = new JButton("← Volver");
 
+    private Color colorFondo = Color.WHITE;
+    private Color colorBoton = Color.BLUE;
+    private Color colorTextoBoton = Color.WHITE;
+    private Font fuentePrincipal = new Font("Arial", Font.BOLD, 14);
+    private Font fuenteCampos = new Font("Arial", Font.PLAIN, 14); 
+    
     public VentanaRegistro() {
         setLayout(new BorderLayout());
+        setBackground(colorFondo);     
 
-        JLabel imagen = new JLabel(new ImageIcon("ruta/a/tu/imagen.png"));
-        imagen.setPreferredSize(new Dimension(300, 600));
-        imagen.setHorizontalAlignment(SwingConstants.CENTER);
-        imagen.setVerticalAlignment(SwingConstants.CENTER);
-        add(imagen, BorderLayout.WEST);
-
-        Font fuenteLabel = new Font("Calibri", Font.BOLD, 18);
-        Font fuenteCampo = new Font("Calibri", Font.PLAIN, 16);
-        Font fuenteBoton = new Font("Calibri", Font.BOLD, 16);
-
-        lblNombres.setFont(fuenteLabel);
-        tfNombres.setFont(fuenteCampo);
-        tfNombres.setPreferredSize(new Dimension(300, 35));
-
-        lblApellidos.setFont(fuenteLabel);
-        tfApellidos.setFont(fuenteCampo);
-        tfApellidos.setPreferredSize(new Dimension(300, 35));
-
-        lblDni.setFont(fuenteLabel);
-        tfDni.setFont(fuenteCampo);
-        tfDni.setPreferredSize(new Dimension(300, 35));
-
-        lblEmail.setFont(fuenteLabel);
-        tfEmail.setFont(fuenteCampo);
-        tfEmail.setPreferredSize(new Dimension(300, 35));
-
-        lblPassword.setFont(fuenteLabel);
-        tfPassword.setFont(fuenteCampo);
-        tfPassword.setPreferredSize(new Dimension(300, 35));
-
-        btnRegistrar.setPreferredSize(new Dimension(120, 30));
-
-        JPanel panelCentro = new JPanel(new GridBagLayout());
-        panelCentro.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 10, 15, 10);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.NONE;
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        panelCentro.add(lblNombres, gbc);
-        gbc.gridx = 1;
-        panelCentro.add(tfNombres, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1;
-        panelCentro.add(lblApellidos, gbc);
-        gbc.gridx = 1;
-        panelCentro.add(tfApellidos, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 2;
-        panelCentro.add(lblDni, gbc);
-        gbc.gridx = 1;
-        panelCentro.add(tfDni, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 3;
-        panelCentro.add(lblEmail, gbc);
-        gbc.gridx = 1;
-        panelCentro.add(tfEmail, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 4;
-        panelCentro.add(lblPassword, gbc);
-        gbc.gridx = 1;
-        panelCentro.add(tfPassword, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelCentro.add(btnRegistrar, gbc);
+        JPanel pnlCentro = new JPanel(new GridBagLayout());
+        pnlCentro.setBackground(colorFondo);
+        pnlCentro.setBorder(BorderFactory.createEmptyBorder(20, 80, 20, 80));
         
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelSuperior.add(btnRetroceso);
-        add(panelSuperior, BorderLayout.NORTH);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 10, 8, 10);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        btnRetroceso.setFont(new Font("Arial", Font.PLAIN, 12));
+        btnRetroceso.setForeground(Color.GRAY);
+        btnRetroceso.setBackground(colorFondo);
+        btnRetroceso.setBorder(null);
+        btnRetroceso.setFocusPainted(false);
+        btnRetroceso.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRetroceso.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 10, 20, 10);
+        pnlCentro.add(btnRetroceso, gbc);
+        
+        tfNombres.setFont(fuenteCampos);
+        tfNombres.setPreferredSize(new Dimension(250, 35));
+        tfApellidos.setFont(fuenteCampos);
+        tfApellidos.setPreferredSize(new Dimension(250, 35));
+        tfDni.setFont(fuenteCampos);
+        tfDni.setPreferredSize(new Dimension(250, 35));
+        tfEmail.setFont(fuenteCampos);
+        tfEmail.setPreferredSize(new Dimension(250, 35));
+        tfPassword.setFont(fuenteCampos);
+        tfPassword.setPreferredSize(new Dimension(250, 35));
+        
+        lblNombres.setFont(fuentePrincipal);
+        lblApellidos.setFont(fuentePrincipal);
+        lblDni.setFont(fuentePrincipal);
+        lblEmail.setFont(fuentePrincipal);
+        lblPassword.setFont(fuentePrincipal);
+        
+        gbc.gridwidth = 1;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        
+        agregarFila(pnlCentro, lblNombres, tfNombres, gbc, 1);
+        agregarFila(pnlCentro, lblApellidos, tfApellidos, gbc, 2);
+        agregarFila(pnlCentro, lblDni, tfDni, gbc, 3);
+        agregarFila(pnlCentro, lblEmail, tfEmail, gbc, 4);
+        agregarFila(pnlCentro, lblPassword, tfPassword, gbc, 5);
+        
+        btnRegistrar.setFont(fuentePrincipal);
+        btnRegistrar.setBackground(colorBoton);
+        btnRegistrar.setForeground(colorTextoBoton);
+        btnRegistrar.setFocusPainted(false);
+        btnRegistrar.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Padding vertical
+        btnRegistrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRegistrar.setPreferredSize(new Dimension(150, 45));
+        
+        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        gbc.insets = new Insets(30, 20, 0, 20);
+        gbc.fill = GridBagConstraints.HORIZONTAL; 
+        pnlCentro.add(btnRegistrar, gbc);            
 
-        add(panelCentro, BorderLayout.CENTER);
+        add(pnlCentro, BorderLayout.CENTER);
     }
 
+    private void agregarFila(JPanel pnl, JLabel lbl, JComponent campo, GridBagConstraints gbc, int fila) {
+        gbc.gridy = fila;
+        
+        gbc.gridx = 0; 
+        gbc.weightx = 0;
+        pnl.add(lbl, gbc);
+        
+        gbc.gridx = 1; 
+        gbc.weightx = 1.0;
+        pnl.add(campo, gbc);
+    }
 	
 	public void addRegistrarListener(ActionListener l) {
 		btnRegistrar.addActionListener(l);
@@ -138,9 +142,5 @@ public class VentanaRegistro extends JPanel {
 	
 	public void mostarMensajeError(String msj) {
 		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	
-	public static void main(String args[]) {
-		VentanaRegistro vr = new VentanaRegistro();
-	}
+	}	
 }
