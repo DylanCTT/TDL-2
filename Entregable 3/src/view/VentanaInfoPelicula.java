@@ -3,14 +3,25 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import model.Pelicula;
 
 public class VentanaInfoPelicula extends JPanel {
 	private JLabel lblTitulo;
-	private JPanel pnlCentro = new JPanel();
 	private JLabel lblAnio;
-	private JTextArea txtResumen;
+	private JLabel lblSinopsisHeader = new JLabel("Sinopsis");
+    private JTextArea txtResumen;
 	private JButton btnContinuar = new JButton("Continuar");
+	private JScrollPane scrollResumen;
+	
+	private Color colorFondo = Color.WHITE;
+    private Color colorBoton = Color.BLUE;
+    private Color colorTextoBoton = Color.WHITE;
+    
+    private Font fuenteTitulo = new Font("Arial", Font.BOLD, 24);
+    private Font fuenteSubtitulo = new Font("Arial", Font.BOLD, 16);
+    private Font fuenteTexto = new Font("Arial", Font.PLAIN, 14);    
+    private Font fuenteDetalle = new Font("Arial", Font.ITALIC, 14);
 	
 	public VentanaInfoPelicula() {
 		this(null);
@@ -18,30 +29,76 @@ public class VentanaInfoPelicula extends JPanel {
 	
 	public VentanaInfoPelicula(Pelicula p) {
 		setLayout(new BorderLayout());
+		setBackground(colorFondo);
 		
-		lblTitulo = new JLabel("", SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 18));
+		JPanel pnlNorte = new JPanel(new BorderLayout());
+        pnlNorte.setBackground(colorFondo);
+        pnlNorte.setBorder(new EmptyBorder(20, 40, 10, 40));
 		
-		txtResumen = new JTextArea("");
-		txtResumen.setWrapStyleWord(true);
-		txtResumen.setEditable(false);
-		txtResumen.setFont(new Font("Calibri", Font.PLAIN, 14));
-		
-		lblAnio = new JLabel("");
-		lblAnio.setFont(new Font("Calibri", Font.BOLD, 14));
-		
-		btnContinuar.setBackground(Color.BLUE);
-		btnContinuar.setForeground(Color.WHITE);
-		btnContinuar.setFont(new Font("Calibri", Font.BOLD, 14));
-		
-		pnlCentro.setLayout(new GridLayout(10,10));
-		pnlCentro.add(lblAnio, BorderLayout.NORTH);
-		pnlCentro.add(new JScrollPane(txtResumen), BorderLayout.CENTER);
-		
-		add(lblTitulo, BorderLayout.NORTH);
-		add(pnlCentro, BorderLayout.CENTER);
-		add(btnContinuar, BorderLayout.SOUTH);
-		
+		lblTitulo = new JLabel("Titulo", SwingConstants.CENTER);
+		lblTitulo.setFont(fuenteTitulo);
+        lblTitulo.setForeground(Color.BLACK);
+        
+        pnlNorte.add(lblTitulo, BorderLayout.CENTER);
+        add(pnlNorte, BorderLayout.NORTH);
+        
+        JPanel pnlCentro = new JPanel(new GridBagLayout());
+        pnlCentro.setBackground(colorFondo);
+        pnlCentro.setBorder(new EmptyBorder(10, 60, 20, 60));
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        
+        lblAnio = new JLabel("Año");
+        lblAnio.setFont(fuenteDetalle);
+        lblAnio.setForeground(Color.DARK_GRAY);
+        lblAnio.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        gbc.gridy = 0;
+        pnlCentro.add(lblAnio, gbc);
+        
+        lblSinopsisHeader.setFont(fuenteSubtitulo);
+        lblSinopsisHeader.setHorizontalAlignment(SwingConstants.LEFT);
+        lblSinopsisHeader.setBorder(new EmptyBorder(20, 0, 5, 0));
+        
+        gbc.gridy = 1;
+        pnlCentro.add(lblSinopsisHeader, gbc);
+        
+        txtResumen = new JTextArea();
+        txtResumen.setWrapStyleWord(true);
+        txtResumen.setLineWrap(true);
+        txtResumen.setEditable(false);
+        txtResumen.setFont(fuenteTexto);
+        txtResumen.setBackground(colorFondo);
+        txtResumen.setBorder(null);
+        
+        scrollResumen = new JScrollPane(txtResumen);
+        scrollResumen.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230)));
+        scrollResumen.setPreferredSize(new Dimension(400, 150));
+        
+        gbc.gridy = 2;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        pnlCentro.add(scrollResumen, gbc);
+        
+        add(pnlCentro, BorderLayout.CENTER);
+        
+        JPanel pnlSur = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        pnlSur.setBackground(colorFondo);
+        pnlSur.setBorder(new EmptyBorder(10, 0, 30, 0));
+        
+        btnContinuar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnContinuar.setBackground(colorBoton);
+        btnContinuar.setForeground(colorTextoBoton);
+        btnContinuar.setFocusPainted(false);
+        btnContinuar.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        btnContinuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        pnlSur.add(btnContinuar);
+        add(pnlSur, BorderLayout.SOUTH);
+        				
 		if (p != null) actualizarPelicula(p);
 	}
 	
@@ -54,6 +111,10 @@ public class VentanaInfoPelicula extends JPanel {
 			else lblAnio.setText("Año: No disponible");
 			
 			txtResumen.setText(p.getResumen() != null ? p.getResumen() : "Resumen no disponible");
+			
+			SwingUtilities.invokeLater(() -> {
+                scrollResumen.getVerticalScrollBar().setValue(0);
+            });
 			
 			this.revalidate();
 			this.repaint();

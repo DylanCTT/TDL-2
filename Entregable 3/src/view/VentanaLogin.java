@@ -8,7 +8,7 @@ import javax.swing.border.*;
 public class VentanaLogin extends JPanel {
     private JLabel lblEmail = new JLabel("E-mail: ");
     private JTextField tfEmail = new JTextField();
-    private JLabel lblPassword = new JLabel("Contrasenia: ");
+    private JLabel lblPassword = new JLabel("Contraseña: ");
     private JPasswordField tfPassword = new JPasswordField();
     private JButton btnIngresar = new JButton("Ingresar");
     private JButton btnRegistrarte = new JButton("Registrarse");
@@ -17,7 +17,7 @@ public class VentanaLogin extends JPanel {
     private Color colorBoton = Color.BLUE;
     private Color colorTextoBoton = Color.WHITE;
     private Font fuentePrincipal = new Font("Arial", Font.BOLD, 14);
-    private Font fuenteCampos = new Font("Calibri", Font.PLAIN, 14);   		
+    private Font fuenteCampos = new Font("Arial", Font.PLAIN, 14);   		
     
     public VentanaLogin() {
     	setLayout(new BorderLayout());
@@ -147,9 +147,5 @@ public class VentanaLogin extends JPanel {
 	
 	public void mostrarMensajeError(String msj) {
 		JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new VentanaLogin());
 	}
 }

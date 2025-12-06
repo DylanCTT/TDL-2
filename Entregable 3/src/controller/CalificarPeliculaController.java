@@ -19,7 +19,7 @@ public class CalificarPeliculaController {
 		this.ventanaPrincipal = ventanaPrincipal;
 		
 		this.view.getBotonGuardar().addActionListener(new GuardarListener());
-		this.view.getBotonRetroceso().addActionListener(new RetrocesoListener());
+		this.view.getBotonVolver().addActionListener(new RetrocesoListener());
 	}
 	
 	class GuardarListener implements ActionListener {

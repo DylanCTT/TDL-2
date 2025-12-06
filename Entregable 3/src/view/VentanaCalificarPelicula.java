@@ -3,78 +3,119 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import model.Pelicula;
 import model.Perfil;
 
 public class VentanaCalificarPelicula extends JPanel {
 	private JLabel lblTitulo;
 	private JPanel pnlCentro = new JPanel();
-	private JLabel lblCalificacion = new JLabel("Calificacion");
+	private JLabel lblCalificacion = new JLabel("Puntaje");
 	private JButton[] estrellas;
-	private JPanel pnlEstrellas = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel pnlEstrellas = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+	private JLabel lblComentario = new JLabel("Escribí tu reseña");
+	private JTextArea taComentario = new JTextArea(5, 30);
+	private JScrollPane scrollComentario;
+	private JButton btnGuardar = new JButton("Subir reseña");
+	private JButton btnVolver = new JButton("← Volver");
+	
 	private int puntaje = 0;
-	private JPanel pnlComentario = new JPanel(new BorderLayout());
-    private JLabel lblComentario = new JLabel("Comentario");
-    private JTextArea taComentario = new JTextArea(5, 30);
-    private JScrollPane scrollComentario;
-    private JButton btnGuardar = new JButton("Guardar");
     private Pelicula peliculaActual;
     private Integer idPerfilActual;
-    private JButton btnRetroceso = new JButton("← Volver");
-    
+	
+    private Color colorFondo = Color.WHITE;
+    private Color colorBoton = Color.BLUE;
+    private Color colorTextoBoton = Color.WHITE;
+	
+    private Font fuenteTitulo = new Font("Arial", Font.BOLD, 24);
+    private Font fuenteSubtitulo = new Font("Arial", Font.BOLD, 16);
+    private Font fuenteTexto = new Font("Arial", Font.PLAIN, 14);
+    private Font fuenteEstrellas = new Font("SansSerif", Font.BOLD, 40);
+     
     public VentanaCalificarPelicula() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(950, 950));
+        setBackground(colorFondo);
  
-        lblTitulo = new JLabel("", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Calibri", Font.BOLD, 26));
-        lblTitulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        JPanel pnlNorte = new JPanel(new BorderLayout());
+        pnlNorte.setBackground(colorFondo);
+        pnlNorte.setBorder(new EmptyBorder(15, 20, 10, 20));
 
-        lblCalificacion.setFont(new Font("Calibri", Font.BOLD, 18));
-        crearEstrellas(pnlEstrellas);
-
-        JPanel pnlCalificacion = new JPanel(new BorderLayout());
-        pnlCalificacion.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        pnlCalificacion.add(lblCalificacion, BorderLayout.NORTH);
-        pnlCalificacion.add(pnlEstrellas, BorderLayout.CENTER);
-
-        lblComentario.setFont(new Font("Calibri", Font.BOLD, 18));
-        taComentario.setFont(new Font("Calibri", Font.PLAIN, 16));
-        taComentario.setLineWrap(true);
-        scrollComentario = new JScrollPane(taComentario);
-
-        pnlComentario.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        pnlComentario.add(lblComentario, BorderLayout.NORTH);
-        pnlComentario.add(scrollComentario, BorderLayout.CENTER);
-
-        pnlCentro = new JPanel();
-        pnlCentro.setLayout(new BoxLayout(pnlCentro, BoxLayout.Y_AXIS));
-        pnlCentro.setBorder(BorderFactory.createEmptyBorder(20, 200, 20, 200)); // centrado horizontal
-        pnlCentro.add(pnlCalificacion);
-        pnlCentro.add(Box.createVerticalStrut(20));
-        pnlCentro.add(pnlComentario);
-
-        btnGuardar.setBackground(Color.BLUE);
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setFont(new Font("Calibri", Font.BOLD, 16));
-        btnGuardar.setPreferredSize(new Dimension(150, 40));
-
-        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelBoton.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
-        panelBoton.add(btnGuardar);
+        btnVolver.setFont(new Font("Arial", Font.PLAIN, 12));
+        btnVolver.setForeground(Color.GRAY);
+        btnVolver.setBackground(colorFondo);
+        btnVolver.setBorder(null);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnVolver.setHorizontalAlignment(SwingConstants.LEFT);
         
-        JPanel pnlSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pnlSuperior.add(btnRetroceso);
-        
-        JPanel pnlNorte = new JPanel();
-        pnlNorte.setLayout(new BoxLayout(pnlNorte, BoxLayout.Y_AXIS));
-        
-        pnlNorte.add(pnlSuperior);
-        pnlNorte.add(lblTitulo);
+        lblTitulo = new JLabel("Título", SwingConstants.CENTER);
+        lblTitulo.setFont(fuenteTitulo);
+        lblTitulo.setForeground(Color.BLACK);
 
+        pnlNorte.add(btnVolver, BorderLayout.WEST);
+        pnlNorte.add(lblTitulo, BorderLayout.CENTER);
+        pnlNorte.add(Box.createHorizontalStrut(80), BorderLayout.EAST); 
+        
         add(pnlNorte, BorderLayout.NORTH);
+
+        JPanel pnlCentro = new JPanel(new GridBagLayout());
+        pnlCentro.setBackground(colorFondo);
+        pnlCentro.setBorder(new EmptyBorder(20, 50, 20, 50));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 5, 0);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        lblCalificacion.setFont(fuenteSubtitulo);
+        lblCalificacion.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        gbc.gridy = 0;
+        pnlCentro.add(lblCalificacion, gbc);
+
+        pnlEstrellas.setBackground(colorFondo);
+        crearEstrellas(pnlEstrellas);
+        
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 30, 0);
+        pnlCentro.add(pnlEstrellas, gbc);
+
+        lblComentario.setFont(fuenteSubtitulo);
+        lblComentario.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        gbc.gridy = 2;
+        gbc.insets = new Insets(0, 0, 5, 0);
+        pnlCentro.add(lblComentario, gbc);
+
+        taComentario.setFont(fuenteTexto);
+        taComentario.setLineWrap(true);
+        taComentario.setWrapStyleWord(true);
+        taComentario.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        scrollComentario = new JScrollPane(taComentario);
+        scrollComentario.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        scrollComentario.setPreferredSize(new Dimension(500, 120));
+        
+        gbc.gridy = 3;
+        gbc.weighty = 1.0; 
+        gbc.fill = GridBagConstraints.BOTH;
+        pnlCentro.add(scrollComentario, gbc);
+
         add(pnlCentro, BorderLayout.CENTER);
-        add(panelBoton, BorderLayout.SOUTH);
+
+        JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelSur.setBackground(colorFondo);
+        panelSur.setBorder(new EmptyBorder(20, 0, 40, 0));
+
+        btnGuardar.setBackground(colorBoton);
+        btnGuardar.setForeground(colorTextoBoton);
+        btnGuardar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnGuardar.setFocusPainted(false);
+        btnGuardar.setBorder(BorderFactory.createEmptyBorder(12, 40, 12, 40));
+        btnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        panelSur.add(btnGuardar);
+        add(panelSur, BorderLayout.SOUTH);
     }
 
     public void actualizarPelicula(Pelicula p) {
@@ -106,9 +147,9 @@ public class VentanaCalificarPelicula extends JPanel {
     private void actualizarEstrellas() {
         for (int i = 0; i < estrellas.length; i++) {
             if (i < puntaje) {
-                estrellas[i].setText("\u2605"); // Estrella llena
+                estrellas[i].setText("\u2605");
             } else {
-                estrellas[i].setText("\u2606"); // Estrella vacía
+                estrellas[i].setText("\u2606"); 
             }
         }
     }
@@ -169,12 +210,12 @@ public class VentanaCalificarPelicula extends JPanel {
     	return estrellas;
     }
     
-    public void addRetrocesoListener(ActionListener l) {
-        btnRetroceso.addActionListener(l);
+    public void addVolverListener(ActionListener l) {
+        btnVolver.addActionListener(l);
     }
 
-    public JButton getBotonRetroceso() {
-        return btnRetroceso;
+    public JButton getBotonVolver() {
+        return btnVolver;
     }
     
     public void mostrarMensaje(String msj) {
